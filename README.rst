@@ -47,7 +47,9 @@ After installation you can use the functions in the package in for example a Jup
 To get the term structures per 31/12/2017 enter
 
 :: 
+
 	d = solvency2_rfr.read(datetime(2017,12,31))
+
 
 If you do not add a input datetime, i.e. solvency2_rfr.read(), then the function will use today() and you will receive the most recent published term structure.
 
@@ -58,7 +60,7 @@ This returns a dictionary with all the information about the term structures. Th
 * 'url': the url of the term structures
 * 'name_zipfile': the name of the zip-file 
 * 'name_excelfile': the name of the Excel-file contained in the zip-file that was downloaded
-* 'metadata': the information per term structure contained in the Excel-file, 
+* 'metadata': the information per term structure contained in the Excel-file: 
 			  - the Coupon frequency, 
 			  - the Last Liquid Point,
 			  - the Convergence period,
@@ -72,13 +74,16 @@ This returns a dictionary with all the information about the term structures. Th
 You can get the term structure without Volatility adjustment for the Euro by 
 
 ::
+
 	rates = d['RFR_spot_no_VA']['Euro']
+
 
 This returns a Pandas Series (convert it to a Numpy array to use it in calculations).
 
 To derive a term structure with different parameters you do the following. First define the liquid maturities of the term structure, together with a dictionary of rates. Then use the smith_wilson function.
 
 ::
+
 	liquid_maturities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20]
 	rates = d['RFR_spot_no_VA']['Euro']
 	ratesin = {num: float(rates[num]) for num in liquid_maturities}
@@ -90,6 +95,7 @@ To derive a term structure with different parameters you do the following. First
              	 			 ufr = 0,
              	 			 T2  = d['metadata'].loc[:, 'Euro'].LLP + 
                        		 d['metadata'].loc[:, 'Euro'].Convergence)
+    
 
 In this case, we use a ufr of zero.
 
