@@ -94,8 +94,8 @@ To derive a term structure with different parameters you do the following. First
              	 			 cra = 0,
              	 			 ufr = 0,
              	 			 T2  = d['metadata'].loc[:, 'Euro'].LLP + 
-                       		 d['metadata'].loc[:, 'Euro'].Convergence)
-    
+                     			   d['metadata'].loc[:, 'Euro'].Convergence)
+
 
 In this case, we use a ufr of zero.
 
