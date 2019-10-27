@@ -126,7 +126,7 @@ def read_meta(xls, cache):
     """
 
     df_meta = pd.read_excel(xls, 
-                            sheet_name = "RFR_spot_no_VA",
+                            sheet_name = "RFR_spot_with_VA",
                             header = 1,
                             index_col = 1, 
                             skipfooter = 150)
