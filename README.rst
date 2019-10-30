@@ -53,14 +53,14 @@ To get the term structures per 31/12/2017 enter
 
 If you do not add a input datetime, i.e. solvency2_rfr.read(), then the function will use today() and you will receive the most recent published term structure.
 
-This returns a dictionary with all the information about the term structures. The dictionary has the following keys
+This returns a Python dictionary with all the information about the term structures. The dictionary has the following keys
 
-* 'input_date': the original date by which the function was called is stored in the dictionary as input_date
-* 'reference_date': the proper reference date generated from the input date. The reference date is the most recent end of the month prior to the input date. So if for example the input is datetime(2018, 1, 1) then the reference date is '20171231', because this the most recent end of the month prior to the input date. The reference date is a string because it is used in the name of the files to be downloaded from the EIOPA-website.
-* 'url': the url of the term structures
-* 'name_zipfile': the name of the zip-file 
-* 'name_excelfile': the name of the Excel-file contained in the zip-file that was downloaded
-* 'metadata': the information per term structure contained in the Excel-file: 
+* input_date: the original date by which the function was called is stored in the dictionary as input_date
+* reference_date: the proper reference date generated from the input date. The reference date is the most recent end of the month prior to the input date. So if for example the input is datetime(2018, 1, 1) then the reference date is '20171231', because this the most recent end of the month prior to the input date. The reference date is a string because it is used in the name of the files to be downloaded from the EIOPA-website.
+* url: the url of the term structures
+* name_zipfile: the name of the zip-file 
+* name_excelfile: the name of the Excel-file contained in the zip-file that was downloaded
+* metadata: the information per term structure contained in the Excel-file: 
 			  - the Coupon frequency, 
 			  - the Last Liquid Point,
 			  - the Convergence period,
@@ -68,8 +68,8 @@ This returns a dictionary with all the information about the term structures. Th
 			  - the alpha parameter of the Smith-Wilson algorithm,
 			  - the Credit Rate Adjustment,
 			  - the Volatility adjustment
-* 'RFR_spot_no_VA': the term structures without Volatility adjustment (a Pandas DataFrame)
-* 'RFR_spot_with_VA': the term structures with Volatility adjustment (a Pandas DataFrame)
+* RFR_spot_no_VA: the term structures without Volatility adjustment (a Pandas DataFrame)
+* RFR_spot_with_VA: the term structures with Volatility adjustment (a Pandas DataFrame)
 
 You can get the term structure without Volatility adjustment for the Euro by 
 
@@ -77,10 +77,11 @@ You can get the term structure without Volatility adjustment for the Euro by
 
 	rates = d['RFR_spot_no_VA']['Euro']
 
-
 This returns a Pandas Series (convert it to a Numpy array to use it in calculations).
 
-To derive a term structure with different parameters you do the following. First define the liquid maturities of the term structure, together with a dictionary of rates. Then use the smith_wilson function.
+The package also contains the Smith-Wilson algorithm that is used to derive the original term structures published by EIOPA. You can use this algorithm to derive term structures with alternative extrapolation by changing the parameters. 
+
+For this you can do the following. First define the liquid maturities of the term structure, together with a Python dictionary of rates. Then use the smith_wilson function.
 
 ::
 
@@ -97,7 +98,7 @@ To derive a term structure with different parameters you do the following. First
                      			   d['metadata'].loc[:, 'Euro'].Convergence)
 
 
-In this case, we use a ufr of zero.
+In this case, we use a UFR of zero and a CRA of zero.
 
 Credits
 -------
