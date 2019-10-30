@@ -134,7 +134,7 @@ def read_meta(xls, cache):
     df_meta = df_meta.drop('Unnamed: 0', axis = 1)
     df_meta.loc["VA"].fillna(0, inplace = True)
     df_meta = df_meta.iloc[0:8]
-    df_meta.index.names = ['metadata']
+    df_meta.index.names = ['meta']
     df_meta.index = df_meta.index.fillna("Info")
 
     df_append = pd.DataFrame(index = ['reference date'], 
@@ -142,7 +142,7 @@ def read_meta(xls, cache):
     df_append.loc['reference date'] = cache["reference_date"]
     df_meta = df_meta.append(df_append)
     
-    cache['metadata'] = df_meta
+    cache['meta'] = df_meta
 
     return cache
 
