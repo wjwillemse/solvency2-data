@@ -18,7 +18,7 @@ solvency2-rfr
 
 Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from the zip-files on the EIOPA website and deriving the term structures for alternative extrapolations.
 
-* Free software: MIT license
+* Free software: MIT/X license
 * Documentation: https://solvency2-rfr.readthedocs.io.
 
 
