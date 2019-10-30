@@ -5,10 +5,13 @@ solvency2-rfr
 
 .. image:: https://img.shields.io/pypi/v/e_solvency2_rfr.svg
         :target: https://pypi.python.org/pypi/solvency2_rfr
-
+        :alt: Pypi Version
 .. image:: https://img.shields.io/travis/DeNederlandscheBank/solvency2-rfr.svg
         :target: https://travis-ci.org/DeNederlandscheBank/solvency2-rfr
-
+        : Build Status
+.. image:: https://img.shields.io/pypi/l/solvency-rfr.svg
+   		:target: https://pypi.python.org/pypi/solvency2-rfr/
+   		:alt: License        
 .. image:: https://readthedocs.org/projects/solvency2-rfr/badge/?version=latest
         :target: https://solvency2-rfr.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
