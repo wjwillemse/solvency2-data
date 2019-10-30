@@ -48,7 +48,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'solvency2-rfr'
-copyright = "2018-{}, De Nederlandsche Bank".format(timezone.now().year)
+copyright = u"2019, De Nederlandsche Bank"
 author = u"De Nederlandsche Bank"
 
 # The version info for the project you're documenting, acts as replacement
