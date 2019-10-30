@@ -5,9 +5,11 @@ Credits
 Development Lead
 ----------------
 
-* De Nederlandsche Bank (DNB)
-* Insurance Supervision
-* Expert Centre on Data Analysis & Operational Management <ECDB_berichten@dnb.nl>
+Willem Jan Willemse <ECDB_berichten@dnb.nl>
+
+Expert Centre on Data Analysis & Operational Management, Division Insurance Supervision
+
+De Nederlandsche Bank (DNB)
 
 Contributors
 ------------

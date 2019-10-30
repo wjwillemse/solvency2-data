@@ -1,5 +1,5 @@
 Welcome to solvency2-rfr's documentation!
-======================================
+=========================================
 
 .. toctree::
    :maxdepth: 2
@@ -8,7 +8,6 @@ Welcome to solvency2-rfr's documentation!
    readme
    installation
    usage
-   modules
    contributing
    authors
    history
