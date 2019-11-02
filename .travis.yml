@@ -25,5 +25,5 @@ deploy:
     secure: PLEASE_REPLACE_ME
   on:
     tags: true
-    repo: DeNederlandscheBank/solvency2_rfr
+    repo: DeNederlandscheBank/solvency2_data
     python: 3.8
