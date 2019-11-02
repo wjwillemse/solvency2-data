@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install solvency2-rfr, run this command in your terminal:
+To install solvency2-data, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install solvency2_rfr
+    $ pip install solvency2_data
 
-This is the preferred method to install solvency2-rfr, as it will always install the most recent stable release.
+This is the preferred method to install solvency2-data, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,19 +26,19 @@ you through the process.
 From sources
 ------------
 
-The sources for solvency2-rfr can be downloaded from the `Github repo`_.
+The sources for solvency2-data can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/DeNederlandscheBank/solvency2_rfr
+    $ git clone git://github.com/DeNederlandscheBank/solvency2_data
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl -OJL https://github.com/DeNederlandscheBank/solvency2_rfr/tarball/master
+    $ curl -OJL https://github.com/DeNederlandscheBank/solvency2_data/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/DeNederlandscheBank/solvency2_rfr
-.. _tarball: https://github.com/DeNederlandscheBank/solvency2_rfr/tarball/master
+.. _Github repo: https://github.com/DeNederlandscheBank/solvency2_data
+.. _tarball: https://github.com/DeNederlandscheBank/solvency2_data/tarball/master

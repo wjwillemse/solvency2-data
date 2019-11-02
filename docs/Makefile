@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
-SPHINXPROJ    = solvency2_rfr
+SPHINXPROJ    = solvency2_data
 SOURCEDIR     = .
 BUILDDIR      = _build
 

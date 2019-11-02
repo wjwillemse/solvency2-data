@@ -1,4 +1,4 @@
-Welcome to solvency2-rfr's documentation!
+Welcome to solvency2-data's documentation!
 =========================================
 
 .. toctree::

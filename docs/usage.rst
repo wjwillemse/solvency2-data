@@ -2,9 +2,9 @@
 Usage
 =====
 
-To use solvency2-rfr in a project::
+To use solvency2-data in a project::
 
-    import solvency2_rfr
+    import solvency2_data
 
 After installation you can use the functions in the package in for example a Jupyter notebook.
 
@@ -12,10 +12,10 @@ To get the term structures per 31/12/2017 enter
 
 :: 
 
-	d = solvency2_rfr.read(datetime(2017,12,31))
+	d = solvency2_data.read(datetime(2017,12,31))
 
 
-If you do not add a input datetime, i.e. solvency2_rfr.read(), then the function will use today() and you will receive the most recent published term structure.
+If you do not add a input datetime, i.e. solvency2_data.read(), then the function will use today() and you will receive the most recent published term structure.
 
 This returns a Python dictionary with all the information about the term structures. The dictionary has the following keys
 
