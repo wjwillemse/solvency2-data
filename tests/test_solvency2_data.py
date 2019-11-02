@@ -5,6 +5,7 @@
 
 import unittest
 import numpy as np
+import pandas as pd
 
 from datetime import datetime
 
@@ -13,7 +14,7 @@ from solvency2_data import solvency2_data
 class TestSmithWilson(unittest.TestCase):
 
     def test_read_input_date(self):
-        """Test of read function"""
+        """Test of read input date function"""
 
         # Input
         date = datetime(2017,12,31)
@@ -22,12 +23,97 @@ class TestSmithWilson(unittest.TestCase):
         expected = datetime(2017, 12, 31, 0, 0)
 
         # Actual output
-        d = solvency2_data.read(date)
+        d = solvency2_data.read(date, path = '/')
         actual = d['input_date']
 
         # Assert
-        self.assertEqual(type(actual), type(expected), "Returned types not matching")
-        self.assertEqual(actual, expected, "Returned types not matching")
+        self.assertEqual(type(actual), type(expected), "Read function, input_date: returned types not matching")
+        self.assertEqual(actual, expected, "Read function, input_date: returned values not matching")
+
+    def test_read_reference_date(self):
+        """Test of read reference date function"""
+
+        # Input
+        date = datetime(2017,12,31)
+
+        # Expected output
+        expected = '20171231'
+
+        # Actual output
+        d = solvency2_data.read(date, path = '/')
+        actual = d['reference_date']
+
+        # Assert
+        self.assertEqual(type(actual), type(expected), "Read function, reference_date: returned types not matching")
+        self.assertEqual(actual, expected, "Read function, reference_date: returned values not matching")
+
+    def test_read_meta_date(self):
+        """Test of read meta data function"""
+
+        # Input
+        date = datetime(2017,12,31)
+
+        # Expected output
+        expected = pd.Series(index = ['Info', 'Coupon_freq', 'LLP', 'Convergence', 'UFR', 'alpha', 'CRA', 'VA', 'reference date'], 
+                             data = ['EUR_31_12_2017_SWP_LLP_20_EXT_40_UFR_4.2', 1, 20, 40, 4.2, 0.126759, 10, 4, '20171231'],
+                             name = 'Euro')
+
+        # Actual output
+        d = solvency2_data.read(date, path = '/')
+        actual = d['meta'].loc[:,'Euro']
+
+        # Assert
+        self.assertEqual(type(actual), type(expected), "Read function, meta data: returned types not matching")
+        assert (actual == expected).all(), "Read function, meta data: returned values not matching"
+
+    def test_read_spot_rates(self):
+        """Test of read spot rates function"""
+
+        # Input
+        date = datetime(2017,12,31)
+
+        # Expected output
+        expected = pd.Series(index = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+                                      20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,
+                                      37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,
+                                      54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+                                      71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87,
+                                      88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103,
+                                      104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116,
+                                      117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129,
+                                      130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142,
+                                      143, 144, 145, 146, 147, 148, 149, 150],
+                             data = [-0.00358, -0.0025, -0.00088, 0.00069, 0.00209, 0.00347, 0.00469,
+                                      0.00585, 0.00695, 0.00802, 0.00897, 0.00982, 0.01059, 0.01125,
+                                      0.01177, 0.01217, 0.01249, 0.0128, 0.01316, 0.01357, 0.01408,
+                                      0.01464, 0.01524, 0.01586, 0.01649, 0.01713, 0.01775, 0.01837,
+                                      0.01897, 0.01956, 0.02013, 0.02069, 0.02122, 0.02174, 0.02223,
+                                      0.02271, 0.02317, 0.02362, 0.02404, 0.02445, 0.02485, 0.02523,
+                                      0.02559, 0.02594, 0.02628, 0.0266, 0.02692, 0.02722, 0.02751,
+                                      0.02779, 0.02806, 0.02832, 0.02857, 0.02881, 0.02905, 0.02928,
+                                      0.02949, 0.02971, 0.02991, 0.03011, 0.0303, 0.03049, 0.03067,
+                                      0.03084, 0.03101, 0.03118, 0.03134, 0.03149, 0.03164, 0.03179,
+                                      0.03193, 0.03207, 0.03221, 0.03234, 0.03247, 0.03259, 0.03271,
+                                      0.03283, 0.03295, 0.03306, 0.03317, 0.03328, 0.03338, 0.03348,
+                                      0.03358, 0.03368, 0.03378, 0.03387, 0.03396, 0.03405, 0.03414,
+                                      0.03422, 0.0343, 0.03439, 0.03447, 0.03454, 0.03462, 0.0347,
+                                      0.03477, 0.03484, 0.03491, 0.03498, 0.03505, 0.03512, 0.03518,
+                                      0.03525, 0.03531, 0.03537, 0.03543, 0.03549, 0.03555, 0.03561,
+                                      0.03566, 0.03572, 0.03577, 0.03583, 0.03588, 0.03593, 0.03598,
+                                      0.03603, 0.03608, 0.03613, 0.03618, 0.03622, 0.03627, 0.03631,
+                                      0.03636, 0.0364, 0.03645, 0.03649, 0.03653, 0.03657, 0.03661,
+                                      0.03665, 0.03669, 0.03673, 0.03677, 0.03681, 0.03684, 0.03688,
+                                      0.03692, 0.03695, 0.03699, 0.03702, 0.03706, 0.03709, 0.03712,
+                                      0.03716, 0.03719, 0.03722],
+                             name = 'Euro')
+
+        # Actual output
+        d = solvency2_data.read(date, path = '/')
+        actual = d['RFR_spot_no_VA']['Euro']
+
+        # Assert
+        self.assertEqual(type(actual), type(expected), "Read function, spot rates: returned types not matching")
+        assert (actual == expected).all(), "Read function, spot rates: returned values not matching"
 
     def test_big_h(self):
         """Test of big_h function"""

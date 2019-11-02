@@ -36,7 +36,7 @@ setup(
     ],
     description="Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from the zip-files on the EIOPA website and deriving the term structures for alternative extrapolations",
     install_requires=requirements,
-    license="MIT license",
+    license="MIT/X license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='solvency2_data',
@@ -45,7 +45,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/DeNederlandscheBank/solvency2_data',
+    url='https://github.com/DeNederlandscheBank/solvency2-data',
     version='0.1.0',
     zip_safe=False,
 )
