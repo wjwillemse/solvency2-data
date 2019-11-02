@@ -6,9 +6,28 @@
 import unittest
 import numpy as np
 
+from datetime import datetime
+
 from solvency2_data import solvency2_data
 
 class TestSmithWilson(unittest.TestCase):
+
+    def test_read_input_date(self):
+        """Test of read function"""
+
+        # Input
+        date = datetime(2017,12,31)
+
+        # Expected output
+        expected = datetime(2017, 12, 31, 0, 0)
+
+        # Actual output
+        d = solvency2_data.read(date)
+        actual = d['input_date']
+
+        # Assert
+        self.assertEqual(type(actual), type(expected), "Returned types not matching")
+        self.assertEqual(actual, expected, "Returned types not matching")
 
     def test_big_h(self):
         """Test of big_h function"""
