@@ -23,7 +23,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = datetime(2017, 12, 31, 0, 0)
 
         # Actual output
-        d = solvency2_data.read(date)
+        d = solvency2_data.read(date, path = "tests/test_data/")
         actual = d['input_date']
 
         # Assert
@@ -40,7 +40,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = '20171231'
 
         # Actual output
-        d = solvency2_data.read(date)
+        d = solvency2_data.read(date, path = "tests/test_data/")
         actual = d['reference_date']
 
         # Assert
@@ -59,7 +59,7 @@ class TestSmithWilson(unittest.TestCase):
                              name = 'Euro')
 
         # Actual output
-        d = solvency2_data.read(date)
+        d = solvency2_data.read(date, path = "tests/test_data/")
         actual = d['meta'].loc[:,'Euro']
 
         # Assert
@@ -108,7 +108,7 @@ class TestSmithWilson(unittest.TestCase):
                              name = 'Euro')
 
         # Actual output
-        d = solvency2_data.read(date)
+        d = solvency2_data.read(date, path = "tests/test_data/")
         actual = d['RFR_spot_no_VA']['Euro']
 
         # Assert
