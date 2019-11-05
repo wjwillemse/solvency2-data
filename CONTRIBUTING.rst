@@ -46,8 +46,8 @@ Ready to contribute? Here's how to set up `solvency2-data` for local development
 
 3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development::
 
-    $ mkvirtualenv solvency2_rfr
-    $ cd solvency2_rfr/
+    $ mkvirtualenv solvency2_data
+    $ cd solvency2_data/
     $ python setup.py develop
 
 4. Create a branch for local development::
@@ -59,7 +59,7 @@ Ready to contribute? Here's how to set up `solvency2-data` for local development
 5. When you're done making changes, check that your changes pass flake8 and the
    tests, including testing other Python versions with tox::
 
-    $ flake8 solvency2_rfr tests
+    $ flake8 solvency2_data tests
     $ python setup.py test or pytest
     $ tox
 
@@ -92,7 +92,7 @@ Tips
 To run a subset of tests::
 
 
-    $ python -m unittest tests.test_solvency2_rfr
+    $ python -m unittest tests.test_solvency2_data
 
 Deploying
 ---------
