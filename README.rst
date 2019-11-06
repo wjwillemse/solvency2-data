@@ -4,7 +4,7 @@ solvency2-data
 
 
 .. image:: https://img.shields.io/pypi/v/solvency2_data.svg
-        :target: https://pypi.python.org/pypi/solvency2_data
+        :target: https://pypi.python.org/pypi/solvency2-data
         :alt: Pypi Version
 .. image:: https://img.shields.io/travis/DeNederlandscheBank/solvency2-data.svg
         :target: https://travis-ci.org/DeNederlandscheBank/solvency2-data
