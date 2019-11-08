@@ -1,5 +1,5 @@
 Welcome to solvency2-data's documentation!
-=========================================
+==========================================
 
 .. toctree::
    :maxdepth: 2
