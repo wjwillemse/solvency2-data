@@ -149,6 +149,7 @@ def read_meta(xls, cache = {}):
     return cache
 
 def read(data = "rfr", input_date = None, path = ""):
+    cache = dict()
     if data == "rfr":
     	cache = {'path_zipfile': path, 'path_excelfile': path}
     	cache = download_RFR(input_date, cache)
