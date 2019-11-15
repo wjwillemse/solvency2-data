@@ -148,15 +148,13 @@ def read_meta(xls, cache = {}):
 
     return cache
 
-def read(data = "rfr", input_date = None, path = ""):
-    cache = dict()
-    if data == "rfr":
-    	cache = {'path_zipfile': path, 'path_excelfile': path}
-    	cache = download_RFR(input_date, cache)
-    	cache['path_excelfile'] = path
-    	xls = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile"])
-    	cache = read_meta(xls, cache)
-    	cache = read_spot(xls, cache)
+def read(input_date = None, path = ""):
+    cache = {'path_zipfile': path, 'path_excelfile': path}
+    cache = download_RFR(input_date, cache)
+    cache['path_excelfile'] = path
+    xls = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile"])
+    cache = read_meta(xls, cache)
+    cache = read_spot(xls, cache)
     return cache
 
 def big_h(u, v):
@@ -319,17 +317,17 @@ def smith_wilson(instrument = "Zero",
     zeroac[1:] = np.power(discount[1:], -1 / np.arange(1, 121)) - 1
 
     if output_type == "zero rates annual compounding":
-    	output = zeroac
+        output = zeroac
     elif output_type == "forward rate annual compounding":
-    	output = forwardac
+        output = forwardac
     elif output_type == "discount rates":
-    	output = fdiscount
+        output = fdiscount
     elif output_type == "forward intensities":
-    	output = fwintensity
+        output = fwintensity
     elif output_type == "yield intensities":
-    	output = yldintensity
+        output = yldintensity
     elif output_type == "alfa":
-    	output = alfa
+        output = alfa
 
     return output
     
