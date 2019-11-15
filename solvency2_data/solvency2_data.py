@@ -7,7 +7,7 @@ __email__ = 'ECDB_berichten@dnb.nl'
 __version__ = '0.1.3'
 
 from datetime import datetime, timedelta
-import requests
+from urllib.requests import urlopen
 import zipfile
 import os
 import numpy as np
@@ -83,11 +83,11 @@ def download_RFR(input_date = None, cache = {}):
     if not(os.path.isfile(cache["path_excelfile"] + cache["name_excelfile"])):
 
         # download file
-        request = get(cache["url"] + cache["name_zipfile"])
+        request = urlopen(cache["url"] + cache["name_zipfile"])
 
         # save zip-file
         output = open(cache['path_zipfile'] + cache["name_zipfile"], "wb")
-        output.write(request.text)
+        output.write(request.read())
         output.close()
 
         # extract file from zip-file
