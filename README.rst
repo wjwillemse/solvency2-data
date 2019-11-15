@@ -12,7 +12,9 @@ solvency2-data
 .. image:: https://readthedocs.org/projects/solvency2-data/badge/?version=latest
         :target: https://solvency2-data.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
-
+.. image:: https://img.shields.io/badge/License-MIT/X-blue.svg
+        :target: https://github.com/DeNederlandscheBank/solvency2-data/blob/master/LICENSE
+        :alt: License
 
 
 

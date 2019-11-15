@@ -7,7 +7,7 @@ __email__ = 'ECDB_berichten@dnb.nl'
 __version__ = '0.1.3'
 
 from datetime import datetime, timedelta
-from urllib.request import urlopen
+from urllib import urlopen
 import zipfile
 import os
 import numpy as np
@@ -148,18 +148,14 @@ def read_meta(xls, cache = {}):
 
     return cache
 
-def read(input_date = None, path = ""):
-    
-    cache = {'path_zipfile': path, 'path_excelfile': path}
-
-    cache = download_RFR(input_date, cache)
-
-    cache['path_excelfile'] = path
-
-    xls = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile"])
-    cache = read_meta(xls, cache)
-    cache = read_spot(xls, cache)
-    
+def read(data = "rfr", input_date = None, path = ""):
+    if data == "rfr":
+    	cache = {'path_zipfile': path, 'path_excelfile': path}
+    	cache = download_RFR(input_date, cache)
+    	cache['path_excelfile'] = path
+    	xls = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile"])
+    	cache = read_meta(xls, cache)
+    	cache = read_spot(xls, cache)
     return cache
 
 def big_h(u, v):
