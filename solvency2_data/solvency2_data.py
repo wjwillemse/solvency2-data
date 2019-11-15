@@ -7,7 +7,7 @@ __email__ = 'ECDB_berichten@dnb.nl'
 __version__ = '0.1.3'
 
 from datetime import datetime, timedelta
-from urllib.requests import urlopen
+from urllib.request import urlopen
 import zipfile
 import os
 import numpy as np
