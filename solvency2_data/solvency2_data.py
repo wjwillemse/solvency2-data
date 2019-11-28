@@ -107,7 +107,9 @@ def read_spot(xls, cache = {}):
     Returns the cache with the dataframes
     >>> 
     """
-    for name in ["RFR_spot_no_VA", "RFR_spot_with_VA"]:
+    for name in ["RFR_spot_no_VA", "RFR_spot_with_VA", 
+                 "Spot_NO_VA_shock_UP", "Spot_NO_VA_shock_DOWN", 
+                 "Spot_WITH_VA_shock_UP", "Spot_WITH_VA_shock_DOWN"]:
         
         df = pd.read_excel(io = xls,
                            sheet_name = name, 
