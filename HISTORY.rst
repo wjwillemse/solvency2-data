@@ -12,7 +12,7 @@ History
 
 * First release on PyPI.
 
-0.1.2 (2020-28-1)
+0.1.5 (2020-28-1)
 -----------------
 
 * Spreads from PD_Cod Excel file added
