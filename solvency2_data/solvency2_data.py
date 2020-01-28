@@ -63,6 +63,7 @@ def RFR_dict(input_date = None, cache = {}):
     cache['url'] = "https://eiopa.europa.eu/Publications/Standards/"
     cache['name_zipfile'] = "EIOPA_RFR_" + reference_date + ".zip"
     cache['name_excelfile'] = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
+    cache['name_excelfile_spreads'] = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
     
     return cache
     
@@ -80,7 +81,7 @@ def download_RFR(input_date = None, cache = {}):
      """
     cache = RFR_dict(input_date, cache)
     
-    if not(os.path.isfile(cache["path_excelfile"] + cache["name_excelfile"])):
+    if not(os.path.isfile(cache["path_excelfile"] + cache["name_excelfile"])) or not(os.path.isfile(cache["path_excelfile"] + cache["name_excelfile_spreads"])):
 
         # download file
         request = urlopen(cache["url"] + cache["name_zipfile"])
@@ -93,6 +94,7 @@ def download_RFR(input_date = None, cache = {}):
         # extract file from zip-file
         zip_ref = zipfile.ZipFile(cache['path_zipfile'] + cache["name_zipfile"])
         zip_ref.extract(cache["name_excelfile"], cache['path_excelfile'])
+        zip_ref.extract(cache["name_excelfile_spreads"], cache['path_excelfile'])
         zip_ref.close()
 
         # remove zip file
@@ -101,6 +103,62 @@ def download_RFR(input_date = None, cache = {}):
     return cache
     
 import pandas as pd
+
+countries_list = ['Euro', 'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus',
+       'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France', 'Germany',
+       'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Latvia',
+       'Liechtenstein', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands',
+       'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Slovakia',
+       'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'United Kingdom',
+       'Australia', 'Brazil', 'Canada', 'Chile', 'China', 'Colombia',
+       'Hong Kong', 'India', 'Japan', 'Malaysia', 'Mexico', 'New Zealand',
+       'Singapore', 'South Africa', 'South Korea', 'Taiwan', 'Thailand',
+       'Turkey', 'United States']
+
+
+def read_spreads(xls, cache = {}):
+
+    cache["financial fundamental spreads"] = {}
+    for name in ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN", "NOK", "RON", "RUB", "SEK", "CHF", 
+                 "GBP", "AUD", "BRL", "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR", "MXN", "NZD",
+                 "SGD", "ZAR", "KRW", "TWD", "THB", "TRY", "USD"]: 
+        df = pd.read_excel(io = xls,
+                           sheet_name = name, 
+                           header = 1,
+                           usecols = 'W:AC',
+                           nrows = 30,
+                           skiprows = 8,
+                           names = [0, 1, 2, 3, 4, 5, 6])
+        df.index = range(1,31)
+        cache["financial fundamental spreads"][name] = df
+
+    cache["non-financial fundamental spreads"] = {}
+    for name in ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN", "NOK", "RON", "RUB", "SEK", "CHF", 
+                 "GBP", "AUD", "BRL", "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR", "MXN", "NZD",
+                 "SGD", "ZAR", "KRW", "TWD", "THB", "TRY", "USD"]: 
+        df = pd.read_excel(io = xls,
+                           sheet_name = name, 
+                           header = 1,
+                           usecols = 'W:AC',
+                           nrows = 30,
+                           skiprows = 48,
+                           names = [0, 1, 2, 3, 4, 5, 6])
+        df.index = range(1,31)
+        cache["non-financial fundamental spreads"][name] = df
+
+    cache["central government fundamental spreads"] = {}
+    for name in ['FS_Govts']: 
+        df = pd.read_excel(io = xls,
+                           sheet_name = name, 
+                           usecols = 'B:AF',
+                           nrows = 54,
+                           index_col = 0,
+                           skiprows = 9)
+        df.index = cache['RFR_spot_no_VA'].columns
+        cache["central government fundamental spreads"] = df.T
+ 
+    return cache
+
 
 def read_spot(xls, cache = {}):
     """Reads the RFR spot from the Excel file
@@ -157,6 +215,8 @@ def read(input_date = None, path = ""):
     xls = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile"])
     cache = read_meta(xls, cache)
     cache = read_spot(xls, cache)
+    xls_spreads = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile_spreads"])
+    cache = read_spreads(xls_spreads, cache)
     return cache
 
 def big_h(u, v):
