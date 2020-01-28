@@ -8,6 +8,11 @@ History
 * Development releases.
 
 0.1.1 (2019-11-6)
-------------------
+-----------------
 
 * First release on PyPI.
+
+0.1.2 (2020-28-1)
+-----------------
+
+* Spreads from PD_Cod Excel file added

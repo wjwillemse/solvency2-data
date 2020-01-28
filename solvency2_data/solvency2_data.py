@@ -115,13 +115,14 @@ countries_list = ['Euro', 'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus',
        'Singapore', 'South Africa', 'South Korea', 'Taiwan', 'Thailand',
        'Turkey', 'United States']
 
+currencies = ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN", "NOK", "RON", "RUB", "SEK", "CHF", 
+                 "GBP", "AUD", "BRL", "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR", "MXN", "NZD",
+                 "SGD", "ZAR", "KRW", "TWD", "THB", "TRY", "USD"]
 
 def read_spreads(xls, cache = {}):
 
     cache["financial fundamental spreads"] = {}
-    for name in ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN", "NOK", "RON", "RUB", "SEK", "CHF", 
-                 "GBP", "AUD", "BRL", "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR", "MXN", "NZD",
-                 "SGD", "ZAR", "KRW", "TWD", "THB", "TRY", "USD"]: 
+    for name in currencies:
         df = pd.read_excel(io = xls,
                            sheet_name = name, 
                            header = 1,
@@ -133,9 +134,7 @@ def read_spreads(xls, cache = {}):
         cache["financial fundamental spreads"][name] = df
 
     cache["non-financial fundamental spreads"] = {}
-    for name in ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN", "NOK", "RON", "RUB", "SEK", "CHF", 
-                 "GBP", "AUD", "BRL", "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR", "MXN", "NZD",
-                 "SGD", "ZAR", "KRW", "TWD", "THB", "TRY", "USD"]: 
+    for name in currencies: 
         df = pd.read_excel(io = xls,
                            sheet_name = name, 
                            header = 1,
