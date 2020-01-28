@@ -4,6 +4,6 @@
 
 __author__ = """De Nederlandsche Bank"""
 __email__ = 'ECDB_berichten@dnb.nl'
-__version__ = ''0.2.1''
+__version__ = '0.2.2'
 
 from .solvency2_data import *
