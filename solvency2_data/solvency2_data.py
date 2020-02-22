@@ -52,9 +52,9 @@ def RFR_dict(input_date = None, cache = {}):
      'reference_date': '20171231', 
      'url': 'https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/', 
      'path_zipfile': '',
-     'name_zipfile': 'eiopa_rfr_20171231.zip', 
+     'name_zipfile': 'EIOPA_RFR_20171231.zip', 
      'path_excelfile': '',
-     'name_excelfile': 'eiopa_rfr_20171231_Term_Structures.xlsx'}
+     'name_excelfile': 'EIOPA_RFR_20171231_Term_Structures.xlsx'}
     """
     
     cache = RFR_reference_date(input_date, cache)
@@ -71,7 +71,7 @@ def download_RFR(input_date = None, cache = {}):
     """Downloads the zipfile from the EIOPA website and extracts the Excel file
     Returns the cache with info
     >>> download_RFR(datetime(2018,1,1))
-    {'name_excelfile': 'eiopa_rfr_20171231_Term_Structures.xlsx',
+    {'name_excelfile': 'EIOPA_RFR_20171231_Term_Structures.xlsx',
      'input_date': datetime.datetime(2018, 1, 1, 0, 0),
      'url': 'https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/', 
      'path_zipfile': '',
