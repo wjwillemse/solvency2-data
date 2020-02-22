@@ -50,18 +50,18 @@ def RFR_dict(input_date = None, cache = {}):
     >>> RFR_dict(datetime(2018,1,1))
     {'input_date': datetime.datetime(2018, 1, 1, 0, 0), 
      'reference_date': '20171231', 
-     'url': 'https://eiopa.europa.eu/Publications/Standards/', 
+     'url': 'https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/', 
      'path_zipfile': '',
-     'name_zipfile': 'EIOPA_RFR_20171231.zip', 
+     'name_zipfile': 'eiopa_rfr_20171231.zip', 
      'path_excelfile': '',
-     'name_excelfile': 'EIOPA_RFR_20171231_Term_Structures.xlsx'}
+     'name_excelfile': 'eiopa_rfr_20171231_Term_Structures.xlsx'}
     """
     
     cache = RFR_reference_date(input_date, cache)
 
     reference_date = cache['reference_date']
-    cache['url'] = "https://eiopa.europa.eu/Publications/Standards/"
-    cache['name_zipfile'] = "EIOPA_RFR_" + reference_date + ".zip"
+    cache['url'] = "https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/"
+    cache['name_zipfile'] = "eiopa_rfr_" + reference_date + ".zip"
     cache['name_excelfile'] = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
     cache['name_excelfile_spreads'] = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
     
@@ -71,11 +71,11 @@ def download_RFR(input_date = None, cache = {}):
     """Downloads the zipfile from the EIOPA website and extracts the Excel file
     Returns the cache with info
     >>> download_RFR(datetime(2018,1,1))
-    {'name_excelfile': 'EIOPA_RFR_20171231_Term_Structures.xlsx',
+    {'name_excelfile': 'eiopa_rfr_20171231_Term_Structures.xlsx',
      'input_date': datetime.datetime(2018, 1, 1, 0, 0),
-     'url': 'https://eiopa.europa.eu/Publications/Standards/', 
+     'url': 'https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/', 
      'path_zipfile': '',
-     'name_zipfile': 'EIOPA_RFR_20171231.zip', 
+     'name_zipfile': 'eiopa_rfr_20171231.zip', 
      'path_excelfile': '',
      'reference_date': '20171231',
      """
