@@ -60,8 +60,8 @@ def RFR_dict(input_date = None, cache = {}):
     cache = RFR_reference_date(input_date, cache)
 
     reference_date = cache['reference_date']
-    cache['url'] = "https://eiopa.europa.eu/Publications/Standards/"
-    cache['name_zipfile'] = "EIOPA_RFR_" + reference_date + ".zip"
+    cache['url'] = "https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/"
+    cache['name_zipfile'] = "eiopa_rfr_" + reference_date + ".zip"
     cache['name_excelfile'] = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
     cache['name_excelfile_spreads'] = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
     
@@ -90,6 +90,8 @@ def download_RFR(input_date = None, cache = {}):
         output = open(cache['path_zipfile'] + cache["name_zipfile"], "wb")
         output.write(request.read())
         output.close()
+
+        print("written to " + str(cache['path_zipfile'] + cache["name_zipfile"]))
 
         # extract file from zip-file
         zip_ref = zipfile.ZipFile(cache['path_zipfile'] + cache["name_zipfile"])
