@@ -4,7 +4,7 @@
 
 __author__ = """De Nederlandsche Bank"""
 __email__ = 'ECDB_berichten@dnb.nl'
-__version__ = '0.1.6'
+__version__ = '0.1.7'
 
 from datetime import datetime, timedelta
 from urllib.request import urlopen

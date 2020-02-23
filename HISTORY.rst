@@ -27,7 +27,7 @@ History
 
 * Spreads from PD_Cod Excel file added
 
-0.1.6 (2020-2-23)
+0.1.7 (2020-2-23)
 -----------------
 
 * Broken links from EIOPA website fixed
