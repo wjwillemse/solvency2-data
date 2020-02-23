@@ -91,8 +91,6 @@ def download_RFR(input_date = None, cache = {}):
         output.write(request.read())
         output.close()
 
-        print("written to " + str(cache['path_zipfile'] + cache["name_zipfile"]))
-
         # extract file from zip-file
         zip_ref = zipfile.ZipFile(cache['path_zipfile'] + cache["name_zipfile"])
         zip_ref.extract(cache["name_excelfile"], cache['path_excelfile'])
