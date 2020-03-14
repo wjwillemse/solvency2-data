@@ -26,7 +26,8 @@ wheels/
 *.egg
 
 # Exclude test_data from package
-tests/test_data/
+tests/test_data/*.zip
+tests/test_data/*.xlsx
 data/
 
 # PyInstaller
