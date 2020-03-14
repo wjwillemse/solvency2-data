@@ -4,7 +4,7 @@
 
 __author__ = """De Nederlandsche Bank"""
 __email__ = 'ECDB_berichten@dnb.nl'
-__version__ = '0.1.7'
+__version__ = '0.1.8'
 
 from datetime import datetime, timedelta
 from urllib.request import urlopen
@@ -12,6 +12,7 @@ import zipfile
 import os
 import numpy as np
 from numpy.linalg import inv
+import configparser
 
 class RiskFreeRate(dict):
     def __init__(self, input_date):
@@ -207,15 +208,34 @@ def read_meta(xls, cache = {}):
 
     return cache
 
-def read(input_date = None, path = ""):
-    cache = {'path_zipfile': path, 'path_excelfile': path}
+def read(input_date = None, path = None):
+
+    if path is None:
+        # look in current directory for .cfg file
+        # if not exists then take the .cfg file in the package directory    
+        config = configparser.RawConfigParser()
+        fname = 'solvency2-data.cfg'
+        if os.path.isfile(fname):
+            config.read(fname)
+        else:
+            config.read(os.path.join(os.path.dirname(__file__), '..', fname))
+
+        path_zipfile = config.get('Directories', 'zip_files')
+        path_excelfile = config.get('Directories', 'excel_files')
+    else:
+        path_zipfile = path
+        path_excelfile = path
+
+    cache = {'path_zipfile'  : path_zipfile, 
+             'path_excelfile': path_excelfile}
+    
     cache = download_RFR(input_date, cache)
-    cache['path_excelfile'] = path
     xls = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile"])
     cache = read_meta(xls, cache)
     cache = read_spot(xls, cache)
     xls_spreads = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile_spreads"])
     cache = read_spreads(xls_spreads, cache)
+    
     return cache
 
 def big_h(u, v):

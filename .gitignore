@@ -27,6 +27,7 @@ wheels/
 
 # Exclude test_data from package
 tests/test_data/
+data/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

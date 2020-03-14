@@ -31,3 +31,8 @@ History
 -----------------
 
 * Broken links from EIOPA website fixed
+
+0.1.8 (2020-3-14)
+-----------------
+
+* Configuration file added to specify data directories

@@ -63,3 +63,8 @@ For this you can do the following. First define the liquid maturities of the ter
 
 In this case, we use a UFR of zero and a CRA of zero.
 
+Configuration file
+------------------
+
+The solvency2-data.cfg specifies the directories where the downloaded zip-files and the Excel files are stored. The .cfg file can be stored in the directory from where the code is run, otherwise the .cfg file in the package directory is used.
+
