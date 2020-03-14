@@ -9,4 +9,4 @@ Sphinx==1.8.5
 twine==1.14.0
 numpy==1.16.4
 pandas==0.24.2
-
+configparser==4.0.2

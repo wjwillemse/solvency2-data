@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 from urllib.request import urlopen
 import zipfile
 import os
+from os.path import join
 import numpy as np
 from numpy.linalg import inv
 import configparser
@@ -82,18 +83,18 @@ def download_RFR(input_date = None, cache = {}):
      """
     cache = RFR_dict(input_date, cache)
     
-    if not(os.path.isfile(cache["path_excelfile"] + cache["name_excelfile"])) or not(os.path.isfile(cache["path_excelfile"] + cache["name_excelfile_spreads"])):
+    if not(os.path.isfile(join(cache["path_excelfile"], cache["name_excelfile"]))) or not(os.path.isfile(join(cache["path_excelfile"], cache["name_excelfile_spreads"]))):
 
         # download file
         request = urlopen(cache["url"] + cache["name_zipfile"])
 
         # save zip-file
-        output = open(cache['path_zipfile'] + cache["name_zipfile"], "wb")
+        output = open(join(cache['path_zipfile'], cache["name_zipfile"]), "wb")
         output.write(request.read())
         output.close()
 
         # extract file from zip-file
-        zip_ref = zipfile.ZipFile(cache['path_zipfile'] + cache["name_zipfile"])
+        zip_ref = zipfile.ZipFile(join(cache['path_zipfile'], cache["name_zipfile"]))
         zip_ref.extract(cache["name_excelfile"], cache['path_excelfile'])
         zip_ref.extract(cache["name_excelfile_spreads"], cache['path_excelfile'])
         zip_ref.close()
@@ -230,10 +231,10 @@ def read(input_date = None, path = None):
              'path_excelfile': path_excelfile}
     
     cache = download_RFR(input_date, cache)
-    xls = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile"])
+    xls = pd.ExcelFile(join(cache['path_excelfile'], cache["name_excelfile"]))
     cache = read_meta(xls, cache)
     cache = read_spot(xls, cache)
-    xls_spreads = pd.ExcelFile(cache['path_excelfile'] + cache["name_excelfile_spreads"])
+    xls_spreads = pd.ExcelFile(join(cache['path_excelfile'], cache["name_excelfile_spreads"]))
     cache = read_spreads(xls_spreads, cache)
     
     return cache
