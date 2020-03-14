@@ -14,6 +14,22 @@ from os.path import join
 import numpy as np
 from numpy.linalg import inv
 import configparser
+import pandas as pd
+
+countries_list = ['Euro', 'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus',
+       'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France', 'Germany',
+       'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Latvia',
+       'Liechtenstein', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands',
+       'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Slovakia',
+       'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'United Kingdom',
+       'Australia', 'Brazil', 'Canada', 'Chile', 'China', 'Colombia',
+       'Hong Kong', 'India', 'Japan', 'Malaysia', 'Mexico', 'New Zealand',
+       'Singapore', 'South Africa', 'South Korea', 'Taiwan', 'Thailand',
+       'Turkey', 'United States']
+
+currencies = ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN", "NOK", "RON", "RUB", "SEK", "CHF", 
+                 "GBP", "AUD", "BRL", "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR", "MXN", "NZD",
+                 "SGD", "ZAR", "KRW", "TWD", "THB", "TRY", "USD"]
 
 class RiskFreeRate(dict):
     def __init__(self, input_date):
@@ -104,23 +120,6 @@ def download_RFR(input_date = None, cache = {}):
         
     return cache
     
-import pandas as pd
-
-countries_list = ['Euro', 'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus',
-       'Czech Republic', 'Denmark', 'Estonia', 'Finland', 'France', 'Germany',
-       'Greece', 'Hungary', 'Iceland', 'Ireland', 'Italy', 'Latvia',
-       'Liechtenstein', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands',
-       'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'Slovakia',
-       'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'United Kingdom',
-       'Australia', 'Brazil', 'Canada', 'Chile', 'China', 'Colombia',
-       'Hong Kong', 'India', 'Japan', 'Malaysia', 'Mexico', 'New Zealand',
-       'Singapore', 'South Africa', 'South Korea', 'Taiwan', 'Thailand',
-       'Turkey', 'United States']
-
-currencies = ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN", "NOK", "RON", "RUB", "SEK", "CHF", 
-                 "GBP", "AUD", "BRL", "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR", "MXN", "NZD",
-                 "SGD", "ZAR", "KRW", "TWD", "THB", "TRY", "USD"]
-
 def read_spreads(xls, cache = {}):
 
     cache["financial fundamental spreads"] = {}
@@ -210,6 +209,10 @@ def read_meta(xls, cache = {}):
     return cache
 
 def read(input_date = None, path = None):
+    """Reads the RFR for input_date and stores data in path
+    Returns the cache with the dataframe
+    >>> 
+    """
 
     if path is None:
         # look in current directory for .cfg file
