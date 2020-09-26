@@ -1,29 +1,20 @@
-# Config file for automatic testing at travis-ci.org
-
 language: python
 python:
-  - 3.8
-  - 3.7
-  - 3.6
-  - 3.5
-
-# Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+- 3.8
+- 3.7
+- 3.6
+- 3.5
 install: pip install -U tox-travis
-
-# Command to run tests, e.g. python setup.py test
 script: tox
-
-# Assuming you have installed the travis-ci CLI tool, after you
-# create the Github repo and add it to Travis, run the
-# following command to finish PyPI deployment setup:
-# $ travis encrypt --add deploy.password
 deploy:
+  skip_existing: true
   provider: pypi
   distributions: sdist bdist_wheel
-  user: "__token__"
-  password:
-    secure: "SP99J4ZJYgwPc91S3kgU4Yyzn9aiG1aAe9Otsmp3hchKQwkJLwSSLejlqgL1vPtZDaQZQnI3cRDcL7Io+sCLQ2KKQkeGLKtZy36O8iKOgS/nt0Th/Xw5OxsOOrjcWb7S4VCHNVJFrzWnoUlZeyPjXwu0mXAPgpliQmwxlZ9p3kK0bXBG9gyEfZ7tiD6EuKWfzodiK/4Ecro2iB0WtY3zXjyE+whFfnuWjdBvVuPTbr0WmeMdumhxI8dINaRjOdbtBkYi06evBgDFqtaAgaQC9fgkl7cfvh+sPBNI8tBZFfN9w0WiSSOzxpLJ7Z5AN9/SWPC306x0KLXwbPyFvbJCL8JcImstrdQD8Y7yvnOxAJ3FlTTvCV3r7cSr88abaVNHCrv+i6N1Q9hZK0ZD9k/VceYfIHDkI9NPJbDL+j6E/Z2DgUjHkPRp6Tpsj5Fl6hkej9J+x/GXixIbMvz/o2MxhErsfItneUpGfbfgbV0bb+oUqlOOWvopzMDeTYguFjNI1hzTK2MCFqtbUio9nPUssYsazdKcLJXt6at+M0Bx2vW1Rm1sQa0uvcJ4+B2XSCwETcjtacDugzQjVCyDaJTUMsS4HJRLHM5UPRPc1Vg0ar4G8iboFQ1xr2qVpkQVc4Mktc3JAhk59XCAGA3+VG5fX8GUKCbPLCHQXP2vTHTrINA="
+  user: wjwillemse
   on:
     tags: true
     repo: DeNederlandscheBank/solvency2-data
-    python: 3.8
+    python: 3.7
+env:
+  global:
+    secure: xC2LJ3f02VCT7jNyKpWPiZLyhkIIIuJZ+/dK69WOwanhNVIafV918+OW3hePh5P4q3X1egez8W70ySikv3xk5AhUvBDwSs1j3OGjYHEA5MzLHTeRxpBPIL8Lin11GOgfw1yU40z9TqtmgZTsevoPibPrwsaKpagTDzhsZEGIwHb1PheAz9lKpbpzEd4ZQRKdQbwpiT3yAPnfFBCesoItKstROexHzKFbJ9ObIW/MXDl6ig0XHF8oRivkJ8ypT+fKRw9B0MwD9NNI8dPJirLzI7u1H5Gp4uqTY7pLbOGO6LQ6iGCpw9gKutDbHHePVfvBdPRu6WXPBjZoufkWDdnruJVXMGM6CuIEhDmKdrm7HUS/IocT55sNj5DZXHNAAyR2lG4bOETqLJgkZtTOFy4bujvXc+YSeQRKTKhS85hW+XOzwNoW2cYztLYep+lEMeFqAXLtkEFe6V00zgaDewrum9uSpUzUV2SPigGxBHRJSHs3wSHF8zpemAgPJJQLjFOBbCdpZN/v9RKt/NBmRDoOG011lnzimqoo1T2RHzb5g8iyQtGJBo+uJBCrvys7gTBaKSULMLQhBb7TpgrLfTuT7Fmw/LmUYRkzeyipJUuFu5S0HsTylscwx4VIiY2vhTx3CBuu/vvvaZrjZKAAURsnHPV9z+PxW3Izf2jrpPuCjQw=
