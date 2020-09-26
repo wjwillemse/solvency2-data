@@ -37,7 +37,7 @@ History
 
 * Configuration file added to specify data directories
 
-0.1.9 (2020-9-26)
+0.1.10 (2020-9-26)
 -----------------
 
 * Bug fixes
