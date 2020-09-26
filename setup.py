@@ -15,13 +15,13 @@ requirements = ['numpy',
                 'pandas',
                 'xlrd',
                 'twine',
-                'wheel==0.33.6',
-                'watchdog==0.9.0',
-                'flake8==3.7.8',
-                'tox==3.14.0',
-                'coverage==4.5.4',
-                'Sphinx==1.8.5',
-                'configparser==4.0.2']
+                'wheel',
+                'watchdog',
+                'flake8',
+                'tox',
+                'coverage',
+                'Sphinx',
+                'configparser']
 
 setup_requirements = [ ]
 
@@ -56,6 +56,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/DeNederlandscheBank/solvency2-data',
-    version='0.1.10',
+    version='0.1.11',
     zip_safe=False,
 )

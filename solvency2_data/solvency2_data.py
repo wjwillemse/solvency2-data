@@ -221,7 +221,7 @@ def read(input_date = None, path = None):
         if os.path.isfile(fname):
             config.read(fname)
         else:
-            config.read(os.path.join(os.path.dirname(__file__), '..', fname))
+            config.read(os.path.join(os.path.dirname(__file__), fname))
 
         path_zipfile = config.get('Directories', 'zip_files')
         path_excelfile = config.get('Directories', 'excel_files')
