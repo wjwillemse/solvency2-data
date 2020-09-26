@@ -13,6 +13,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['numpy',
                 'pandas',
+                'xlrd',
                 'wheel==0.33.6',
                 'watchdog==0.9.0',
                 'flake8==3.7.8',
