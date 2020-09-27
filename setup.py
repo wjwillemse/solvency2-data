@@ -14,17 +14,18 @@ with open('HISTORY.rst') as history_file:
 requirements = ['numpy',
                 'pandas',
                 'xlrd',
-                'configparser']
+                'configparser',
+                'twine',
+                'wheel',
+                'watchdog',
+                'flake8',
+                'tox',
+                'coverage',
+                'Sphinx']
 
 setup_requirements = []
 
-test_requirements = ['twine',
-                     'wheel',
-                     'watchdog',
-                     'flake8',
-                     'tox',
-                     'coverage',
-                     'Sphinx']
+test_requirements = []
 
 setup(
     name='solvency2_data',
