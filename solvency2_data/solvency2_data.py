@@ -88,8 +88,7 @@ def RFR_dict(input_date=None, cache={}):
     cache = RFR_reference_date(input_date, cache)
 
     reference_date = cache['reference_date']
-    cache['url'] = "https://www.eiopa.europa.eu/\
-                    sites/default/files/risk_free_interest_rate/"
+    cache['url'] = "https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/"
     cache['name_zipfile'] = "eiopa_rfr_" + reference_date + ".zip"
     cache['name_excelfile'] = "EIOPA_RFR_" + reference_date + \
         "_Term_Structures" + ".xlsx"
