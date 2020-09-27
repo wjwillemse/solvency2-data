@@ -41,3 +41,9 @@ History
 ------------------
 
 * Bug fixes
+
+0.1.12 (2020-9-27)
+------------------
+
+* Code satisfies Flake8
+* solvency2_data.cfg added to pypi package

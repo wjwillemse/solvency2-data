@@ -14,20 +14,26 @@ with open('HISTORY.rst') as history_file:
 requirements = ['numpy',
                 'pandas',
                 'xlrd',
-                'twine',
-                'wheel',
-                'watchdog',
-                'flake8',
-                'tox',
-                'coverage',
-                'Sphinx',
                 'configparser']
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = ['twine',
+                     'wheel',
+                     'watchdog',
+                     'flake8',
+                     'tox',
+                     'coverage',
+                     'Sphinx']
 
 setup(
+    name='solvency2_data',
+    packages=find_packages(include=['solvency2_data', 'solvency2_data.*']),
+    package_data={'solvency2_data': ['solvency2_data.cfg']},
+    include_package_data=True,
+    description="Package for reading the Solvency 2 Risk-Free Interest Rate \
+                 Term Structures from the zip-files on the EIOPA website and \
+                 deriving the term structures for alternative extrapolations",
     author="De Nederlandsche Bank",
     author_email='ECDB_berichten@dnb.nl',
     python_requires='>=3.0, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
@@ -44,18 +50,14 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
-    description="Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from the zip-files on the EIOPA website and deriving the term structures for alternative extrapolations",
     install_requires=requirements,
     license="MIT/X license",
     long_description=readme + '\n\n' + history,
-    include_package_data=True,
     keywords='solvency2_data',
-    name='solvency2_data',
-    packages=find_packages(include=['solvency2_data', 'solvency2_data.*']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/DeNederlandscheBank/solvency2-data',
-    version='0.1.11',
+    version='0.1.12',
     zip_safe=False,
 )
