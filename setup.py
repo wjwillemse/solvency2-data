@@ -30,7 +30,7 @@ test_requirements = []
 setup(
     name='solvency2_data',
     packages=find_packages(include=['solvency2_data', 'solvency2_data.*']),
-    package_data={'solvency2_data': ['solvency2_data.cfg']},
+    package_data={'solvency2_data': ['solvency2_data/solvency2_data.cfg']},
     include_package_data=True,
     description="Package for reading the Solvency 2 Risk-Free Interest Rate \
                  Term Structures from the zip-files on the EIOPA website and \
@@ -59,6 +59,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/DeNederlandscheBank/solvency2-data',
-    version='0.1.12',
+    version='0.1.13',
     zip_safe=False,
 )
