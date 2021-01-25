@@ -47,3 +47,8 @@ History
 
 * Code satisfies Flake8
 * solvency2_data.cfg added to pypi package
+
+0.1.14 (2021-1-25)
+------------------
+
+* Bug nested module solved
