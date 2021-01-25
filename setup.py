@@ -21,7 +21,8 @@ requirements = ['numpy',
                 'flake8',
                 'tox',
                 'coverage',
-                'Sphinx']
+                'Sphinx',
+                'sphinx_rtd_theme']
 
 setup_requirements = []
 
