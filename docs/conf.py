@@ -49,8 +49,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'solvency2-data'
-copyright = u"2019, De Nederlandsche Bank"
-author = u"De Nederlandsche Bank"
+copyright = u"2021, Willem Jan Willemse"
+author = u"Willem Jan Willemse"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout

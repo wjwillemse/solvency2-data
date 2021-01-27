@@ -1,0 +1,12 @@
+numpy,
+pandas,
+openpyxl,
+configparser,
+twine,
+wheel,
+watchdog,
+flake8,
+tox,
+coverage',
+Sphinx',
+sphinx_rtd_theme
