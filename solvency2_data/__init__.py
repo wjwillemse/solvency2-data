@@ -2,8 +2,8 @@
 
 """Top-level package for solvency2-data."""
 
-__author__ = """De Nederlandsche Bank"""
-__email__ = 'ECDB_berichten@dnb.nl'
+__author__ = """Willem Jan Willemse"""
+__email__ = 'w.j.willemse@xs4all.nl'
 __version__ = '0.1.14'
 
-from .solvency2_data import *
+from .rfr import *

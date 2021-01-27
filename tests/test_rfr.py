@@ -9,7 +9,7 @@ import pandas as pd
 
 from datetime import datetime
 
-from solvency2_data import solvency2_data
+from solvency2_data import rfr
 
 class TestSmithWilson(unittest.TestCase):
 
@@ -23,7 +23,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = datetime(2017, 12, 31, 0, 0)
 
         # Actual output
-        d = solvency2_data.read(date, path = "tests/test_data/")
+        d = rfr.read(date, path = "tests/test_data/")
         actual = d['input_date']
 
         # Assert
@@ -40,7 +40,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = '20171231'
 
         # Actual output
-        d = solvency2_data.read(date, path = "tests/test_data/")
+        d = rfr.read(date, path = "tests/test_data/")
         actual = d['reference_date']
 
         # Assert
@@ -59,7 +59,7 @@ class TestSmithWilson(unittest.TestCase):
                              name = 'Euro')
 
         # Actual output
-        d = solvency2_data.read(date, path = "tests/test_data/")
+        d = rfr.read(date, path = "tests/test_data/")
         actual = d['meta'].loc[:,'Euro']
 
         # Assert
@@ -108,7 +108,7 @@ class TestSmithWilson(unittest.TestCase):
                              name = 'Euro')
 
         # Actual output
-        d = solvency2_data.read(date, path = "tests/test_data/")
+        d = rfr.read(date, path = "tests/test_data/")
         actual = d['RFR_spot_no_VA']['Euro']
 
         # Assert
@@ -126,7 +126,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = np.float64(0.697710712843422)
 
         # Actual output
-        actual = solvency2_data.big_h(u,v)
+        actual = rfr.big_h(u,v)
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")
@@ -150,7 +150,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = np.float64(-0.7248604952614899) 
 
         #Actual output
-        actual = solvency2_data.big_g(alfa, q, nrofcoup, t2, tau)[0]
+        actual = rfr.big_g(alfa, q, nrofcoup, t2, tau)[0]
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")
@@ -174,7 +174,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = np.array([[0.03861839], [-0.02275808], [0.01393944], [-0.0168802]])
 
         #Actual output
-        actual = solvency2_data.big_g(alfa, q, nrofcoup, t2, tau)[1]
+        actual = rfr.big_g(alfa, q, nrofcoup, t2, tau)[1]
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")
@@ -240,7 +240,7 @@ class TestSmithWilson(unittest.TestCase):
                               5.00865063e-04])
 
         #Actual output
-        actual = solvency2_data.smith_wilson(instrument, liqmat, rates, nrofcoup, cra, ufr, alfamin, tau, t2, output_type = "zero rates annual compounding")
+        actual = rfr.smith_wilson(instrument, liqmat, rates, nrofcoup, cra, ufr, alfamin, tau, t2, output_type = "zero rates annual compounding")
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")

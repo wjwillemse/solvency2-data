@@ -13,7 +13,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['numpy',
                 'pandas',
-                'xlrd',
+                'openpyxl',
                 'configparser',
                 'twine',
                 'wheel',

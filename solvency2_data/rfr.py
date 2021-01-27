@@ -2,8 +2,9 @@
 
 """Main module."""
 
-__author__ = """De Nederlandsche Bank"""
-__email__ = 'ECDB_berichten@dnb.nl'
+__author__ = """Willem Jan Willemse"""
+__email__ = 'w.j.willemse@xs4all.nl'
+__version__ = '0.1.14'
 
 from datetime import datetime, timedelta
 from urllib.request import urlopen
@@ -33,7 +34,6 @@ currencies = ["EUR", "BGN", "HRK", "CZK", "DKK", "HUF", "LIC", "PLN",
               "CAD", "CLP", "CNY", "COP", "HKD", "INR", "JPY", "MYR",
               "MXN", "NZD", "SGD", "ZAR", "KRW", "TWD", "THB", "TRY",
               "USD"]
-
 
 class RiskFreeRate(dict):
 
@@ -170,7 +170,7 @@ def read_spreads(xls, cache={}):
         df = pd.read_excel(io=xls,
                            sheet_name=name,
                            usecols='B:AF',
-                           nrows=54,
+                           nrows=53,
                            index_col=0,
                            skiprows=9)
         df.index = cache['RFR_spot_no_VA'].columns
@@ -187,12 +187,15 @@ def read_spot(xls, cache={}):
     for name in ["RFR_spot_no_VA", "RFR_spot_with_VA",
                  "Spot_NO_VA_shock_UP", "Spot_NO_VA_shock_DOWN",
                  "Spot_WITH_VA_shock_UP", "Spot_WITH_VA_shock_DOWN"]:
-
         df = pd.read_excel(io=xls,
                            sheet_name=name,
                            header=1,
+                           nrows=158,
                            index_col=1)
-        df = df.drop('Unnamed: 0', axis=1)
+        # drop unnamed columns from the excel file
+        for col in df.columns:
+        	if "Unnamed:" in col:
+        		df = df.drop(col, axis=1)
         df.loc["VA"].fillna(0, inplace=True)
         df = df.iloc[8:]
         df.index.names = ['Duration']
@@ -212,9 +215,12 @@ def read_meta(xls, cache={}):
                             header=1,
                             index_col=1,
                             skipfooter=150)
+    # drop unnamed columns from the excel file
+    for col in df_meta.columns:
+    	if "Unnamed:" in col:
+    		df_meta = df_meta.drop(col, axis=1)
 
-    df_meta = df_meta.drop('Unnamed: 0', axis=1)
-    df_meta.loc["VA"].fillna(0, inplace=True)
+    df_meta.loc["VA", :].fillna(0, inplace=True)
     df_meta = df_meta.iloc[0:8]
     df_meta.index.names = ['meta']
     df_meta.index = df_meta.index.fillna("Info")
@@ -255,11 +261,11 @@ def read(input_date=None, path=None):
              'path_excelfile': path_excelfile}
 
     cache = download_RFR(input_date, cache)
-    xls = pd.ExcelFile(join(cache['path_excelfile'], cache["name_excelfile"]))
+    xls = pd.ExcelFile(join(cache['path_excelfile'], cache["name_excelfile"]), engine='openpyxl')
     cache = read_meta(xls, cache)
     cache = read_spot(xls, cache)
     xls_spreads = pd.ExcelFile(join(cache['path_excelfile'],
-                                    cache["name_excelfile_spreads"]))
+                                    cache["name_excelfile_spreads"]), engine='openpyxl')
     cache = read_spreads(xls_spreads, cache)
 
     return cache
