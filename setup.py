@@ -36,8 +36,8 @@ setup(
     description="Package for reading the Solvency 2 Risk-Free Interest Rate \
                  Term Structures from the zip-files on the EIOPA website and \
                  deriving the term structures for alternative extrapolations",
-    author="De Nederlandsche Bank",
-    author_email='ECDB_berichten@dnb.nl',
+    author="Willem Jan Willemse",
+    author_email='w.j.willemse@xs4all.nl',
     python_requires='>=3.0, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
@@ -59,7 +59,7 @@ setup(
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/DeNederlandscheBank/solvency2-data',
+    url='https://github.com/wjwillemse/solvency2-data',
     version='0.1.14',
     zip_safe=False,
 )
