@@ -22,7 +22,12 @@ requirements = ['numpy',
                 'tox',
                 'coverage',
                 'Sphinx',
-                'sphinx_rtd_theme']
+                'sphinx_rtd_theme', 
+                'cycler',
+                'kiwisolver',
+                'pillow',
+                'PyYAML',
+                'tornado']
 
 setup_requirements = []
 
@@ -60,6 +65,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/wjwillemse/solvency2-data',
-    version='0.1.14',
+    version='0.1.15',
     zip_safe=False,
 )
