@@ -173,7 +173,8 @@ def read_spreads(xls, cache={}):
                            nrows=53,
                            index_col=0,
                            skiprows=9)
-        df.index = cache['RFR_spot_no_VA'].columns
+        # This line introduces a dependency on the spots
+        # df.index = cache['RFR_spot_no_VA'].columns
         cache["central government fundamental spreads"] = df.T
 
     return cache
