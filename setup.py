@@ -22,12 +22,13 @@ requirements = ['numpy',
                 'tox',
                 'coverage',
                 'Sphinx',
-                'sphinx_rtd_theme', 
+                'sphinx_rtd_theme',
                 'cycler',
                 'kiwisolver',
                 'pillow',
                 'PyYAML',
-                'tornado']
+                'tornado',
+                'bs4']
 
 setup_requirements = []
 
