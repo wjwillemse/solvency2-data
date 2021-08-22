@@ -2,10 +2,6 @@
 
 """Main module."""
 
-__author__ = """Willem Jan Willemse"""
-__email__ = 'w.j.willemse@xs4all.nl'
-__version__ = '0.1.15'
-
 from datetime import datetime, timedelta
 from urllib.request import urlopen
 import zipfile
