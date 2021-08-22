@@ -15,6 +15,7 @@ import numpy as np
 from numpy.linalg import inv
 import configparser
 import pandas as pd
+from solvency2_data.scraping import eiopa_link
 
 countries_list = ['Euro', 'Austria', 'Belgium', 'Bulgaria', 'Croatia',
                   'Cyprus', 'Czech Republic', 'Denmark', 'Estonia',
@@ -88,8 +89,9 @@ def RFR_dict(input_date=None, cache={}):
     cache = RFR_reference_date(input_date, cache)
 
     reference_date = cache['reference_date']
-    cache['url'] = "https://www.eiopa.europa.eu/sites/default/files/risk_free_interest_rate/"
-    cache['name_zipfile'] = "eiopa_rfr_" + reference_date + ".zip"
+    full_url = eiopa_link(cache['input_date'], data_type='rfr')
+    cache['url'] = os.path.dirname(full_url)
+    cache['name_zipfile'] = os.path.basename(full_url)
     cache['name_excelfile'] = "EIOPA_RFR_" + reference_date + \
         "_Term_Structures" + ".xlsx"
     cache['name_excelfile_spreads'] = "EIOPA_RFR_" + reference_date + \
