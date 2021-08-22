@@ -47,7 +47,5 @@ To install the package enter the following in the command prompt.
 Credits
 -------
 
-This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
-
-.. _Cookiecutter: https://github.com/audreyr/cookiecutter
-.. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+| Willem Jan Willemse <https://github.com/wjwillemse>
+| Peter Davidson <https://github.com/pdavidsonFIA>
