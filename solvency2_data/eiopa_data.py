@@ -9,10 +9,9 @@ import sqlite3
 from sqlite3 import Error
 import pandas as pd
 import urllib
-import bs4 as bs
-import requests
 
-from .rfr import read_spot, read_spreads
+from solvency2_data.rfr import read_spot, read_spreads
+from solvency2_data.scraping import eiopa_link
 
 
 def get_workspace():
@@ -62,36 +61,10 @@ def download_file(url: str,
     return target_file
 
 
-def eiopa_rfr_link(rep_date):
-    urls = ["https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures_en",
-            "https://www.eiopa.europa.eu/risk-free-rate-previous-releases-and-preparatory-phase"]
-    reference_date = rep_date.strftime('%Y%m%d')
-    filename = "eiopa_rfr_" + reference_date
-    zip_name = filename + ".zip"
-    valid_links = []
-
-    for page in urls:
-        if len(valid_links) == 0:
-            resp = requests.get(page)
-            soup = bs.BeautifulSoup(resp.text, 'lxml')
-            soup2 = soup.find('div', {"class": "group-related-resources"})
-            links = []
-            for link in soup2.findAll('a'):
-                links.append(link.get("href"))
-            valid_links = [link for link in links if filename in link]
-
-    if len(valid_links) >= 1:
-        valid_link = valid_links[0]
-    else:
-        raise FileNotFoundError("failure: data not found for this rep_date: " + reference_date)
-
-    return valid_link
-
-
 def download_EIOPA_rates(rep_date, raw_folder):
     """ Download and unzip the EIOPA files """
 
-    url = eiopa_rfr_link(rep_date)
+    url = eiopa_link(rep_date, data_type='rfr')
     zip_file = download_file(url, raw_folder)
 
     reference_date = rep_date.strftime('%Y%m%d')
@@ -281,3 +254,17 @@ def get_govies(ref_date):
 
     df = df.drop(columns='ref_date')
     return df
+
+def get(ref_date, data_type='rfr'):
+
+    return 0
+
+
+def full_rebuild():
+
+    return "Database successfully rebuilt"
+
+
+def refresh():
+    """ Update the local DB with any new dates not already included """
+    return "Still #TODO"
