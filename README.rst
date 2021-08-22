@@ -44,8 +44,8 @@ To install the package enter the following in the command prompt.
     pip install solvency2-data
     
 
-Credits
--------
+Contributors
+------------
 
 | Willem Jan Willemse <https://github.com/wjwillemse>
 | Peter Davidson <https://github.com/pdavidsonFIA>
