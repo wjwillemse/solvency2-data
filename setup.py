@@ -28,7 +28,8 @@ requirements = ['numpy',
                 'pillow',
                 'PyYAML',
                 'tornado',
-                'bs4']
+                'bs4',
+                'lxml']
 
 setup_requirements = []
 
