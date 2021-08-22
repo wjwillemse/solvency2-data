@@ -47,13 +47,14 @@ def eiopa_link(ref_date, data_type='rfr'):
     reference_date = ref_date.strftime('%Y%m%d')
     if data_type == 'rfr':
         filename = "eiopa_rfr_" + reference_date
+        # Allow for extra 4 characters e.g. _0_0
         r = re.compile('.*' + filename + '.{0,4}.zip')
     elif data_type == 'sym_adj':
         str_year = ref_date.strftime("%Y")
         str_month = ref_date.strftime("%B").lower()
         # Regex to find the file :
         # ._ required for ._march_2019
-        # Only matches on first 3 letters of month
+        # Only matches on first 3 letters of months since some mis-spellings
         r = re.compile(
             '.*eiopa[-, _]symmetric[-, _]adjustment[-, _]equity[-, _]capital[-, _]charge\.?[-, _]' +
             str_month[:3] + '[a-z]{0,' + str(len(str_month) - 3) + '}[-, _]' + str_year + '.*.xlsx')

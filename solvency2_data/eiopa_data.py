@@ -9,6 +9,7 @@ import sqlite3
 from sqlite3 import Error
 import pandas as pd
 import urllib
+from datetime import date
 
 from solvency2_data.rfr import read_spot, read_spreads
 from solvency2_data.scraping import eiopa_link
@@ -255,13 +256,19 @@ def get_govies(ref_date):
     df = df.drop(columns='ref_date')
     return df
 
-def get(ref_date, data_type='rfr'):
 
-    return 0
+def get(ref_date, data_type='rfr'):
+    # TODO: expand this to include other types:
+    if data_type == 'rfr':
+        return get_rfr(ref_date)
+    else:
+        return None
 
 
 def full_rebuild():
-
+    dr = pd.date_range(date(2016, 1, 31), date(2021, 7, 31), freq='M')
+    for i in dr:
+        rfr = get_rfr(i)
     return "Database successfully rebuilt"
 
 

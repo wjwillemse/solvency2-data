@@ -7,3 +7,4 @@ __email__ = 'w.j.willemse@xs4all.nl'
 __version__ = '0.1.15'
 
 from .rfr import *
+from .eiopa_data import get, full_rebuild
