@@ -5,7 +5,6 @@ Example:
 
 from datetime import date
 import pandas as pd
-pd.date_range(date(2016,1,31), date(2021,7,31), freq='M')
 dr = pd.date_range(date(2016,1,31), date(2021,7,31), freq='M')
 rfr_links = {i.strftime('%Y%m%d'): eiopa_link(i) for i in dr}
 sym_adj_links = {i.strftime('%Y%m%d'): eiopa_link(i, 'sym_adj') for i in dr}
