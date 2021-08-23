@@ -2,32 +2,26 @@
 Downloads rfr and stores in sqlite database for future reference
 
 """
-import configparser
 import os
 import zipfile
-import sqlite3
-from sqlite3 import Error
 import pandas as pd
 import urllib
 from datetime import date
 
+from solvency2_data.sqlite_handler import EiopaDB
+from solvency2_data.util import get_config
 from solvency2_data.rfr import read_spot, read_spreads
 from solvency2_data.scraping import eiopa_link
+from solvency2_data.sqlite_handler import create_connection, create_eiopa_db
 
 
 def get_workspace():
     """ Get the workspace for saving xl and the database """
-    # look in current directory for .cfg file
-    # if not exists then take the .cfg file in the package directory
-    config = configparser.RawConfigParser()
-    fname = 'solvency2_data.cfg'
-    if os.path.isfile(fname):
-        config.read(fname)
-    else:
-        config.read(os.path.join(os.path.dirname(__file__), fname))
-    path_db = config.get('Directories', 'db_folder')
-    path_raw = config.get('Directories', 'raw_data')
-    return {'db_folder': path_db, 'raw_data': path_raw}
+    config = get_config().get('Directories')
+    path_db = config.get('db_folder')
+    database = os.path.join(path_db, "eiopa.db")
+    path_raw = config.get('raw_data')
+    return {'database': database, 'raw_data': path_raw}
 
 
 def download_file(url: str,
@@ -62,13 +56,12 @@ def download_file(url: str,
     return target_file
 
 
-def download_EIOPA_rates(rep_date, raw_folder):
+def download_EIOPA_rates(url, ref_date, raw_folder):
     """ Download and unzip the EIOPA files """
 
-    url = eiopa_link(rep_date, data_type='rfr')
     zip_file = download_file(url, raw_folder)
 
-    reference_date = rep_date.strftime('%Y%m%d')
+    reference_date = ref_date.strftime('%Y%m%d')
 
     name_excelfile = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
     name_excelfile_spreads = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
@@ -121,88 +114,27 @@ def extract_spreads(spread_filepath):
     return spreads_non_gov, spreads_gov
 
 
-def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file)
-        return conn
-    except Error as e:
-        print(e)
-
-    return conn
-
-
-def exec_sql(conn, sql):
-    """ Execute sql in connection """
-    try:
-        c = conn.cursor()
-        c.execute(sql)
-    except Error as e:
-        print(e)
-
-
-def create_eiopa_db(database=r"eiopa.db"):
-    rfr = """ CREATE TABLE IF NOT EXISTS rfr_raw (
-                                        ref_date TEXT,
-                                        scenario TEXT,
-                                        currency_code TEXT,
-                                        duration INTEGER,
-                                        spot REAL
-                                    ); """
-
-    spreads = """CREATE TABLE IF NOT EXISTS spreads_raw (
-                                    ref_date TEXT,
-                                    type TEXT,
-                                    currency_code TEXT,
-                                    duration INTEGER,
-                                    cc_step INTEGER,
-                                    spread REAL
-                                );"""
-    govies = """CREATE TABLE IF NOT EXISTS govies_raw (
-                                        ref_date TEXT,
-                                        country_code TEXT,
-                                        duration INTEGER,
-                                        spread REAL
-                                    );"""
-
-    # create a database connection
-    conn = create_connection(database)
-
-    # create tables
-    if conn is not None:
-        # create tables
-        exec_sql(conn, rfr)
-        exec_sql(conn, spreads)
-        exec_sql(conn, govies)
-    else:
-        print("Error! cannot create the database connection.")
-
-
 def get_rfr(ref_date):
     # Check if DB exists, if not, create it:
     workspace = get_workspace()
-    database = os.path.join(workspace['db_folder'], "eiopa.db")
-    if not os.path.isfile(database):
-        if not os.path.exists(workspace['db_folder']):
-            os.makedirs(workspace['db_folder'])
-        create_eiopa_db(database)
+    database = workspace['database']
+    db = EiopaDB(database)
 
     # Try to SELECT the rates from DB:
     rates_sql = "SELECT * FROM rfr_raw WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(rates_sql, con=create_connection(database))
+    df = pd.read_sql(rates_sql, con=db.conn)
 
     if df.empty:
-        files = download_EIOPA_rates(ref_date, workspace['raw_data'])
+        url = eiopa_link(ref_date, data_type='rfr')
+        set_id = db.get_set_id(url)
+
+        files = download_EIOPA_rates(url, ref_date, workspace['raw_data'])
         rfr = extract_spot_rates(files['rfr'])
         rfr = rfr.reset_index()
+        rfr['url_id'] = set_id
         rfr['ref_date'] = ref_date.strftime('%Y-%m-%d')
-        rfr.to_sql('rfr_raw', con=create_connection(database), if_exists='append', index=False)
-        df = pd.read_sql(rates_sql, con=create_connection(database))
+        rfr.to_sql('rfr_raw', con=db.conn, if_exists='append', index=False)
+        df = pd.read_sql(rates_sql, con=db.conn)
     df = df.drop(columns='ref_date')
     return df
 

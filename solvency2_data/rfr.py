@@ -9,8 +9,10 @@ import os
 from os.path import join
 import numpy as np
 from numpy.linalg import inv
-import configparser
+
 import pandas as pd
+
+from solvency2_data.util import get_config
 from solvency2_data.scraping import eiopa_link
 
 countries_list = ['Euro', 'Austria', 'Belgium', 'Bulgaria', 'Croatia',
@@ -243,12 +245,7 @@ def read(input_date=None, path=None):
     if path is None:
         # look in current directory for .cfg file
         # if not exists then take the .cfg file in the package directory
-        config = configparser.RawConfigParser()
-        fname = 'solvency2_data.cfg'
-        if os.path.isfile(fname):
-            config.read(fname)
-        else:
-            config.read(os.path.join(os.path.dirname(__file__), fname))
+        config = get_config()
 
         path_zipfile = config.get('Directories', 'zip_files')
         path_excelfile = config.get('Directories', 'excel_files')
