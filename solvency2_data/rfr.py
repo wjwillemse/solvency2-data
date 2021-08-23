@@ -166,6 +166,11 @@ def read_spreads(xls, cache={}):
         df.index = range(1, 31)
         cache["non-financial fundamental spreads"][name] = df
 
+    return cache
+
+
+def read_govies(xls, cache={}):
+
     cache["central government fundamental spreads"] = {}
     for name in ['FS_Govts']:
         df = pd.read_excel(io=xls,
@@ -264,6 +269,7 @@ def read(input_date=None, path=None):
     xls_spreads = pd.ExcelFile(join(cache['path_excelfile'],
                                     cache["name_excelfile_spreads"]), engine='openpyxl')
     cache = read_spreads(xls_spreads, cache)
+    cache = read_govies(xls_spreads, cache)
 
     return cache
 

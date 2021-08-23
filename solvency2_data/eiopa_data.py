@@ -10,9 +10,8 @@ from datetime import date
 
 from solvency2_data.sqlite_handler import EiopaDB
 from solvency2_data.util import get_config
-from solvency2_data.rfr import read_spot, read_spreads
+from solvency2_data.rfr import read_spot, read_spreads, read_govies
 from solvency2_data.scraping import eiopa_link
-from solvency2_data.sqlite_handler import create_connection, create_eiopa_db
 
 
 def get_workspace():
@@ -116,10 +115,15 @@ def extract_spreads(spread_filepath):
 
 def extract_govies(govies_filepath):
     print('Extracting govies: ' + govies_filepath)
-    spreads = read_spreads(govies_filepath)
-    spreads_gov = spreads["central government fundamental spreads"].stack().rename('spread').to_frame()
-    spreads_gov.index.names = ['duration', 'country_code']
-    spreads_gov.index = spreads_gov.index.reorder_levels([1, 0])
+    try:
+        spreads = read_govies(govies_filepath)
+        spreads_gov = spreads["central government fundamental spreads"].stack().rename('spread').to_frame()
+        spreads_gov.index.names = ['duration', 'country_code']
+        spreads_gov.index = spreads_gov.index.reorder_levels([1, 0])
+    except ValueError:
+        print('No govies found: ' + govies_filepath)
+        spreads_gov = None
+        pass
     return spreads_gov
 
 
@@ -138,15 +142,19 @@ def add_to_db(ref_date, db, data_type='rfr'):
     else:
         raise KeyError
 
-    df = df.reset_index()
-    df['url_id'] = set_id
-    df['ref_date'] = ref_date.strftime('%Y-%m-%d')
-    df.to_sql(data_type, con=db.conn, if_exists='append', index=False)
-
-    db.update_catalog(
-        url_id=set_id,
-        dict_vals={'set_type': data_type, 'primary_set': True, 'ref_date': ref_date.strftime('%Y-%m-%d')}
-    )
+    if df is not None:
+        df = df.reset_index()
+        df['url_id'] = set_id
+        df['ref_date'] = ref_date.strftime('%Y-%m-%d')
+        df.to_sql(data_type, con=db.conn, if_exists='append', index=False)
+        set_types = {'govies': 'rfr', 'spreads': 'rfr'}
+        db.update_catalog(
+            url_id=set_id,
+            dict_vals={
+                'set_type': set_types.get(data_type, data_type),
+                'primary_set': True,
+                'ref_date': ref_date.strftime('%Y-%m-%d')}
+        )
     return None
 
 
@@ -205,8 +213,13 @@ def get(ref_date, data_type='rfr'):
 
 def full_rebuild():
     dr = pd.date_range(date(2016, 1, 31), date(2021, 7, 31), freq='M')
-    for i in dr:
-        rfr = get_rfr(i)
+    workspace = get_workspace()
+    database = workspace['database']
+    db = EiopaDB(database)
+    for ref_date in dr:
+        rfr = get_rfr(ref_date, db)
+        spr = get_spreads(ref_date, db)
+        gov = get_govies(ref_date, db)
     return "Database successfully rebuilt"
 
 
