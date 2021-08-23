@@ -4,7 +4,6 @@
 
 from datetime import datetime, timedelta
 from urllib.request import urlopen
-from urllib.parse import urljoin
 import zipfile
 import os
 from os.path import join
@@ -119,7 +118,7 @@ def download_RFR(input_date=None, cache={}):
                                   cache["name_excelfile_spreads"]))):
 
         # download file
-        request = urlopen(urljoin(cache["url"], cache["name_zipfile"]))
+        request = urlopen(cache["url"] + '/' + cache["name_zipfile"])
 
         # save zip-file
         output = open(join(cache['path_zipfile'], cache["name_zipfile"]), "wb")
@@ -251,10 +250,10 @@ def read(input_date=None, path=None):
     if path is None:
         # look in current directory for .cfg file
         # if not exists then take the .cfg file in the package directory
-        config = get_config()
+        config = get_config().get('Directories')
 
-        path_zipfile = config.get('Directories', 'zip_files')
-        path_excelfile = config.get('Directories', 'excel_files')
+        path_zipfile = config.get('zip_files')
+        path_excelfile = config.get('excel_files')
     else:
         path_zipfile = path
         path_excelfile = path
