@@ -4,6 +4,7 @@
 
 from datetime import datetime, timedelta
 from urllib.request import urlopen
+from urllib.parse import urljoin
 import zipfile
 import os
 from os.path import join
@@ -118,7 +119,7 @@ def download_RFR(input_date=None, cache={}):
                                   cache["name_excelfile_spreads"]))):
 
         # download file
-        request = urlopen(cache["url"] + cache["name_zipfile"])
+        request = urlopen(urljoin(cache["url"], cache["name_zipfile"]))
 
         # save zip-file
         output = open(join(cache['path_zipfile'], cache["name_zipfile"]), "wb")
