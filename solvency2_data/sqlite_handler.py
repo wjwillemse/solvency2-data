@@ -56,6 +56,13 @@ class EiopaDB(object):
         self.conn.commit()
         return cur.lastrowid
 
+    def update_catalog(self, url_id: int, dict_vals: dict):
+        set_lines = ", ".join([f"{k}='{v}'" for k, v in dict_vals.items()])
+        sql = "UPDATE catalog SET %s WHERE url_id=%s" % (set_lines, url_id)
+        cur = self.conn.cursor()
+        cur.execute(sql)
+        self.conn.commit()
+
 
 def create_connection(database):
     """ create a database connection to the SQLite database
@@ -87,10 +94,13 @@ def create_eiopa_db(database=r"eiopa.db"):
         'catalog':
             """ CREATE TABLE IF NOT EXISTS catalog (
                                      url_id INTEGER NOT NULL PRIMARY KEY,
-                                     url TEXT
+                                     url TEXT,
+                                     set_type TEXT,
+                                     primary_set BOOLEAN,
+                                     ref_date TEXT
                                      ); """,
         'rfr':
-            """ CREATE TABLE IF NOT EXISTS rfr_raw (
+            """ CREATE TABLE IF NOT EXISTS rfr (
                                      url_id INTEGER NOT NULL,
                                      ref_date TEXT,
                                      scenario TEXT,
@@ -101,7 +111,7 @@ def create_eiopa_db(database=r"eiopa.db"):
                                         ON DELETE CASCADE ON UPDATE NO ACTION
                                      ); """,
         'spreads':
-            """CREATE TABLE IF NOT EXISTS spreads_raw (
+            """CREATE TABLE IF NOT EXISTS spreads (
                                         url_id INTEGER NOT NULL,
                                         ref_date TEXT,
                                         type TEXT,
@@ -113,7 +123,7 @@ def create_eiopa_db(database=r"eiopa.db"):
                                         ON DELETE CASCADE ON UPDATE NO ACTION
                                         );""",
         'govies':
-            """CREATE TABLE IF NOT EXISTS govies_raw (
+            """CREATE TABLE IF NOT EXISTS govies (
                                             url_id INTEGER NOT NULL,
                                             ref_date TEXT,
                                             country_code TEXT,
