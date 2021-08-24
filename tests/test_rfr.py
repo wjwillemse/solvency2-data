@@ -58,8 +58,10 @@ class TestReadRFR(unittest.TestCase):
 
         # Expected output
         expected = pd.Series(
-            index=['Info', 'Coupon_freq', 'LLP', 'Convergence', 'UFR', 'alpha', 'CRA', 'VA', 'reference date'],
-            data=['EUR_31_12_2017_SWP_LLP_20_EXT_40_UFR_4.2', 1, 20, 40, 4.2, 0.126759, 10, 4, '20171231'],
+            index=['Info', 'Coupon_freq', 'LLP', 'Convergence', 'UFR', 'alpha', 'CRA', 'VA'],
+            # 'reference date'],
+            data=['EUR_31_12_2017_SWP_LLP_20_EXT_40_UFR_4.2', 1, 20, 40, 4.2, 0.126759, 10, 4],
+            # '20171231'],
             name='Euro')
 
         # Actual output
