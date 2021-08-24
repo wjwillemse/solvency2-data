@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-"""Tests for `insurance_solvency2_data` package."""
+"""Tests for `solvency2_data` package."""
 
 import unittest
 import numpy as np
@@ -9,6 +9,7 @@ import pandas as pd
 
 from datetime import datetime
 
+import solvency2_data.smith_wilson
 from solvency2_data import rfr
 from solvency2_data.eiopa_data import get
 
@@ -186,7 +187,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = np.float64(0.697710712843422)
 
         # Actual output
-        actual = rfr.big_h(u, v)
+        actual = solvency2_data.smith_wilson.big_h(u, v)
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")
@@ -210,7 +211,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = np.float64(-0.7248604952614899)
 
         # Actual output
-        actual = rfr.big_g(alfa, q, nrofcoup, t2, tau)[0]
+        actual = solvency2_data.smith_wilson.big_g(alfa, q, nrofcoup, t2, tau)[0]
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")
@@ -234,7 +235,7 @@ class TestSmithWilson(unittest.TestCase):
         expected = np.array([[0.03861839], [-0.02275808], [0.01393944], [-0.0168802]])
 
         # Actual output
-        actual = rfr.big_g(alfa, q, nrofcoup, t2, tau)[1]
+        actual = solvency2_data.smith_wilson.big_g(alfa, q, nrofcoup, t2, tau)[1]
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")
@@ -299,8 +300,8 @@ class TestSmithWilson(unittest.TestCase):
                              5.00865063e-04])
 
         # Actual output
-        actual = rfr.smith_wilson(instrument, liqmat, rates, nrofcoup, cra, ufr, alfamin, tau, t2,
-                                  output_type="zero rates annual compounding")
+        actual = solvency2_data.smith_wilson.smith_wilson(instrument, liqmat, rates, nrofcoup, cra, ufr, alfamin, tau, t2,
+                                                          output_type="zero rates annual compounding")
 
         # Assert
         self.assertEqual(type(actual), type(expected), "Returned types not matching")
