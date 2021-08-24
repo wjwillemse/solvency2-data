@@ -42,7 +42,7 @@ def eiopa_link(ref_date, data_type='rfr'):
     This returns the link for downloading the selected type of data for a given date
     Utilises regex to allow for variability in EIOPA publications
     """
-    data_type_remap = {'spreads': 'rfr', 'govies': 'rfr'}
+    data_type_remap = {'spreads': 'rfr', 'govies': 'rfr', 'meta': 'rfr'}
     data_type = data_type_remap.get(data_type, data_type)
     urls = urls_dict.get(data_type)
     reference_date = ref_date.strftime('%Y%m%d')

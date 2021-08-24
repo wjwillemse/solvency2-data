@@ -99,6 +99,22 @@ def create_eiopa_db(database=r"eiopa.db"):
                                      primary_set BOOLEAN,
                                      ref_date TEXT
                                      ); """,
+        'meta':
+            """ CREATE TABLE IF NOT EXISTS meta (
+                                     url_id INTEGER NOT NULL,
+                                     ref_date TEXT,
+                                     Country TEXT,
+                                     Info TEXT,
+                                     Coupon_freq INTEGER,
+                                     LLP INTEGER,
+                                     Convergence INTEGER,
+                                     UFR REAL,
+                                     alpha REAL,
+                                     CRA REAL,
+                                     VA REAL,
+                                     FOREIGN KEY (url_id) REFERENCES catalog (url_id)
+                                        ON DELETE CASCADE ON UPDATE NO ACTION
+                                     ); """,
         'rfr':
             """ CREATE TABLE IF NOT EXISTS rfr (
                                      url_id INTEGER NOT NULL,

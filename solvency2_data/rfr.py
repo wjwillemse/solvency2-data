@@ -229,10 +229,11 @@ def read_meta(xls, cache={}):
     df_meta.index.names = ['meta']
     df_meta.index = df_meta.index.fillna("Info")
 
-    df_append = pd.DataFrame(index=['reference date'],
-                             columns=df_meta.columns)
-    df_append.loc['reference date'] = cache["reference_date"]
-    df_meta = df_meta.append(df_append)
+    # Reference date is not strictly part of meta
+    # df_append = pd.DataFrame(index=['reference date'],
+    #                          columns=df_meta.columns)
+    # # df_append.loc['reference date'] = cache["reference_date"]
+    # df_meta = df_meta.append(df_append)
 
     cache['meta'] = df_meta
 

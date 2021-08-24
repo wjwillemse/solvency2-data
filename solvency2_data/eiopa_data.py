@@ -10,7 +10,7 @@ from datetime import date
 
 from solvency2_data.sqlite_handler import EiopaDB
 from solvency2_data.util import get_config
-from solvency2_data.rfr import read_spot, read_spreads, read_govies
+from solvency2_data.rfr import read_spot, read_spreads, read_govies, read_meta
 from solvency2_data.scraping import eiopa_link
 
 
@@ -70,6 +70,7 @@ def download_EIOPA_rates(url, ref_date):
         zipobj.extract(name_excelfile, raw_folder)
         zipobj.extract(name_excelfile_spreads, raw_folder)
     return {'rfr': os.path.join(raw_folder, name_excelfile),
+            'meta': os.path.join(raw_folder, name_excelfile),
             'spreads': os.path.join(raw_folder, name_excelfile_spreads),
             'govies': os.path.join(raw_folder, name_excelfile_spreads),
             }
@@ -99,6 +100,15 @@ def extract_spot_rates(rfr_filepath):
     rates_tables = rates_tables.sort_index()
     return rates_tables
 
+
+def extract_meta(rfr_filepath):
+    print('Extracting meta data :' + rfr_filepath)
+    meta = read_meta(rfr_filepath)
+    meta = pd.concat(meta).T
+    meta.columns = meta.columns.droplevel()
+    meta.index.name = 'Country'
+    meta = meta.sort_index()
+    return meta
 
 def extract_spreads(spread_filepath):
     print('Extracting spreads: ' + spread_filepath)
@@ -135,6 +145,8 @@ def add_to_db(ref_date, db, data_type='rfr'):
     files = download_EIOPA_rates(url, ref_date)
     if data_type == 'rfr':
         df = extract_spot_rates(files[data_type])
+    elif data_type == 'meta':
+        df = extract_meta(files[data_type])
     elif data_type == 'spreads':
         df = extract_spreads(files[data_type])
     elif data_type == 'govies':
@@ -147,7 +159,7 @@ def add_to_db(ref_date, db, data_type='rfr'):
         df['url_id'] = set_id
         df['ref_date'] = ref_date.strftime('%Y-%m-%d')
         df.to_sql(data_type, con=db.conn, if_exists='append', index=False)
-        set_types = {'govies': 'rfr', 'spreads': 'rfr'}
+        set_types = {'govies': 'rfr', 'spreads': 'rfr', 'meta':'rfr'}
         db.update_catalog(
             url_id=set_id,
             dict_vals={
@@ -168,6 +180,19 @@ def get_rfr(ref_date, db):
         df = pd.read_sql(rates_sql, con=db.conn)
     df = df.drop(columns=['url_id', 'ref_date'])
     return df
+
+
+def get_meta(ref_date, db):
+    # Try to SELECT the rates from DB:
+    sql = "SELECT * FROM meta WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
+    df = pd.read_sql(sql, con=db.conn)
+
+    if df.empty:
+        add_to_db(ref_date, db, 'meta')
+        df = pd.read_sql(sql, con=db.conn)
+    df = df.drop(columns=['url_id', 'ref_date'])
+    return df
+
 
 
 def get_spreads(ref_date, db):
@@ -203,6 +228,8 @@ def get(ref_date, data_type='rfr'):
 
     if data_type == 'rfr':
         return get_rfr(ref_date, db)
+    elif data_type == 'meta':
+        return get_meta(ref_date, db)
     elif data_type == 'spreads':
         return get_spreads(ref_date, db)
     elif data_type == 'govies':
@@ -218,6 +245,7 @@ def full_rebuild():
     db = EiopaDB(database)
     for ref_date in dr:
         rfr = get_rfr(ref_date, db)
+        meta = get_rfr(ref_date, db)
         spr = get_spreads(ref_date, db)
         gov = get_govies(ref_date, db)
     return "Database successfully rebuilt"
