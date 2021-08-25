@@ -126,15 +126,14 @@ def extract_spreads(spread_filepath):
 
 def extract_govies(govies_filepath):
     logging.info('Extracting govies: ' + govies_filepath)
-    try:
-        spreads = read_govies(govies_filepath)
-        spreads_gov = spreads["central government fundamental spreads"].stack().rename('spread').to_frame()
+    cache = read_govies(govies_filepath)
+    if cache["central government fundamental spreads"] is not None:
+        spreads_gov = cache["central government fundamental spreads"].stack().rename('spread').to_frame()
         spreads_gov.index.names = ['duration', 'country_code']
         spreads_gov.index = spreads_gov.index.reorder_levels([1, 0])
-    except ValueError:
+    else:
         logging.error('No govies found: ' + govies_filepath)
         spreads_gov = None
-        pass
     return spreads_gov
 
 
@@ -239,8 +238,21 @@ def get(ref_date, data_type='rfr'):
         return None
 
 
-def full_rebuild():
-    dr = pd.date_range(date(2016, 1, 31), date(2021, 7, 31), freq='M')
+def full_rebuild(start_date = None,
+                 end_date = None):
+
+    if start_date is None:
+        start_date = date(2016, 1, 31)
+    if end_date is None:
+        end_date = datetime.today()
+        if (end_date.day < 5):  # rfr not published yet
+            end_date = end_date.replace(day=1) - timedelta(days=1)
+    else:
+        end_date = end_date + timedelta(days=1)
+    # to do : check if end of month
+    end_date = end_date.replace(day=1) - timedelta(days=1)  # go to end of previous month
+
+    dr = pd.date_range(start_date, end_date, freq='M')
     workspace = get_workspace()
     database = workspace['database']
     db = EiopaDB(database)
