@@ -141,7 +141,7 @@ def read_spreads(xls, cache={}):
 
     cache["financial fundamental spreads"] = {}
     for name in currencies:
-        if name in pd.ExcelFile(xls).sheet_names:
+        if name in xls.sheet_names:
             df = pd.read_excel(io=xls,
                                sheet_name=name,
                                header=1,
@@ -154,7 +154,7 @@ def read_spreads(xls, cache={}):
 
     cache["non-financial fundamental spreads"] = {}
     for name in currencies:
-        if name in pd.ExcelFile(xls).sheet_names:
+        if name in xls.sheet_names:
             df = pd.read_excel(io=xls,
                                sheet_name=name,
                                header=1,
@@ -172,7 +172,7 @@ def read_govies(xls, cache={}):
 
     cache["central government fundamental spreads"] = None
     for name in ['FS_Govts']:
-        if name in pd.ExcelFile(xls).sheet_names:
+        if name in xls.sheet_names:
             df = pd.read_excel(io=xls,
                                sheet_name=name,
                                usecols='B:AF',
@@ -194,7 +194,7 @@ def read_spot(xls, cache={}):
     for name in ["RFR_spot_no_VA", "RFR_spot_with_VA",
                  "Spot_NO_VA_shock_UP", "Spot_NO_VA_shock_DOWN",
                  "Spot_WITH_VA_shock_UP", "Spot_WITH_VA_shock_DOWN"]:
-        if name in pd.ExcelFile(xls).sheet_names:
+        if name in xls.sheet_names:
             df = pd.read_excel(io=xls,
                                sheet_name=name,
                                header=1,
