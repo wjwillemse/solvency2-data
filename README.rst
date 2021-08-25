@@ -26,7 +26,7 @@ Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from 
 Easy access to Solvency 2 financial data:
 
 .. image:: https://github.com/wjwillemse/solvency2-data/tree/master/docs/rfr.gif?raw=true
-   :alt: alternate text
+   :alt: click for animation
    :align: left
 
 Features
