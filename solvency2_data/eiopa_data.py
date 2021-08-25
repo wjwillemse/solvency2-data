@@ -7,6 +7,7 @@ import zipfile
 import pandas as pd
 import urllib
 from datetime import date
+import logging
 
 from solvency2_data.sqlite_handler import EiopaDB
 from solvency2_data.util import get_config
@@ -44,13 +45,13 @@ def download_file(url: str,
     target_file = os.path.join(raw_folder, filename)
 
     if os.path.isfile(target_file):
-        print("file already exists in this location, not downloading")
+        logging.info("file already exists in this location, not downloading")
 
     else:
         if not os.path.exists(raw_folder):
             os.makedirs(raw_folder)
         urllib.request.urlretrieve(url, target_file)  # simpler for file downloading
-        print("file downloaded and saved in the following location: " + target_file)
+        logging.info("file downloaded and saved in the following location: " + target_file)
 
     return target_file
 
@@ -77,7 +78,7 @@ def download_EIOPA_rates(url, ref_date):
 
 
 def extract_spot_rates(rfr_filepath):
-    print('Extracting spots: ' + rfr_filepath)
+    logging.info('Extracting spots: ' + rfr_filepath)
     # TODO: Complete this remap dictionary
     currency_codes_and_regions = {"EUR": "Euro", "PLN": "Poland", "CHF": "Switzerland",
                                   "USD": "United States", "GBP": "United Kingdom", "NOK": "Norway",
@@ -102,7 +103,7 @@ def extract_spot_rates(rfr_filepath):
 
 
 def extract_meta(rfr_filepath):
-    print('Extracting meta data :' + rfr_filepath)
+    logging.info('Extracting meta data :' + rfr_filepath)
     meta = read_meta(rfr_filepath)
     meta = pd.concat(meta).T
     meta.columns = meta.columns.droplevel()
@@ -111,7 +112,7 @@ def extract_meta(rfr_filepath):
     return meta
 
 def extract_spreads(spread_filepath):
-    print('Extracting spreads: ' + spread_filepath)
+    logging.info('Extracting spreads: ' + spread_filepath)
     spreads = read_spreads(spread_filepath)
     spreads_non_gov = pd.concat({i: pd.concat(spreads[i]) for i in
                                  ["financial fundamental spreads", "non-financial fundamental spreads"]})
@@ -124,14 +125,14 @@ def extract_spreads(spread_filepath):
 
 
 def extract_govies(govies_filepath):
-    print('Extracting govies: ' + govies_filepath)
+    logging.info('Extracting govies: ' + govies_filepath)
     try:
         spreads = read_govies(govies_filepath)
         spreads_gov = spreads["central government fundamental spreads"].stack().rename('spread').to_frame()
         spreads_gov.index.names = ['duration', 'country_code']
         spreads_gov.index = spreads_gov.index.reorder_levels([1, 0])
     except ValueError:
-        print('No govies found: ' + govies_filepath)
+        logging.error('No govies found: ' + govies_filepath)
         spreads_gov = None
         pass
     return spreads_gov
