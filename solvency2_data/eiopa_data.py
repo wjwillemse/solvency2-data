@@ -85,7 +85,10 @@ def extract_spot_rates(rfr_filepath):
                                   "SEK": "Sweden", "DKK": "Denmark", "HRK": "Croatia"}
     currency_dict = dict((v, k) for k, v in currency_codes_and_regions.items())
 
-    rates_tables = read_spot(rfr_filepath)
+
+    xls = pd.ExcelFile(rfr_filepath, engine='openpyxl')
+    rates_tables = read_spot(xls)
+
     rates_tables = pd.concat(rates_tables)
     rates_tables = rates_tables.rename(columns=currency_dict)[currency_dict.values()]
 
@@ -113,7 +116,8 @@ def extract_meta(rfr_filepath):
 
 def extract_spreads(spread_filepath):
     logging.info('Extracting spreads: ' + spread_filepath)
-    spreads = read_spreads(spread_filepath)
+    xls = pd.ExcelFile(spread_filepath, engine='openpyxl')
+    spreads = read_spreads(xls)
     spreads_non_gov = pd.concat({i: pd.concat(spreads[i]) for i in
                                  ["financial fundamental spreads", "non-financial fundamental spreads"]})
     spreads_non_gov = spreads_non_gov.stack().rename('spread')
@@ -126,7 +130,8 @@ def extract_spreads(spread_filepath):
 
 def extract_govies(govies_filepath):
     logging.info('Extracting govies: ' + govies_filepath)
-    cache = read_govies(govies_filepath)
+    xls = pd.ExcelFile(spread_filepath, engine='openpyxl')
+    cache = read_govies(xls)
     if cache["central government fundamental spreads"] is not None:
         spreads_gov = cache["central government fundamental spreads"].stack().rename('spread').to_frame()
         spreads_gov.index.names = ['duration', 'country_code']
