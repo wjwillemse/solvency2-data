@@ -2,32 +2,25 @@
 Downloads rfr and stores in sqlite database for future reference
 
 """
-import configparser
 import os
 import zipfile
-import sqlite3
-from sqlite3 import Error
 import pandas as pd
 import urllib
 from datetime import date
 
-from solvency2_data.rfr import read_spot, read_spreads
+from solvency2_data.sqlite_handler import EiopaDB
+from solvency2_data.util import get_config
+from solvency2_data.rfr import read_spot, read_spreads, read_govies, read_meta
 from solvency2_data.scraping import eiopa_link
 
 
 def get_workspace():
     """ Get the workspace for saving xl and the database """
-    # look in current directory for .cfg file
-    # if not exists then take the .cfg file in the package directory
-    config = configparser.RawConfigParser()
-    fname = 'solvency2_data.cfg'
-    if os.path.isfile(fname):
-        config.read(fname)
-    else:
-        config.read(os.path.join(os.path.dirname(__file__), fname))
-    path_db = config.get('Directories', 'db_folder')
-    path_raw = config.get('Directories', 'raw_data')
-    return {'db_folder': path_db, 'raw_data': path_raw}
+    config = get_config().get('Directories')
+    path_db = config.get('db_folder')
+    database = os.path.join(path_db, "eiopa.db")
+    path_raw = config.get('raw_data')
+    return {'database': database, 'raw_data': path_raw}
 
 
 def download_file(url: str,
@@ -62,13 +55,13 @@ def download_file(url: str,
     return target_file
 
 
-def download_EIOPA_rates(rep_date, raw_folder):
+def download_EIOPA_rates(url, ref_date):
     """ Download and unzip the EIOPA files """
-
-    url = eiopa_link(rep_date, data_type='rfr')
+    workspace = get_workspace()
+    raw_folder = workspace['raw_data']
     zip_file = download_file(url, raw_folder)
 
-    reference_date = rep_date.strftime('%Y%m%d')
+    reference_date = ref_date.strftime('%Y%m%d')
 
     name_excelfile = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
     name_excelfile_spreads = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
@@ -77,10 +70,14 @@ def download_EIOPA_rates(rep_date, raw_folder):
         zipobj.extract(name_excelfile, raw_folder)
         zipobj.extract(name_excelfile_spreads, raw_folder)
     return {'rfr': os.path.join(raw_folder, name_excelfile),
-            'spreads': os.path.join(raw_folder, name_excelfile_spreads)}
+            'meta': os.path.join(raw_folder, name_excelfile),
+            'spreads': os.path.join(raw_folder, name_excelfile_spreads),
+            'govies': os.path.join(raw_folder, name_excelfile_spreads),
+            }
 
 
 def extract_spot_rates(rfr_filepath):
+    print('Extracting spots: ' + rfr_filepath)
     # TODO: Complete this remap dictionary
     currency_codes_and_regions = {"EUR": "Euro", "PLN": "Poland", "CHF": "Switzerland",
                                   "USD": "United States", "GBP": "United Kingdom", "NOK": "Norway",
@@ -104,7 +101,17 @@ def extract_spot_rates(rfr_filepath):
     return rates_tables
 
 
+def extract_meta(rfr_filepath):
+    print('Extracting meta data :' + rfr_filepath)
+    meta = read_meta(rfr_filepath)
+    meta = pd.concat(meta).T
+    meta.columns = meta.columns.droplevel()
+    meta.index.name = 'Country'
+    meta = meta.sort_index()
+    return meta
+
 def extract_spreads(spread_filepath):
+    print('Extracting spreads: ' + spread_filepath)
     spreads = read_spreads(spread_filepath)
     spreads_non_gov = pd.concat({i: pd.concat(spreads[i]) for i in
                                  ["financial fundamental spreads", "non-financial fundamental spreads"]})
@@ -113,162 +120,134 @@ def extract_spreads(spread_filepath):
     spreads_non_gov.index = spreads_non_gov.index.reorder_levels([0, 1, 3, 2])
     spreads_non_gov = spreads_non_gov.rename(
         {"financial fundamental spreads": 'fin', "non-financial fundamental spreads": 'non_fin'})
-
-    spreads_gov = spreads["central government fundamental spreads"].stack().rename('spread').to_frame()
-    spreads_gov.index.names = ['duration', 'country_code']
-    spreads_gov.index = spreads_gov.index.reorder_levels([1, 0])
-
-    return spreads_non_gov, spreads_gov
+    return spreads_non_gov
 
 
-def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
-    conn = None
+def extract_govies(govies_filepath):
+    print('Extracting govies: ' + govies_filepath)
     try:
-        conn = sqlite3.connect(db_file)
-        return conn
-    except Error as e:
-        print(e)
-
-    return conn
-
-
-def exec_sql(conn, sql):
-    """ Execute sql in connection """
-    try:
-        c = conn.cursor()
-        c.execute(sql)
-    except Error as e:
-        print(e)
+        spreads = read_govies(govies_filepath)
+        spreads_gov = spreads["central government fundamental spreads"].stack().rename('spread').to_frame()
+        spreads_gov.index.names = ['duration', 'country_code']
+        spreads_gov.index = spreads_gov.index.reorder_levels([1, 0])
+    except ValueError:
+        print('No govies found: ' + govies_filepath)
+        spreads_gov = None
+        pass
+    return spreads_gov
 
 
-def create_eiopa_db(database=r"eiopa.db"):
-    rfr = """ CREATE TABLE IF NOT EXISTS rfr_raw (
-                                        ref_date TEXT,
-                                        scenario TEXT,
-                                        currency_code TEXT,
-                                        duration INTEGER,
-                                        spot REAL
-                                    ); """
+def add_to_db(ref_date, db, data_type='rfr'):
+    """ Call this if a set is missing """
+    url = eiopa_link(ref_date, data_type=data_type)
+    set_id = db.get_set_id(url)
 
-    spreads = """CREATE TABLE IF NOT EXISTS spreads_raw (
-                                    ref_date TEXT,
-                                    type TEXT,
-                                    currency_code TEXT,
-                                    duration INTEGER,
-                                    cc_step INTEGER,
-                                    spread REAL
-                                );"""
-    govies = """CREATE TABLE IF NOT EXISTS govies_raw (
-                                        ref_date TEXT,
-                                        country_code TEXT,
-                                        duration INTEGER,
-                                        spread REAL
-                                    );"""
-
-    # create a database connection
-    conn = create_connection(database)
-
-    # create tables
-    if conn is not None:
-        # create tables
-        exec_sql(conn, rfr)
-        exec_sql(conn, spreads)
-        exec_sql(conn, govies)
+    files = download_EIOPA_rates(url, ref_date)
+    if data_type == 'rfr':
+        df = extract_spot_rates(files[data_type])
+    elif data_type == 'meta':
+        df = extract_meta(files[data_type])
+    elif data_type == 'spreads':
+        df = extract_spreads(files[data_type])
+    elif data_type == 'govies':
+        df = extract_govies(files[data_type])
     else:
-        print("Error! cannot create the database connection.")
+        raise KeyError
+
+    if df is not None:
+        df = df.reset_index()
+        df['url_id'] = set_id
+        df['ref_date'] = ref_date.strftime('%Y-%m-%d')
+        df.to_sql(data_type, con=db.conn, if_exists='append', index=False)
+        set_types = {'govies': 'rfr', 'spreads': 'rfr', 'meta':'rfr'}
+        db.update_catalog(
+            url_id=set_id,
+            dict_vals={
+                'set_type': set_types.get(data_type, data_type),
+                'primary_set': True,
+                'ref_date': ref_date.strftime('%Y-%m-%d')}
+        )
+    return None
 
 
-def get_rfr(ref_date):
-    # Check if DB exists, if not, create it:
-    workspace = get_workspace()
-    database = os.path.join(workspace['db_folder'], "eiopa.db")
-    if not os.path.isfile(database):
-        if not os.path.exists(workspace['db_folder']):
-            os.makedirs(workspace['db_folder'])
-        create_eiopa_db(database)
-
+def get_rfr(ref_date, db):
     # Try to SELECT the rates from DB:
-    rates_sql = "SELECT * FROM rfr_raw WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(rates_sql, con=create_connection(database))
+    rates_sql = "SELECT * FROM rfr WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
+    df = pd.read_sql(rates_sql, con=db.conn)
 
     if df.empty:
-        files = download_EIOPA_rates(ref_date, workspace['raw_data'])
-        rfr = extract_spot_rates(files['rfr'])
-        rfr = rfr.reset_index()
-        rfr['ref_date'] = ref_date.strftime('%Y-%m-%d')
-        rfr.to_sql('rfr_raw', con=create_connection(database), if_exists='append', index=False)
-        df = pd.read_sql(rates_sql, con=create_connection(database))
-    df = df.drop(columns='ref_date')
+        add_to_db(ref_date, db, 'rfr')
+        df = pd.read_sql(rates_sql, con=db.conn)
+    df = df.drop(columns=['url_id', 'ref_date'])
     return df
 
 
-def get_spreads(ref_date):
-    # Check if DB exists, if not, create it:
-    workspace = get_workspace()
-    database = os.path.join(workspace['db_folder'], "eiopa.db")
-    if not os.path.isfile(database):
-        if not os.path.exists(workspace['db_folder']):
-            os.makedirs(workspace['db_folder'])
-        create_eiopa_db(database)
-
+def get_meta(ref_date, db):
     # Try to SELECT the rates from DB:
-    spreads_sql = "SELECT * FROM spreads_raw WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(spreads_sql, con=create_connection(database))
+    sql = "SELECT * FROM meta WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
+    df = pd.read_sql(sql, con=db.conn)
 
     if df.empty:
-        files = download_EIOPA_rates(ref_date, workspace['raw_data'])
-        spreads, govies = extract_spreads(files['spreads'])
-        spreads = spreads.reset_index()
-        spreads['ref_date'] = ref_date.strftime('%Y-%m-%d')
-        spreads.to_sql('spreads_raw', con=create_connection(database), if_exists='append', index=False)
-        df = pd.read_sql(spreads_sql, con=create_connection(database))
-
-    df = df.drop(columns='ref_date')
+        add_to_db(ref_date, db, 'meta')
+        df = pd.read_sql(sql, con=db.conn)
+    df = df.drop(columns=['url_id', 'ref_date'])
     return df
 
 
-def get_govies(ref_date):
-    # Check if DB exists, if not, create it:
-    workspace = get_workspace()
-    database = os.path.join(workspace['db_folder'], "eiopa.db")
-    if not os.path.isfile(database):
-        if not os.path.exists(workspace['db_folder']):
-            os.makedirs(workspace['db_folder'])
-        create_eiopa_db(database)
 
+def get_spreads(ref_date, db):
     # Try to SELECT the rates from DB:
-    govies_sql = "SELECT * FROM govies_raw WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(govies_sql, con=create_connection(database))
+    spreads_sql = "SELECT * FROM spreads WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
+    df = pd.read_sql(spreads_sql, con=db.conn)
 
     if df.empty:
-        files = download_EIOPA_rates(ref_date, workspace['raw_data'])
-        spreads, govies = extract_spreads(files['spreads'])
-        govies = govies.reset_index()
-        govies['ref_date'] = ref_date.strftime('%Y-%m-%d')
-        govies.to_sql('govies_raw', con=create_connection(database), if_exists='append', index=False)
-        df = pd.read_sql(govies_sql, con=create_connection(database))
+        add_to_db(ref_date, db, data_type='spreads')
+        df = pd.read_sql(spreads_sql, con=db.conn)
 
-    df = df.drop(columns='ref_date')
+    df = df.drop(columns=['url_id', 'ref_date'])
+    return df
+
+
+def get_govies(ref_date, db):
+    # Try to SELECT the rates from DB:
+    govies_sql = "SELECT * FROM govies WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
+    df = pd.read_sql(govies_sql, con=db.conn)
+    if df.empty:
+        add_to_db(ref_date, db, data_type='govies')
+        df = pd.read_sql(govies_sql, con=db.conn)
+    df = df.drop(columns=['url_id', 'ref_date'])
     return df
 
 
 def get(ref_date, data_type='rfr'):
     # TODO: expand this to include other types:
+    # Check if DB exists, if not, create it:
+    workspace = get_workspace()
+    database = workspace['database']
+    db = EiopaDB(database)
+
     if data_type == 'rfr':
-        return get_rfr(ref_date)
+        return get_rfr(ref_date, db)
+    elif data_type == 'meta':
+        return get_meta(ref_date, db)
+    elif data_type == 'spreads':
+        return get_spreads(ref_date, db)
+    elif data_type == 'govies':
+        return get_govies(ref_date, db)
     else:
         return None
 
 
 def full_rebuild():
     dr = pd.date_range(date(2016, 1, 31), date(2021, 7, 31), freq='M')
-    for i in dr:
-        rfr = get_rfr(i)
+    workspace = get_workspace()
+    database = workspace['database']
+    db = EiopaDB(database)
+    for ref_date in dr:
+        rfr = get_rfr(ref_date, db)
+        meta = get_rfr(ref_date, db)
+        spr = get_spreads(ref_date, db)
+        gov = get_govies(ref_date, db)
     return "Database successfully rebuilt"
 
 
