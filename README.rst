@@ -23,9 +23,7 @@ Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from 
 * Free software: MIT/X license
 * Documentation: https://solvency2-data.readthedocs.io.
 
-Easy access to Solvency 2 financial data:
-
-.. image:: https://github.com/wjwillemse/solvency2-data/tree/master/docs/rfr.gif?raw=true
+.. image:: https://raw.githubusercontent.com/wjwillemse/solvency2-data/master/docs/rfr.gif?raw=true
    :alt: click for animation
    :align: left
 
