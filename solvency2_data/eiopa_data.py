@@ -158,9 +158,8 @@ def extract_sym_adj(sym_adj_filepath, ref_date):
     ref_check = df.at[0, 'ref_date'].strftime('%Y-%m-%d')
 
     if input_ref != ref_check:
-        # raise ValueError("date mismatch betweeen rep_date and symmetric adjustment date")
-        print('Date mismatch in sym_adj file: ' + sym_adj_filepath)
-        print('Try opening this file and setting the date correctly then save and close, and rerun.')
+        logging.warning('Date mismatch in sym_adj file: ' + sym_adj_filepath)
+        logging.warning('Try opening this file and setting the date correctly then save and close, and rerun.')
         return None
     else:
         df = df.set_index('ref_date')
