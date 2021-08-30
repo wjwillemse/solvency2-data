@@ -141,44 +141,47 @@ def read_spreads(xls, cache={}):
 
     cache["financial fundamental spreads"] = {}
     for name in currencies:
-        df = pd.read_excel(io=xls,
-                           sheet_name=name,
-                           header=1,
-                           usecols='W:AC',
-                           nrows=30,
-                           skiprows=8,
-                           names=[0, 1, 2, 3, 4, 5, 6])
-        df.index = range(1, 31)
-        cache["financial fundamental spreads"][name] = df
+        if name in xls.sheet_names:
+            df = pd.read_excel(io=xls,
+                               sheet_name=name,
+                               header=1,
+                               usecols='W:AC',
+                               nrows=30,
+                               skiprows=8,
+                               names=[0, 1, 2, 3, 4, 5, 6])
+            df.index = range(1, 31)
+            cache["financial fundamental spreads"][name] = df
 
     cache["non-financial fundamental spreads"] = {}
     for name in currencies:
-        df = pd.read_excel(io=xls,
-                           sheet_name=name,
-                           header=1,
-                           usecols='W:AC',
-                           nrows=30,
-                           skiprows=48,
-                           names=[0, 1, 2, 3, 4, 5, 6])
-        df.index = range(1, 31)
-        cache["non-financial fundamental spreads"][name] = df
+        if name in xls.sheet_names:
+            df = pd.read_excel(io=xls,
+                               sheet_name=name,
+                               header=1,
+                               usecols='W:AC',
+                               nrows=30,
+                               skiprows=48,
+                               names=[0, 1, 2, 3, 4, 5, 6])
+            df.index = range(1, 31)
+            cache["non-financial fundamental spreads"][name] = df
 
     return cache
 
 
 def read_govies(xls, cache={}):
 
-    cache["central government fundamental spreads"] = {}
+    cache["central government fundamental spreads"] = None
     for name in ['FS_Govts']:
-        df = pd.read_excel(io=xls,
-                           sheet_name=name,
-                           usecols='B:AF',
-                           nrows=53,
-                           index_col=0,
-                           skiprows=9)
-        # This line introduces a dependency on the spots
-        # df.index = cache['RFR_spot_no_VA'].columns
-        cache["central government fundamental spreads"] = df.T
+        if name in xls.sheet_names:
+            df = pd.read_excel(io=xls,
+                               sheet_name=name,
+                               usecols='B:AF',
+                               nrows=53,
+                               index_col=0,
+                               skiprows=9)
+            # This line introduces a dependency on the spots
+            # df.index = cache['RFR_spot_no_VA'].columns
+            cache["central government fundamental spreads"] = df.T
 
     return cache
 
@@ -191,19 +194,20 @@ def read_spot(xls, cache={}):
     for name in ["RFR_spot_no_VA", "RFR_spot_with_VA",
                  "Spot_NO_VA_shock_UP", "Spot_NO_VA_shock_DOWN",
                  "Spot_WITH_VA_shock_UP", "Spot_WITH_VA_shock_DOWN"]:
-        df = pd.read_excel(io=xls,
-                           sheet_name=name,
-                           header=1,
-                           nrows=158,
-                           index_col=1)
-        # drop unnamed columns from the excel file
-        for col in df.columns:
-        	if "Unnamed:" in col:
-        		df = df.drop(col, axis=1)
-        df.loc["VA"].fillna(0, inplace=True)
-        df = df.iloc[8:]
-        df.index.names = ['Duration']
-        cache[name] = df
+        if name in xls.sheet_names:
+            df = pd.read_excel(io=xls,
+                               sheet_name=name,
+                               header=1,
+                               nrows=158,
+                               index_col=1)
+            # drop unnamed columns from the excel file
+            for col in df.columns:
+                if "Unnamed:" in col:
+                    df = df.drop(col, axis=1)
+            df.loc["VA"].fillna(0, inplace=True)
+            df = df.iloc[8:]
+            df.index.names = ['Duration']
+            cache[name] = df
 
     return cache
 
@@ -221,8 +225,8 @@ def read_meta(xls, cache={}):
                             skipfooter=150)
     # drop unnamed columns from the excel file
     for col in df_meta.columns:
-    	if "Unnamed:" in col:
-    		df_meta = df_meta.drop(col, axis=1)
+        if "Unnamed:" in col:
+            df_meta = df_meta.drop(col, axis=1)
 
     df_meta.loc["VA", :].fillna(0, inplace=True)
     df_meta = df_meta.iloc[0:8]

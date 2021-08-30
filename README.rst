@@ -23,6 +23,9 @@ Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from 
 * Free software: MIT/X license
 * Documentation: https://solvency2-data.readthedocs.io.
 
+.. image:: https://raw.githubusercontent.com/wjwillemse/solvency2-data/master/docs/rfr.gif?raw=true
+   :alt: click for animation
+   :align: left
 
 Features
 --------
@@ -30,9 +33,9 @@ Features
 Here is what the package does:
 
 - Downloading and extracting the zip-files from the EIOPA website
+- Store the financial data in a local database
 - Reading the term structures from Excel-files into Pandas DataFrames
 - Deriving term structures with other parameters for alternative extrapolations
-
 
 Overview
 --------

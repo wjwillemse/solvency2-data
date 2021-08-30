@@ -4,6 +4,7 @@ This module contains all the handler functions for the sqlite database storing t
 import os
 import sqlite3
 from sqlite3 import Error
+import logging
 
 
 class EiopaDB(object):
@@ -15,7 +16,7 @@ class EiopaDB(object):
                 os.makedirs(root_folder)
             create_eiopa_db(database)
         self.set_conn()
-        print('DB initialised')
+        logging.info('DB initialised')
 
     def reset(self):
         """ Hard reset of the database """
@@ -75,7 +76,7 @@ def create_connection(database):
         conn = sqlite3.connect(database)
         return conn
     except Error as e:
-        print(e)
+        logging.error(e)
 
     return conn
 
@@ -86,7 +87,7 @@ def exec_sql(conn, sql):
         c = conn.cursor()
         c.execute(sql)
     except Error as e:
-        print(e)
+        logging.error(e)
 
 
 def create_eiopa_db(database=r"eiopa.db"):
@@ -167,6 +168,6 @@ def create_eiopa_db(database=r"eiopa.db"):
         for key, val in table_def.items():
             exec_sql(conn, val)
     else:
-        print("Error! cannot create the database connection.")
+        logging.error("Error! cannot create the database connection.")
 
 
