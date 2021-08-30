@@ -131,7 +131,7 @@ def extract_spreads(spread_filepath):
 
 def extract_govies(govies_filepath):
     logging.info('Extracting govies: ' + govies_filepath)
-    xls = pd.ExcelFile(spread_filepath, engine='openpyxl')
+    xls = pd.ExcelFile(govies_filepath, engine='openpyxl')
     cache = read_govies(xls)
     if cache["central government fundamental spreads"] is not None:
         spreads_gov = cache["central government fundamental spreads"].stack().rename('spread').to_frame()
@@ -206,7 +206,7 @@ def add_to_db(ref_date, db, data_type='rfr'):
 
 
 def get(ref_date, data_type='rfr'):
-    # TODO: expand this to include other types:
+    """ Main API function """
     # Check if DB exists, if not, create it:
     workspace = get_workspace()
     database = workspace['database']
@@ -231,14 +231,9 @@ def get(ref_date, data_type='rfr'):
         return None
 
 
-def full_rebuild():
-    dr = pd.date_range(date(2016, 1, 31), date(2021, 7, 31), freq='M')
+def refresh():
+    dr = pd.date_range(date(2016, 1, 31), date.today(), freq='M')
     for ref_date in dr:
         for data_type in ['rfr', 'meta', 'spreads', 'govies', 'sym_adj']:
             df = get(ref_date, data_type)
     return "Database successfully rebuilt"
-
-
-def refresh():
-    """ Update the local DB with any new dates not already included """
-    return "Still #TODO"
