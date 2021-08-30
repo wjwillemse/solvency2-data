@@ -231,6 +231,7 @@ def get(ref_date, data_type='rfr'):
     else:
         return None
 
+
 def full_rebuild():
     dr = pd.date_range(date(2016, 1, 31), date(2021, 7, 31), freq='M')
     for ref_date in dr:
