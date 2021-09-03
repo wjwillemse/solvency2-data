@@ -114,6 +114,7 @@ def extract_meta(rfr_filepath):
     meta = meta.sort_index()
     return meta
 
+
 def extract_spreads(spread_filepath):
     logging.info('Extracting spreads: ' + spread_filepath)
     xls = pd.ExcelFile(spread_filepath, engine='openpyxl')
@@ -130,7 +131,7 @@ def extract_spreads(spread_filepath):
 
 def extract_govies(govies_filepath):
     logging.info('Extracting govies: ' + govies_filepath)
-    xls = pd.ExcelFile(spread_filepath, engine='openpyxl')
+    xls = pd.ExcelFile(govies_filepath, engine='openpyxl')
     cache = read_govies(xls)
     if cache["central government fundamental spreads"] is not None:
         spreads_gov = cache["central government fundamental spreads"].stack().rename('spread').to_frame()
@@ -142,22 +143,51 @@ def extract_govies(govies_filepath):
     return spreads_gov
 
 
+def extract_sym_adj(sym_adj_filepath, ref_date):
+
+    df = pd.read_excel(sym_adj_filepath,
+                       sheet_name='Symmetric_adjustment',
+                       usecols='E, K',
+                       nrows=1,
+                       skiprows=7,
+                       header=None,
+                       squeeze=True,
+                       names=['ref_date', 'sym_adj'])
+
+    input_ref = ref_date.strftime('%Y-%m-%d')
+    ref_check = df.at[0, 'ref_date'].strftime('%Y-%m-%d')
+
+    if input_ref != ref_check:
+        logging.warning('Date mismatch in sym_adj file: ' + sym_adj_filepath)
+        logging.warning('Try opening this file and setting the date correctly then save and close, and rerun.')
+        return None
+    else:
+        df = df.set_index('ref_date')
+        return df
+
+
 def add_to_db(ref_date, db, data_type='rfr'):
     """ Call this if a set is missing """
     url = eiopa_link(ref_date, data_type=data_type)
     set_id = db.get_set_id(url)
 
-    files = download_EIOPA_rates(url, ref_date)
-    if data_type == 'rfr':
-        df = extract_spot_rates(files[data_type])
-    elif data_type == 'meta':
-        df = extract_meta(files[data_type])
-    elif data_type == 'spreads':
-        df = extract_spreads(files[data_type])
-    elif data_type == 'govies':
-        df = extract_govies(files[data_type])
-    else:
-        raise KeyError
+    if data_type != 'sym_adj':
+        files = download_EIOPA_rates(url, ref_date)
+        if data_type == 'rfr':
+            df = extract_spot_rates(files[data_type])
+        elif data_type == 'meta':
+            df = extract_meta(files[data_type])
+        elif data_type == 'spreads':
+            df = extract_spreads(files[data_type])
+        elif data_type == 'govies':
+            df = extract_govies(files[data_type])
+        else:
+            raise KeyError
+    elif data_type == 'sym_adj':
+        workspace = get_workspace()
+        raw_folder = workspace['raw_data']
+        file = download_file(url, raw_folder)
+        df = extract_sym_adj(file, ref_date)
 
     if df is not None:
         df = df.reset_index()
@@ -175,100 +205,35 @@ def add_to_db(ref_date, db, data_type='rfr'):
     return None
 
 
-def get_rfr(ref_date, db):
-    # Try to SELECT the rates from DB:
-    rates_sql = "SELECT * FROM rfr WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(rates_sql, con=db.conn)
-
-    if df.empty:
-        add_to_db(ref_date, db, 'rfr')
-        df = pd.read_sql(rates_sql, con=db.conn)
-    df = df.drop(columns=['url_id', 'ref_date'])
-    return df
-
-
-def get_meta(ref_date, db):
-    # Try to SELECT the rates from DB:
-    sql = "SELECT * FROM meta WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(sql, con=db.conn)
-
-    if df.empty:
-        add_to_db(ref_date, db, 'meta')
-        df = pd.read_sql(sql, con=db.conn)
-    df = df.drop(columns=['url_id', 'ref_date'])
-    return df
-
-
-
-def get_spreads(ref_date, db):
-    # Try to SELECT the rates from DB:
-    spreads_sql = "SELECT * FROM spreads WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(spreads_sql, con=db.conn)
-
-    if df.empty:
-        add_to_db(ref_date, db, data_type='spreads')
-        df = pd.read_sql(spreads_sql, con=db.conn)
-
-    df = df.drop(columns=['url_id', 'ref_date'])
-    return df
-
-
-def get_govies(ref_date, db):
-    # Try to SELECT the rates from DB:
-    govies_sql = "SELECT * FROM govies WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
-    df = pd.read_sql(govies_sql, con=db.conn)
-    if df.empty:
-        add_to_db(ref_date, db, data_type='govies')
-        df = pd.read_sql(govies_sql, con=db.conn)
-    df = df.drop(columns=['url_id', 'ref_date'])
-    return df
-
-
 def get(ref_date, data_type='rfr'):
-    # TODO: expand this to include other types:
+    """ Main API function """
     # Check if DB exists, if not, create it:
     workspace = get_workspace()
     database = workspace['database']
     db = EiopaDB(database)
 
-    if data_type == 'rfr':
-        return get_rfr(ref_date, db)
-    elif data_type == 'meta':
-        return get_meta(ref_date, db)
-    elif data_type == 'spreads':
-        return get_spreads(ref_date, db)
-    elif data_type == 'govies':
-        return get_govies(ref_date, db)
+    sql_map = {
+        'rfr': "SELECT * FROM rfr WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'",
+        'meta': "SELECT * FROM meta WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'",
+        'spreads': "SELECT * FROM spreads WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'",
+        'govies': "SELECT * FROM govies WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'",
+        'sym_adj': "SELECT * FROM sym_adj WHERE ref_date = '" + ref_date.strftime('%Y-%m-%d') + "'"
+    }
+    sql = sql_map.get(data_type)
+    df = pd.read_sql(sql, con=db.conn)
+    if df.empty:
+        add_to_db(ref_date, db, data_type)
+        df = pd.read_sql(sql, con=db.conn)
+    if ~df.empty:
+        df = df.drop(columns=['url_id', 'ref_date'])
+        return df
     else:
         return None
 
 
-def full_rebuild(start_date = None,
-                 end_date = None):
-
-    if start_date is None:
-        start_date = date(2016, 1, 31)
-    if end_date is None:
-        end_date = datetime.today()
-        if (end_date.day < 5):  # rfr not published yet
-            end_date = end_date.replace(day=1) - timedelta(days=1)
-    else:
-        end_date = end_date + timedelta(days=1)
-    # to do : check if end of month
-    end_date = end_date.replace(day=1) - timedelta(days=1)  # go to end of previous month
-
-    dr = pd.date_range(start_date, end_date, freq='M')
-    workspace = get_workspace()
-    database = workspace['database']
-    db = EiopaDB(database)
-    for ref_date in dr:
-        rfr = get_rfr(ref_date, db)
-        meta = get_rfr(ref_date, db)
-        spr = get_spreads(ref_date, db)
-        gov = get_govies(ref_date, db)
-    return "Database successfully rebuilt"
-
-
 def refresh():
-    """ Update the local DB with any new dates not already included """
-    return "Still #TODO"
+    dr = pd.date_range(date(2016, 1, 31), date.today(), freq='M')
+    for ref_date in dr:
+        for data_type in ['rfr', 'meta', 'spreads', 'govies', 'sym_adj']:
+            df = get(ref_date, data_type)
+    return "Database successfully rebuilt"

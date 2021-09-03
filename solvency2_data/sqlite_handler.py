@@ -148,7 +148,15 @@ def create_eiopa_db(database=r"eiopa.db"):
                                             spread REAL,
                                             FOREIGN KEY (url_id) REFERENCES catalog (url_id)
                                         ON DELETE CASCADE ON UPDATE NO ACTION
-                                            );"""
+                                            );""",
+        'sym_adj':
+            """CREATE TABLE IF NOT EXISTS sym_adj (
+                                    url_id INTEGER NOT NULL,
+                                    ref_date TEXT,
+                                    sym_adj REAL,
+                                    FOREIGN KEY (url_id) REFERENCES catalog (url_id)
+                                ON DELETE CASCADE ON UPDATE NO ACTION
+                                    );"""
     }
 
     # create a database connection
