@@ -13,3 +13,4 @@ History
 0.1.13 (2020-9-27): Code satisfies Flake8, solvency2_data.cfg added to pypi package
 0.1.14 (2021-1-25): Bug nested module solved
 0.1.15 (2021-1-29): Bug with pypi solved
+0.1.16 (2022-1-20): major update with database object to store downloaded rfr's
