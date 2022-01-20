@@ -18,7 +18,7 @@ def get_config():
     """
     # look in current directory for .cfg file
     # if not exists then take the .cfg file in the package directory
-    config = configparser.RawConfigParser()
+    config = configparser.ConfigParser()
     fname = "solvency2_data.cfg"
     if os.path.isfile(fname):
         config.read(fname)
@@ -27,7 +27,7 @@ def get_config():
     return config._sections
 
 
-def set_config(existing_key: str, new_value: str):
+def set_config(new_value: str, existing_key: str = 'data_folder'):
     """
     Exposed via API to allow users to adjust the config without digging into install folder
 
@@ -38,4 +38,18 @@ def set_config(existing_key: str, new_value: str):
         configuration sections
 
     """
-    # TODO: Implement set_config
+    config = configparser.ConfigParser()
+    fname = "solvency2_data.cfg"
+    fpath = os.path.join(os.path.dirname(__file__), fname)
+    config.read(fpath)
+
+    if existing_key == 'data_folder':
+        for k in config['Directories']:
+            # print(k)
+            config['Directories'][k] = new_value
+
+    with open(fpath, 'w') as configfile:
+        config.write(configfile)
+    print('Download paths updated')
+    return 0
+
