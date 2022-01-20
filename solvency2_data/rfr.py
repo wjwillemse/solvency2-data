@@ -120,28 +120,28 @@ class RiskFreeRate(dict):
         self.update(read(input_date))
 
 
-def RFR_reference_date(input_date: datetime = None, cache: dict = {}) -> dict:
+def RFR_reference_date(input_date: str = None, cache: dict = {}) -> dict:
     """
     Returns the closest reference date prior to an input_date
     The reference_date is put in a dict with the original input_date
-    
+
     If no input_date is given then today() is used
-    >>> RFR_reference_date(datetime(2018, 1, 1))
-    {'input_date': datetime.datetime(2018, 1, 1, 0, 0), 'reference_date':
+    >>> RFR_reference_date('2018-12-31')
+    {'input_date': '2018-12-31', 'reference_date':
     '20171231'}
-    >>> RFR_reference_date(datetime(2018, 8, 15))
-    {'input_date': datetime.datetime(2018, 8, 15, 0, 0), 'reference_date':
+    >>> RFR_reference_date('2018-12-31')
+    {'input_date': '2018-12-31', 'reference_date':
     '20180731'}
 
     Args:
-        input_date: 
+        input_date:
 
     Returns
         The cache with the data
 
     """
 
-    reference_date = input_date
+    reference_date = datetime.strptime(input_date, '%Y-%m-%d')
 
     if (reference_date is None) or (reference_date > datetime.today()):
         reference_date = datetime.today()
@@ -154,17 +154,17 @@ def RFR_reference_date(input_date: datetime = None, cache: dict = {}) -> dict:
     # to do : check if end of month
     reference_date = reference_date.replace(day=1) - timedelta(days=1)
 
-    cache["input_date"] = input_date
-    cache["reference_date"] = reference_date.strftime("%Y%m%d")
+    cache["input_date"] = reference_date.strftime("%Y-%m-%d")
+    cache["reference_date"] = input_date.replace('-', '')
 
     return cache
 
 
-def RFR_dict(input_date: datetime = None, cache: dict = {}) -> dict:
+def RFR_dict(input_date: str = None, cache: dict = {}) -> dict:
     """
     Returns a dict with url and filenames from the EIOPA website based on the
     input_date
-    
+
     >>> RFR_dict(datetime(2018,1,1))
     {'input_date': datetime.datetime(2018, 1, 1, 0, 0),
      'reference_date': '20171231',
@@ -180,7 +180,7 @@ def RFR_dict(input_date: datetime = None, cache: dict = {}) -> dict:
 
     Returns
         The updated cache with the data
-    
+
     """
 
     cache = RFR_reference_date(input_date, cache)
@@ -199,14 +199,14 @@ def RFR_dict(input_date: datetime = None, cache: dict = {}) -> dict:
     return cache
 
 
-def download_RFR(input_date: datetime = None, cache: dict = {}) -> dict:
+def download_RFR(input_date: str = None, cache: dict = {}) -> dict:
     """
     Downloads the zipfile from the EIOPA website and extracts the Excel file
-    
+
     Returns the cache with info
-    >>> download_RFR(datetime(2018,1,1))
+    >>> download_RFR('2018-12-31')
     {'name_excelfile': 'EIOPA_RFR_20171231_Term_Structures.xlsx',
-     'input_date': datetime.datetime(2018, 1, 1, 0, 0),
+     'input_date': '2018-12-31',
      'url': 'https://eiopa.europa.eu/Publications/Standards/',
      'path_zipfile': '',
      'name_zipfile': 'EIOPA_RFR_20171231.zip',

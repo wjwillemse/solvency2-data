@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """Tests for `solvency2_data` package."""
-
+import pathlib
 import unittest
 import numpy as np
 import pandas as pd
@@ -20,13 +20,14 @@ class TestReadRFR(unittest.TestCase):
         """Test of read input date function"""
 
         # Input
-        date = datetime(2017, 12, 31)
+        date = '2017-12-31'
 
         # Expected output
-        expected = datetime(2017, 12, 31, 0, 0)
+        expected = '2017-12-31'
 
         # Actual output
-        d = rfr.read(date, path="tests/test_data/")
+        fldr = pathlib.Path(__file__).parent.joinpath('test_data').as_posix()
+        d = rfr.read(date, path=fldr)
         actual = d['input_date']
 
         # Assert
@@ -37,13 +38,14 @@ class TestReadRFR(unittest.TestCase):
         """Test of read reference date function"""
 
         # Input
-        date = datetime(2017, 12, 31)
+        date = '2017-12-31'
 
         # Expected output
         expected = '20171231'
 
         # Actual output
-        d = rfr.read(date, path="tests/test_data/")
+        fldr = pathlib.Path(__file__).parent.joinpath('test_data').as_posix()
+        d = rfr.read(date, path=fldr)
         actual = d['reference_date']
 
         # Assert
@@ -54,7 +56,7 @@ class TestReadRFR(unittest.TestCase):
         """Test of read meta data function"""
 
         # Input
-        date = datetime(2017, 12, 31)
+        date = '2017-12-31'
 
         # Expected output
         expected = pd.Series(
@@ -65,7 +67,8 @@ class TestReadRFR(unittest.TestCase):
             name='Euro')
 
         # Actual output
-        d = rfr.read(date, path="tests/test_data/")
+        fldr = pathlib.Path(__file__).parent.joinpath('test_data').as_posix()
+        d = rfr.read(date, path=fldr)
         actual = d['meta'].loc[:, 'Euro']
 
         # Assert
@@ -76,7 +79,7 @@ class TestReadRFR(unittest.TestCase):
         """Test of read spot rates function"""
 
         # Input
-        date = datetime(2017, 12, 31)
+        date = '2017-12-31'
 
         # Expected output
         expected = pd.Series(index=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
@@ -114,7 +117,8 @@ class TestReadRFR(unittest.TestCase):
                              name='Euro')
 
         # Actual output
-        d = rfr.read(date, path="tests/test_data/")
+        fldr = pathlib.Path(__file__).parent.joinpath('test_data').as_posix()
+        d = rfr.read(date, path=fldr)
         actual = d['RFR_spot_no_VA']['Euro']
 
         # Assert
