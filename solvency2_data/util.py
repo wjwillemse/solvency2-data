@@ -6,11 +6,20 @@ import configparser
 
 
 def get_config():
-    """ Returns the config file as a dictionary """
+    """
+    Returns the config file as a dictionary
+
+    Args:
+        None
+
+    Returns:
+        configuration sections
+
+    """
     # look in current directory for .cfg file
     # if not exists then take the .cfg file in the package directory
     config = configparser.RawConfigParser()
-    fname = 'solvency2_data.cfg'
+    fname = "solvency2_data.cfg"
     if os.path.isfile(fname):
         config.read(fname)
     else:
@@ -18,9 +27,15 @@ def get_config():
     return config._sections
 
 
-def set_config(existing_key, new_value):
+def set_config(existing_key: str, new_value: str):
     """
     Exposed via API to allow users to adjust the config without digging into install folder
+
+    Args:
+        None
+
+    Returns:
+        configuration sections
+
     """
     # TODO: Implement set_config
-
