@@ -6,3 +6,4 @@ __version__ = "0.1.15"
 
 from .rfr import *
 from .eiopa_data import get, refresh
+from .util import set_config
