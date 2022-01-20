@@ -5,6 +5,7 @@ Returns links for EIOPA files
 import re
 import bs4 as bs
 import requests
+import datetime
 
 urls_dict = {
     "rfr": [
@@ -67,14 +68,16 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
     data_type_remap = {"spreads": "rfr", "govies": "rfr", "meta": "rfr"}
     data_type = data_type_remap.get(data_type, data_type)
     urls = urls_dict.get(data_type)
-    reference_date = ref_date.strftime("%Y%m%d")
+    # Change format of ref_date string for EIOPA Excel files from YYYY-mm-dd to YYYYmmdd:
+    reference_date = ref_date.replace('-', '')
     if data_type == "rfr":
         filename = "eiopa_rfr_" + reference_date
         # Allow for extra 4 characters e.g. _0_0
         r = re.compile(".*" + filename + ".{0,4}.zip")
     elif data_type == "sym_adj":
-        str_year = ref_date.strftime("%Y")
-        str_month = ref_date.strftime("%B").lower()
+        ref_date_datetime = datetime.datetime.strptime(ref_date, '%Y-%m-%d')
+        str_year = ref_date_datetime.strftime("%Y")
+        str_month = ref_date_datetime.strftime("%B").lower()
         # Regex to find the file :
         # ._ required for ._march_2019
         # Only matches on first 3 letters of months since some mis-spellings
@@ -89,7 +92,18 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
         )
 
     valid_link = get_links(urls, r)
+
     if not valid_link:
-        raise FileNotFoundError("Error: no EIOPA file found for: " + reference_date)
+        manual_links = {
+            'sym_adj':
+                {
+                    '2020-06-30': 'https://www.eiopa.europa.eu/sites/default/files/symmetric_adjustment/eiopa_symmetric_adjustment_equity_capital_charge_16_06_2020.xlsx',
+                    '2020-07-31': 'https://www.eiopa.europa.eu/sites/default/files/symmetric_adjustment/eiopa_symmetric_adjustment_equity_capital_charge_14_07_2020.xlsx'
+                }
+        }
+        valid_link = manual_links.get(data_type).get(ref_date)
+
+    if not valid_link:
+        raise FileNotFoundError("Error: no EIOPA file found for date: " + ref_date + '; Source: ' + data_type)
 
     return valid_link

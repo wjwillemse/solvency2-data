@@ -4,6 +4,7 @@
 Downloads rfr and stores in sqlite database for future reference
 
 """
+import datetime
 import os
 import zipfile
 import pandas as pd
@@ -90,7 +91,8 @@ def download_EIOPA_rates(url: str, ref_date: str) -> dict:
     raw_folder = workspace["raw_data"]
     zip_file = download_file(url, raw_folder)
 
-    reference_date = ref_date.strftime("%Y%m%d")
+    # Change format of ref_date string for EIOPA Excel files from YYYY-mm-dd to YYYYmmdd:
+    reference_date = ref_date.replace('-', '')
 
     name_excelfile = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
     name_excelfile_spreads = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
@@ -262,7 +264,7 @@ def extract_sym_adj(sym_adj_filepath: str, ref_date: str) -> pd.DataFrame:
         names=["ref_date", "sym_adj"],
     )
 
-    input_ref = ref_date.strftime("%Y-%m-%d")
+    input_ref = ref_date
     ref_check = df.at[0, "ref_date"].strftime("%Y-%m-%d")
 
     if input_ref != ref_check:
@@ -313,7 +315,7 @@ def add_to_db(ref_date: str, db: EiopaDB, data_type: str = "rfr"):
     if df is not None:
         df = df.reset_index()
         df["url_id"] = set_id
-        df["ref_date"] = ref_date.strftime("%Y-%m-%d")
+        df["ref_date"] = ref_date
         df.to_sql(data_type, con=db.conn, if_exists="append", index=False)
         set_types = {"govies": "rfr", "spreads": "rfr", "meta": "rfr"}
         db.update_catalog(
@@ -321,10 +323,31 @@ def add_to_db(ref_date: str, db: EiopaDB, data_type: str = "rfr"):
             dict_vals={
                 "set_type": set_types.get(data_type, data_type),
                 "primary_set": True,
-                "ref_date": ref_date.strftime("%Y-%m-%d"),
+                "ref_date": ref_date,
             },
         )
     return None
+
+
+def validate_date_string(ref_date):
+    """
+    This function just converts the input date to a string YYYY-mm-dd for use in SQL
+    e.g.
+    from datetime import date
+    ref_date = validate_date_string(date(2021,12,31))
+    ref_date = validate_date_string('2021-12-31')
+    Both return the same result
+    """
+    if type(ref_date) == datetime.date:
+        return ref_date.strftime('%Y-%m-%d')
+    elif type(ref_date) == str:
+        try:
+            return datetime.datetime.strptime(ref_date, "%Y-%m-%d").strftime("%Y-%m-%d")
+        except (TypeError, ValueError):
+            logging.warning("Date type not recognised. Try datetime.date or YYYY-mm-dd")
+            return None
+    else:
+        return None
 
 
 def get(ref_date: str, data_type: str = "rfr"):
@@ -332,34 +355,26 @@ def get(ref_date: str, data_type: str = "rfr"):
     Main API function
 
     Args:
-        ref_date: reference date
+        ref_date: reference date. Can be string or datetime.date. If passed as datetime.date this is converted for use elsewhere.
         data_type: type of the required dataset
 
     Returns:
         DataFrame with data if not empty dataset, otherwise None
 
     """
+    # Validate the provided ref_date:
+    ref_date = validate_date_string(ref_date)
     # Check if DB exists, if not, create it:
     workspace = get_workspace()
     database = workspace["database"]
     db = EiopaDB(database)
 
     sql_map = {
-        "rfr": "SELECT * FROM rfr WHERE ref_date = '"
-        + ref_date.strftime("%Y-%m-%d")
-        + "'",
-        "meta": "SELECT * FROM meta WHERE ref_date = '"
-        + ref_date.strftime("%Y-%m-%d")
-        + "'",
-        "spreads": "SELECT * FROM spreads WHERE ref_date = '"
-        + ref_date.strftime("%Y-%m-%d")
-        + "'",
-        "govies": "SELECT * FROM govies WHERE ref_date = '"
-        + ref_date.strftime("%Y-%m-%d")
-        + "'",
-        "sym_adj": "SELECT * FROM sym_adj WHERE ref_date = '"
-        + ref_date.strftime("%Y-%m-%d")
-        + "'",
+        "rfr": "SELECT * FROM rfr WHERE ref_date = '" + ref_date + "'",
+        "meta": "SELECT * FROM meta WHERE ref_date = '" + ref_date + "'",
+        "spreads": "SELECT * FROM spreads WHERE ref_date = '" + ref_date + "'",
+        "govies": "SELECT * FROM govies WHERE ref_date = '" + ref_date + "'",
+        "sym_adj": "SELECT * FROM sym_adj WHERE ref_date = '" + ref_date + "'",
     }
     sql = sql_map.get(data_type)
     df = pd.read_sql(sql, con=db.conn)
@@ -387,5 +402,5 @@ def refresh():
     dr = pd.date_range(date(2016, 1, 31), date.today(), freq="M")
     for ref_date in dr:
         for data_type in ["rfr", "meta", "spreads", "govies", "sym_adj"]:
-            df = get(ref_date, data_type)
+            df = get(ref_date.date(), data_type)
     return "Database successfully rebuilt"
