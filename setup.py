@@ -68,6 +68,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/wjwillemse/solvency2-data',
-    version='0.1.16',
+    version='0.1.17',
     zip_safe=False,
 )
