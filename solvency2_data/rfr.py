@@ -109,17 +109,6 @@ currencies = [
 ]
 
 
-class RiskFreeRate(dict):
-    """
-    Object oriented approach to rfr
-
-    Still used?
-
-    """
-    def __init__(self, input_date):
-        self.update(read(input_date))
-
-
 def RFR_reference_date(input_date: str = None, cache: dict = {}) -> dict:
     """
     Returns the closest reference date prior to an input_date
@@ -141,7 +130,10 @@ def RFR_reference_date(input_date: str = None, cache: dict = {}) -> dict:
 
     """
 
-    reference_date = datetime.strptime(input_date, '%Y-%m-%d')
+    if input_date is not None:
+        reference_date = datetime.strptime(input_date, '%Y-%m-%d')
+    else:
+        reference_date = None
 
     if (reference_date is None) or (reference_date > datetime.today()):
         reference_date = datetime.today()
@@ -155,7 +147,7 @@ def RFR_reference_date(input_date: str = None, cache: dict = {}) -> dict:
     reference_date = reference_date.replace(day=1) - timedelta(days=1)
 
     cache["input_date"] = reference_date.strftime("%Y-%m-%d")
-    cache["reference_date"] = input_date.replace('-', '')
+    cache["reference_date"] = cache["input_date"].replace('-', '')
 
     return cache
 
@@ -182,20 +174,13 @@ def RFR_dict(input_date: str = None, cache: dict = {}) -> dict:
         The updated cache with the data
 
     """
-
     cache = RFR_reference_date(input_date, cache)
-
-    reference_date = cache["reference_date"]
-    full_url = eiopa_link(cache["input_date"], data_type="rfr")
-    cache["url"] = os.path.dirname(full_url)
-    cache["name_zipfile"] = os.path.basename(full_url)
     cache["name_excelfile"] = (
-        "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
+        "EIOPA_RFR_" + cache["reference_date"] + "_Term_Structures" + ".xlsx"
     )
     cache["name_excelfile_spreads"] = (
-        "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
+        "EIOPA_RFR_" + cache["reference_date"] + "_PD_Cod" + ".xlsx"
     )
-
     return cache
 
 
@@ -228,9 +213,12 @@ def download_RFR(input_date: str = None, cache: dict = {}) -> dict:
     ) or not (
         os.path.isfile(join(cache["path_excelfile"], cache["name_excelfile_spreads"]))
     ):
+        # determine correct url and zipfile
+        cache["url"] = eiopa_link(cache["input_date"], data_type="rfr")
+        cache["name_zipfile"] = os.path.basename(cache["url"]).split("filename=")[-1]
 
         # download file
-        request = urlopen(cache["url"] + "/" + cache["name_zipfile"])
+        request = urlopen(cache["url"])
 
         # save zip-file
         output = open(join(cache["path_zipfile"], cache["name_zipfile"]), "wb")

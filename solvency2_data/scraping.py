@@ -6,7 +6,6 @@ import re
 import bs4 as bs
 import requests
 import datetime
-
 urls_dict = {
     "rfr": [
         "https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures_en",
@@ -31,13 +30,16 @@ def get_links(urls: str, r: str) -> list:
 
     """
     valid_links = []
-
     for page in urls:
         if len(valid_links) == 0:
             resp = requests.get(page)
             soup = bs.BeautifulSoup(resp.text, "lxml")
             for link in soup.find_all("a", {"href": r}):
-                valid_links.append(link.get("href"))
+                if link.get("href")[0]=="/":
+                    # correct relative urls
+                    valid_links.append("https://www.eiopa.europa.eu"+link.get("href"))
+                else:
+                    valid_links.append(link.get("href"))
     if len(valid_links) > 0:
         return valid_links[0]
     else:
@@ -70,12 +72,13 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
     urls = urls_dict.get(data_type)
     # Change format of ref_date string for EIOPA Excel files from YYYY-mm-dd to YYYYmmdd:
     reference_date = ref_date.replace('-', '')
+    ref_date_datetime = datetime.datetime.strptime(ref_date, '%Y-%m-%d')
     if data_type == "rfr":
-        filename = "eiopa_rfr_" + reference_date
-        # Allow for extra 4 characters e.g. _0_0
-        r = re.compile(".*" + filename + ".{0,4}.zip")
+        # eiopa uses two naming conventions for the files
+        filename1 = ".*"+ref_date_datetime.strftime("%B%%20%Y")+"(%E2%80%8B)?"
+        filename2 = ".*EIOPA_RFR_" + reference_date + ".zip"
+        r = re.compile(filename1+"|"+filename2)
     elif data_type == "sym_adj":
-        ref_date_datetime = datetime.datetime.strptime(ref_date, '%Y-%m-%d')
         str_year = ref_date_datetime.strftime("%Y")
         str_month = ref_date_datetime.strftime("%B").lower()
         # Regex to find the file :

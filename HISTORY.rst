@@ -16,3 +16,4 @@ History
 0.1.16 (2022-1-20): major update with database object to store downloaded rfr's
 0.1.18 (2022-1-31): smith wilson code added to package
 0.1.19 (2022-2-17): alternative extrapolation method from DNB implemented
+0.1.20 (2023-3-29): Broken links from EIOPA website fixed
