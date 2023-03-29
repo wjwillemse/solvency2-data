@@ -7,9 +7,9 @@ Welcome to solvency2-data's documentation!
 
    readme
    installation
-   usage
+   Usage <usage>
+   using a database <api_example>
    contributing
-   authors
    history
 
 Indices and tables

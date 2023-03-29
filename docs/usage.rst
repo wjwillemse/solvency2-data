@@ -12,7 +12,7 @@ To get the term structures per 31/12/2017 enter
 
 :: 
 
-	d = solvency2_data.read(datetime(2017,12,31))
+	d = solvency2_data.read("2017-12-31")
 
 
 If you do not add a input datetime, i.e. solvency2_data.read(), then the function will use today() and you will receive the most recent published term structure.
