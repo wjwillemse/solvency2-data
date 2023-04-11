@@ -13,7 +13,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = ['numpy',
                 'pandas',
-                'openpyxl==3.1.0"',
+                'openpyxl==3.1.0',
                 'configparser',
                 'twine',
                 'wheel',
@@ -68,6 +68,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/wjwillemse/solvency2-data',
-    version='0.1.20',
+    version='0.1.21',
     zip_safe=False,
 )
