@@ -32,9 +32,9 @@ def get_links(urls: str, r: str) -> list:
         list of valid links
 
     """
-    valid_links = []
+    raw_links = []
     for page in urls:
-        if len(valid_links) == 0:
+        if len(raw_links) == 0:
             resp = requests.get(page)
             soup = bs.BeautifulSoup(resp.text, "lxml")
             for link in soup.find_all("a", {"href": r}):
@@ -44,12 +44,27 @@ def get_links(urls: str, r: str) -> list:
                 else:
                     link_before_redirect = link.get("href")
                 # Check if there is a redirect:
-                valid_links.append(link_before_redirect)
+                raw_links.append(link_before_redirect)
 
+    valid_links = []
+    for url in raw_links:
+        if check_if_download(url):
+            valid_links.append(url)
+        else:
+            redirect = lookthrough_redirect(url)
+            if check_if_download(redirect):
+                valid_links.append(redirect)
     if len(valid_links) > 0:
         return valid_links[0]
     else:
         return None
+
+
+def check_if_download(url:str) -> bool:
+    headers = requests.head(url).headers
+    # downloadable = 'attachment' in headers.get('Content-Disposition', '')
+    downloadable = headers.get('Content-Type') in ['application/zip', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+    return downloadable
 
 
 def lookthrough_redirect(url: str) -> str:
@@ -116,14 +131,21 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
         )
 
     valid_link = get_links(urls, r)
-    valid_link = lookthrough_redirect(valid_link)
+
+    problem_dates = {'rfr': ['2021-11-30']}
+    if ref_date in problem_dates.get(data_type, []):
+        valid_link = False
 
     if not valid_link:
         manual_links = {
             'sym_adj':
                 {
-                    '2020-06-30': 'https://www.eiopa.europa.eu/sites/default/files/symmetric_adjustment/eiopa_symmetric_adjustment_equity_capital_charge_16_06_2020.xlsx',
-                    '2020-07-31': 'https://www.eiopa.europa.eu/sites/default/files/symmetric_adjustment/eiopa_symmetric_adjustment_equity_capital_charge_14_07_2020.xlsx'
+                    '2020-06-30': 'https://www.eiopa.europa.eu/system/files/2020-06/eiopa_symmetric_adjustment_equity_capital_charge_16_06_2020.xlsx',
+                    '2020-07-31': 'https://www.eiopa.europa.eu/system/files/2020-07/eiopa_symmetric_adjustment_equity_capital_charge_14_07_2020.xlsx'
+                },
+            'rfr':
+                {
+                    '2021-11-30': 'https://www.eiopa.europa.eu/system/files/2021-12/eiopa_rfr_20211130.zip'
                 }
         }
         valid_link = manual_links.get(data_type).get(ref_date)

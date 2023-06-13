@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = ['numpy',
-                'pandas<2.0.0',
+                'pandas',
                 'openpyxl==3.1.0',
                 'configparser',
                 'twine',

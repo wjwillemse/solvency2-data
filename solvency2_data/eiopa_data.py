@@ -260,9 +260,8 @@ def extract_sym_adj(sym_adj_filepath: str, ref_date: str) -> pd.DataFrame:
         nrows=1,
         skiprows=7,
         header=None,
-        squeeze=True,
         names=["ref_date", "sym_adj"],
-    )
+    ).squeeze('columns')
 
     input_ref = ref_date
     ref_check = df.at[0, "ref_date"].strftime("%Y-%m-%d")
@@ -400,6 +399,7 @@ def refresh():
 
     """
     dr = pd.date_range(date(2016, 1, 31), date.today(), freq="M")
+    # dr = pd.date_range(date(2021, 11, 30), date.today(), freq="M")
     for ref_date in dr:
         for data_type in ["rfr", "meta", "spreads", "govies", "sym_adj"]:
             df = get(ref_date.date(), data_type)
