@@ -3,6 +3,8 @@ Returns links for EIOPA files
 
 """
 import re
+import urllib as urllib
+
 import bs4 as bs
 import requests
 import datetime
@@ -37,13 +39,27 @@ def get_links(urls: str, r: str) -> list:
             for link in soup.find_all("a", {"href": r}):
                 if link.get("href")[0]=="/":
                     # correct relative urls
-                    valid_links.append("https://www.eiopa.europa.eu"+link.get("href"))
+                    link_before_redirect = "https://www.eiopa.europa.eu" + link.get("href")
                 else:
-                    valid_links.append(link.get("href"))
+                    link_before_redirect = link.get("href")
+                # Check if there is a redirect:
+                valid_links.append(link_before_redirect)
+
     if len(valid_links) > 0:
         return valid_links[0]
     else:
         return None
+
+
+def lookthrough_redirect(url: str) -> str:
+    """ Get the file behind the redirect link """
+    try:
+        resp = urllib.request.urlopen(url)
+        file_url = resp.geturl()
+    except:
+        file_url = url
+    return file_url
+
 
 
 def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
@@ -71,6 +87,7 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
     data_type = data_type_remap.get(data_type, data_type)
     urls = urls_dict.get(data_type)
     # Change format of ref_date string for EIOPA Excel files from YYYY-mm-dd to YYYYmmdd:
+    print(ref_date)
     reference_date = ref_date.replace('-', '')
     ref_date_datetime = datetime.datetime.strptime(ref_date, '%Y-%m-%d')
     if data_type == "rfr":
@@ -84,17 +101,19 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
         # Regex to find the file :
         # ._ required for ._march_2019
         # Only matches on first 3 letters of months since some mis-spellings
-        r = re.compile(
-            ".*eiopa[-, _]symmetric[-, _]adjustment[-, _]equity[-, _]capital[-, _]charge\.?[-, _]"
-            + str_month[:3]
-            + "[a-z]{0,"
-            + str(len(str_month) - 3)
-            + "}[-, _]"
-            + str_year
-            + ".*.xlsx"
+        words_in_link = ['symmetric', 'adjustment', 'equity', 'capital', 'charge']
+        r = re.compile(".*(?i:eiopa)(?:[-, _]|%20)"
+                       + "(?:[-, _]|%20)".join(words_in_link)
+                       + "(?:[-, _]|%20)" + "(?i:" + str_month[:3]+ ")"
+                       + "[a-z]{0,"
+                       + str(len(str_month) - 3)
+                       + "}(?:[-, _]|%20)"
+                       + str_year
+                       + "(?:.xlsx|$)"
         )
 
     valid_link = get_links(urls, r)
+    valid_link = lookthrough_redirect(valid_link)
 
     if not valid_link:
         manual_links = {
