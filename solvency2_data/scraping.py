@@ -10,6 +10,7 @@ import requests
 import datetime
 urls_dict = {
     "rfr": [
+        "https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures/risk-free-rate-previous-releases-and-preparatory-phase_en",
         "https://www.eiopa.europa.eu/tools-and-data/risk-free-interest-rate-term-structures_en",
         "https://www.eiopa.europa.eu/risk-free-rate-previous-releases-and-preparatory-phase",
     ],
@@ -61,7 +62,6 @@ def lookthrough_redirect(url: str) -> str:
     return file_url
 
 
-
 def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
     """
     This returns the link for downloading the selected type of data for a given date
@@ -87,17 +87,21 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
     data_type = data_type_remap.get(data_type, data_type)
     urls = urls_dict.get(data_type)
     # Change format of ref_date string for EIOPA Excel files from YYYY-mm-dd to YYYYmmdd:
-    print(ref_date)
     reference_date = ref_date.replace('-', '')
     ref_date_datetime = datetime.datetime.strptime(ref_date, '%Y-%m-%d')
+    str_year = ref_date_datetime.strftime("%Y")
+    str_month = ref_date_datetime.strftime("%B").lower()
     if data_type == "rfr":
         # eiopa uses two naming conventions for the files
-        filename1 = ".*"+ref_date_datetime.strftime("%B%%20%Y")+"(%E2%80%8B)?"
-        filename2 = ".*EIOPA_RFR_" + reference_date + ".zip"
-        r = re.compile(filename1+"|"+filename2)
+        # filename1 = ".*"+ref_date_datetime.strftime("%B%%20%Y")+"(%E2%80%8B)?"
+        # filename2 = ".*EIOPA_RFR_" + reference_date + ".zip"
+        # r = re.compile(filename1+"|"+filename2)
+        r = re.compile(".*(?i:filename=)"
+                       + "(?i:" + str_month + ")"
+                       + "(?:[-, _]|%20)" + str_year
+                       + ".*"
+        )
     elif data_type == "sym_adj":
-        str_year = ref_date_datetime.strftime("%Y")
-        str_month = ref_date_datetime.strftime("%B").lower()
         # Regex to find the file :
         # ._ required for ._march_2019
         # Only matches on first 3 letters of months since some mis-spellings
