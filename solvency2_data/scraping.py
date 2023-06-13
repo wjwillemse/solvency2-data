@@ -91,7 +91,6 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
     ref_date_datetime = datetime.datetime.strptime(ref_date, '%Y-%m-%d')
     str_year = ref_date_datetime.strftime("%Y")
     str_month = ref_date_datetime.strftime("%B").lower()
-    print(ref_date)
     if data_type == "rfr":
         # eiopa uses two naming conventions for the files
         filename1 = ".*(?i:filename=)(?:%E2%80%8B)?"\
