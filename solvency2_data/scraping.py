@@ -71,9 +71,9 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
 
     from datetime import date
     import pandas as pd
-    dr = pd.date_range(date(2016,1,31), date(2021,7,31), freq='M')
-    rfr_links = {i.strftime('%Y%m%d'): eiopa_link(i) for i in dr}
-    sym_adj_links = {i.strftime('%Y%m%d'): eiopa_link(i, 'sym_adj') for i in dr}
+    dr = pd.date_range(date(2016,1,31), date(2023,5,31), freq='M')
+    rfr_links = {i.strftime('%Y%m%d'): eiopa_link(i.strftime('%Y-%m-%d')) for i in dr}
+    sym_adj_links = {i.strftime('%Y%m%d'): eiopa_link(i.strftime('%Y-%m-%d'), 'sym_adj') for i in dr}
 
     Args:
         ref_date: reference date
@@ -91,16 +91,16 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
     ref_date_datetime = datetime.datetime.strptime(ref_date, '%Y-%m-%d')
     str_year = ref_date_datetime.strftime("%Y")
     str_month = ref_date_datetime.strftime("%B").lower()
+    print(ref_date)
     if data_type == "rfr":
         # eiopa uses two naming conventions for the files
-        # filename1 = ".*"+ref_date_datetime.strftime("%B%%20%Y")+"(%E2%80%8B)?"
-        # filename2 = ".*EIOPA_RFR_" + reference_date + ".zip"
-        # r = re.compile(filename1+"|"+filename2)
-        r = re.compile(".*(?i:filename=)"
-                       + "(?i:" + str_month + ")"
-                       + "(?:[-, _]|%20)" + str_year
-                       + ".*"
-        )
+        filename1 = ".*(?i:filename=)(?:%E2%80%8B)?"\
+                    + "(?i:" + str_month + ")"\
+                    + "(?:[-, _]|%20)" + str_year\
+                    + ".*"".*"
+        filename2 = ".*EIOPA_RFR_" + reference_date + ".zip"
+        r = re.compile(filename1+"|"+filename2)
+
     elif data_type == "sym_adj":
         # Regex to find the file :
         # ._ required for ._march_2019
@@ -113,7 +113,7 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
                        + str(len(str_month) - 3)
                        + "}(?:[-, _]|%20)"
                        + str_year
-                       + "(?:.xlsx|$)"
+                       + "(?:_[0-9]{0,1})?(?:.xlsx|$)"
         )
 
     valid_link = get_links(urls, r)
