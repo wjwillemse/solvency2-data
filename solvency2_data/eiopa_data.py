@@ -6,6 +6,7 @@ Downloads rfr and stores in sqlite database for future reference
 """
 import datetime
 import os
+import re
 import zipfile
 import pandas as pd
 import urllib
@@ -96,10 +97,20 @@ def download_EIOPA_rates(url: str, ref_date: str) -> dict:
 
     name_excelfile = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
     name_excelfile_spreads = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
+    # Making file paths string insensitve via regex
+    re_rfr = re.compile(f"(?i:{name_excelfile})")
+    re_spreads = re.compile(f"(?i:{name_excelfile_spreads})")
 
     with zipfile.ZipFile(zip_file) as zipobj:
-        zipobj.extract(name_excelfile, raw_folder)
-        zipobj.extract(name_excelfile_spreads, raw_folder)
+        for file in zipobj.namelist():
+            res_rfr = re_rfr.search(file)
+            res_spreads = re_spreads.search(file)
+            if res_rfr:
+                rfr_file = res_rfr.group(0)
+                zipobj.extract(rfr_file, raw_folder)
+            if res_spreads:
+                spreads_file = res_spreads.group(0)
+                zipobj.extract(spreads_file, raw_folder)
     return {
         "rfr": os.path.join(raw_folder, name_excelfile),
         "meta": os.path.join(raw_folder, name_excelfile),
