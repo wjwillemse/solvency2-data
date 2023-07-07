@@ -6,9 +6,6 @@ solvency2-data
 .. image:: https://img.shields.io/pypi/v/solvency2_data.svg
         :target: https://pypi.python.org/pypi/solvency2-data
         :alt: Pypi Version
-.. image:: https://img.shields.io/travis/wjwillemse/solvency2-data.svg
-        :target: https://app.travis-ci.com/github/wjwillemse/solvency2-data
-        :alt: Build Status
 .. image:: https://readthedocs.org/projects/solvency2-data/badge/?version=latest
         :target: https://solvency2-data.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
