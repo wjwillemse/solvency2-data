@@ -240,8 +240,8 @@ def smith_wilson(
     tempdiscount = np.zeros(121)
     tempintensity = np.zeros(121)
     for i in range(0, 121):
-        tempdiscount[i] = temptempdiscount[i]
-        tempintensity[i] = temptempintensity[i]
+        tempdiscount[i] = temptempdiscount[i][0]
+        tempintensity[i] = temptempintensity[i][0]
 
     # calculating (1'-exp(-alfa*u'))Qb as subresult for 160 of specs
     res1 = sum(

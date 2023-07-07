@@ -423,4 +423,7 @@ def read(input_date=None, path: str = None) -> dict:
     cache = read_spreads(xls_spreads, cache)
     cache = read_govies(xls_spreads, cache)
 
+    xls.close()
+    xls_spreads.close()
+
     return cache

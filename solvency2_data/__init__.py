@@ -2,7 +2,7 @@
 
 """Top-level package for solvency2-data."""
 
-__version__ = "0.1.21"
+__version__ = "0.1.22"
 
 from .rfr import *
 from .eiopa_data import get, refresh
