@@ -225,10 +225,18 @@ def download_RFR(input_date: str = None, cache: dict = {}) -> dict:
         output.write(request.read())
         output.close()
 
-        # extract file from zip-file
+        name_excelfile = None
+        name_excelfile_spreads = None
         zip_ref = zipfile.ZipFile(join(cache["path_zipfile"], cache["name_zipfile"]))
-        zip_ref.extract(cache["name_excelfile"], cache["path_excelfile"])
-        zip_ref.extract(cache["name_excelfile_spreads"], cache["path_excelfile"])
+        for idx, name in enumerate(zip_ref.namelist()):
+            if name.lower() == cache["name_excelfile"].lower():
+                name_excelfile = name
+            if name.lower() == cache["name_excelfile_spreads"].lower():
+                name_excelfile_spreads = name
+        if name_excelfile is not None:
+            zip_ref.extract(name_excelfile, cache["path_excelfile"])
+        if name_excelfile_spreads is not None:
+            zip_ref.extract(name_excelfile_spreads, cache["path_excelfile"])
         zip_ref.close()
 
         # remove zip file

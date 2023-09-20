@@ -17,3 +17,4 @@ History
 0.1.18 (2022-1-31): smith wilson code added to package
 0.1.19 (2022-2-17): alternative extrapolation method from DNB implemented
 0.1.21 (2023-3-29): Broken links from EIOPA website fixed
+0.1.23 (2023-9-20): Eiopa's 2023-6-1 uses PD_CoD instead pf PD_Cod
