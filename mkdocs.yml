@@ -15,3 +15,5 @@ theme: material
 plugins:
 - search
 - mkdocstrings
+
+use_directory_urls: false
