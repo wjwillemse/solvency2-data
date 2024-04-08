@@ -4,6 +4,7 @@
 Downloads rfr and stores in sqlite database for future reference
 
 """
+
 import datetime
 import os
 import re
@@ -21,14 +22,13 @@ from solvency2_data.scraping import eiopa_link
 
 def get_workspace() -> dict:
     """
-    Get the workspace for saving xl and the database
-
-    Args:
-        None
+    Retrieves workspace directories and paths from the configuration.
 
     Returns:
-        dictionary with workspace data
-
+        dict: A dictionary containing workspace directories and paths.
+            The dictionary includes the following keys:
+                - "database": The path to the EIOPA database file.
+                - "raw_data": The path to the directory containing raw data.
     """
     config = get_config().get("Directories")
     path_db = config.get("db_folder")
@@ -39,17 +39,17 @@ def get_workspace() -> dict:
 
 def download_file(url: str, raw_folder: str, filename: str = "") -> str:
     """
-    This function downloads a file and give it a name if not explicitly specified.
+    Downloads a file from a URL and saves it in a specified folder.
 
     Args:
-        raw_folder: url of the file to download
-        filename: file path+name to give to the file to download
+        url (str): The URL of the file to download.
+        raw_folder (str): The path to the directory where the file will be saved.
+        filename (str, optional): The desired filename. If not provided,
+            the filename will be derived from the URL. Defaults to "".
 
     Returns:
-        name of the file
-
+        str: The path to the downloaded file.
     """
-
     if filename:
         extension = url[(url.rfind(".")) :]
         if extension not in filename:
@@ -59,12 +59,16 @@ def download_file(url: str, raw_folder: str, filename: str = "") -> str:
     else:
         # if filename not specified, then the file name will be the original file name
         filename = url[(url.rfind("/") + 1) :]
+        # make sure that the filename does not contain illegal characters
+        filename = re.sub(r"[^\w_. -]", "_", filename)
+
+    if filename[-4:] != ".zip":
+        filename = filename + ".zip"
 
     target_file = os.path.join(raw_folder, filename)
 
     if os.path.isfile(target_file):
         logging.info("file already exists in this location, not downloading")
-
     else:
         if not os.path.exists(raw_folder):
             os.makedirs(raw_folder)
@@ -76,24 +80,32 @@ def download_file(url: str, raw_folder: str, filename: str = "") -> str:
     return target_file
 
 
-def download_EIOPA_rates(url: str, ref_date: str) -> dict:
+def download_EIOPA_rates(url: str, ref_date: str, workspace: dict = None) -> dict:
     """
-    Download and unzip the EIOPA files
+    Downloads EIOPA RFR (Risk-Free Rate) files from a given URL and extracts them.
 
     Args:
-        url: url from which data is to be downloaded
-        ref_date: the reference date of the data
+        url (str): The URL from which to download the EIOPA RFR files.
+        ref_date (str): The reference date in the format "%Y-%m-%d".
+        workspace (dict, optional): A dictionary containing workspace directories and paths.
+            If None, it retrieves workspace information using get_workspace() function.
+            Defaults to None.
 
     Returns:
-        dictionary with metadata
-
+        dict: A dictionary containing the paths to the downloaded files.
+            The dictionary includes the following keys:
+                - "rfr": The path to the downloaded EIOPA RFR term structures Excel file.
+                - "meta": The path to the downloaded EIOPA RFR meta Excel file.
+                - "spreads": The path to the downloaded EIOPA RFR PD Cod Excel file.
+                - "govies": The path to the downloaded EIOPA RFR govvies Excel file.
     """
-    workspace = get_workspace()
+    if workspace is None:
+        workspace = get_workspace()
     raw_folder = workspace["raw_data"]
     zip_file = download_file(url, raw_folder)
 
     # Change format of ref_date string for EIOPA Excel files from YYYY-mm-dd to YYYYmmdd:
-    reference_date = ref_date.replace('-', '')
+    reference_date = ref_date.replace("-", "")
 
     name_excelfile = "EIOPA_RFR_" + reference_date + "_Term_Structures" + ".xlsx"
     name_excelfile_spreads = "EIOPA_RFR_" + reference_date + "_PD_Cod" + ".xlsx"
@@ -121,14 +133,14 @@ def download_EIOPA_rates(url: str, ref_date: str) -> dict:
 
 def extract_spot_rates(rfr_filepath: str) -> dict:
     """
-    Extract spot rates
+    Extracts spot rates from an EIOPA RFR Excel file.
 
     Args:
-        rfr_filepath: path to Excel file with rfr data
+        rfr_filepath (str): The path to the EIOPA RFR Excel file.
 
     Returns:
-        dictionary with metadata
-
+        dict: A dictionary containing extracted spot rates.
+            The dictionary includes spot rates indexed by scenario, currency code, and duration.
     """
     logging.info("Extracting spots: " + rfr_filepath)
     # TODO: Complete this remap dictionary
@@ -171,14 +183,14 @@ def extract_spot_rates(rfr_filepath: str) -> dict:
 
 def extract_meta(rfr_filepath: str) -> dict:
     """
-    Extract spot rates
+    Extracts metadata from an EIOPA RFR Excel file.
 
     Args:
-        rfr_filepath: path to Excel file with rfr data
+        rfr_filepath (str): The path to the EIOPA RFR Excel file.
 
     Returns:
-        dictionary with metadata
-
+        dict: A dictionary containing extracted metadata.
+            The dictionary includes metadata indexed by country.
     """
     logging.info("Extracting meta data :" + rfr_filepath)
     meta = read_meta(rfr_filepath)
@@ -191,14 +203,14 @@ def extract_meta(rfr_filepath: str) -> dict:
 
 def extract_spreads(spread_filepath):
     """
-    Extract spreads data
+    Extracts spreads data from an EIOPA RFR spreads Excel file.
 
     Args:
-        spread_filepath: path to Excel file with spreads data
+        spread_filepath (str): The path to the EIOPA RFR spreads Excel file.
 
     Returns:
-        dictionary with metadata
-
+        pandas.DataFrame: A DataFrame containing extracted spreads data.
+            The DataFrame includes spreads indexed by type, currency code, credit curve step, and duration.
     """
     logging.info("Extracting spreads: " + spread_filepath)
     xls = pd.ExcelFile(spread_filepath, engine="openpyxl")
@@ -226,14 +238,15 @@ def extract_spreads(spread_filepath):
 
 def extract_govies(govies_filepath):
     """
-    Extract govies data
+    Extracts government spreads data from an EIOPA RFR spreads Excel file.
 
     Args:
-        govies_filepath: path to Excel file with govies data
+        govies_filepath (str): The path to the EIOPA RFR spreads Excel file containing government spreads.
 
     Returns:
-        dictionary with metadata
-
+        pandas.DataFrame or None: A DataFrame containing extracted government spreads data,
+            indexed by country code and duration.
+            Returns None if no government spreads are found.
     """
     logging.info("Extracting govies: " + govies_filepath)
     xls = pd.ExcelFile(govies_filepath, engine="openpyxl")
@@ -255,14 +268,16 @@ def extract_govies(govies_filepath):
 
 def extract_sym_adj(sym_adj_filepath: str, ref_date: str) -> pd.DataFrame:
     """
-    Extract symmetric adjustment
+    Extracts symmetric adjustment data from a file.
 
     Args:
-        sym_adj_filepath: path to Excel file with symmetric adjustment
+        sym_adj_filepath (str): The path to the file containing symmetric adjustment data.
+        ref_date (str): The reference date in the format "%Y-%m-%d".
 
     Returns:
-        DataFrame with symmetric adjustment data
-
+        pd.DataFrame or None: A DataFrame containing symmetric adjustment data.
+            Returns None if there is a date mismatch between the reference date provided
+            and the date in the file.
     """
     df = pd.read_excel(
         sym_adj_filepath,
@@ -272,7 +287,7 @@ def extract_sym_adj(sym_adj_filepath: str, ref_date: str) -> pd.DataFrame:
         skiprows=7,
         header=None,
         names=["ref_date", "sym_adj"],
-    ).squeeze('columns')
+    ).squeeze("columns")
 
     input_ref = ref_date
     ref_check = df.at[0, "ref_date"].strftime("%Y-%m-%d")
@@ -288,18 +303,23 @@ def extract_sym_adj(sym_adj_filepath: str, ref_date: str) -> pd.DataFrame:
         return df
 
 
-def add_to_db(ref_date: str, db: EiopaDB, data_type: str = "rfr"):
+def add_to_db(
+    ref_date: str, db: EiopaDB, data_type: str = "rfr", workspace: dict = None
+):
     """
-    Call this if a set is missing
+    Adds data to the EIOPA database, to use when you are missing data.
 
     Args:
-        ref_date: reference date
-        db: database to be used
-        data_type: type of the dataset to be added
+        ref_date (str): The reference date in the format "%Y-%m-%d".
+        db (EiopaDB): The EIOPA database instance.
+        data_type (str, optional): The type of data to add.
+            Options: "rfr" (default), "meta", "spreads", "govies", "sym_adj".
+        workspace (dict, optional): A dictionary containing workspace directories and paths.
+            If None, it retrieves workspace information using get_workspace() function.
+            Defaults to None.
 
     Returns:
         None
-
     """
     url = eiopa_link(ref_date, data_type=data_type)
     set_id = db.get_set_id(url)
@@ -317,7 +337,8 @@ def add_to_db(ref_date: str, db: EiopaDB, data_type: str = "rfr"):
         else:
             raise KeyError
     elif data_type == "sym_adj":
-        workspace = get_workspace()
+        if workspace is None:
+            workspace = get_workspace()
         raw_folder = workspace["raw_data"]
         file = download_file(url, raw_folder)
         df = extract_sym_adj(file, ref_date)
@@ -341,16 +362,18 @@ def add_to_db(ref_date: str, db: EiopaDB, data_type: str = "rfr"):
 
 def validate_date_string(ref_date):
     """
-    This function just converts the input date to a string YYYY-mm-dd for use in SQL
-    e.g.
-    from datetime import date
-    ref_date = validate_date_string(date(2021,12,31))
-    ref_date = validate_date_string('2021-12-31')
-    Both return the same result
+    Validates the input date string.
+
+    Args:
+        ref_date (str or datetime.date): The input date string or datetime.date object.
+
+    Returns:
+        str or None: A validated date string in the format "%Y-%m-%d".
+            Returns None if the input date type is not recognized or cannot be converted.
     """
     if type(ref_date) == datetime.date:
-        return ref_date.strftime('%Y-%m-%d')
-    elif type(ref_date) == str:
+        return ref_date.strftime("%Y-%m-%d")
+    elif isinstance(ref_date, str):
         try:
             return datetime.datetime.strptime(ref_date, "%Y-%m-%d").strftime("%Y-%m-%d")
         except (TypeError, ValueError):
@@ -360,22 +383,27 @@ def validate_date_string(ref_date):
         return None
 
 
-def get(ref_date: str, data_type: str = "rfr"):
+def get(ref_date: str, data_type: str = "rfr", workspace: dict = None):
     """
-    Main API function
+    Retrieves data from the EIOPA database for a given reference date and data type.
 
     Args:
-        ref_date: reference date. Can be string or datetime.date. If passed as datetime.date this is converted for use elsewhere.
-        data_type: type of the required dataset
+        ref_date (str): The reference date in the format "%Y-%m-%d".
+        data_type (str, optional): The type of data to retrieve.
+            Options: "rfr" (default), "meta", "spreads", "govies", "sym_adj".
+        workspace (dict, optional): A dictionary containing workspace directories and paths.
+            If None, it retrieves workspace information using get_workspace() function.
+            Defaults to None.
 
     Returns:
-        DataFrame with data if not empty dataset, otherwise None
-
+        pandas.DataFrame or None: A DataFrame containing retrieved data.
+            Returns None if no data is found for the given reference date and data type.
     """
     # Validate the provided ref_date:
     ref_date = validate_date_string(ref_date)
     # Check if DB exists, if not, create it:
-    workspace = get_workspace()
+    if workspace is None:
+        workspace = get_workspace()
     database = workspace["database"]
     db = EiopaDB(database)
 
@@ -391,7 +419,7 @@ def get(ref_date: str, data_type: str = "rfr"):
     if df.empty:
         add_to_db(ref_date, db, data_type)
         df = pd.read_sql(sql, con=db.conn)
-    if ~df.empty:
+    if not df.empty:
         df = df.drop(columns=["url_id", "ref_date"])
         return df
     else:
@@ -400,18 +428,14 @@ def get(ref_date: str, data_type: str = "rfr"):
 
 def refresh():
     """
-    Function to refresh database
-
-    Args:
-        None
+    Refreshes the EIOPA database by updating data for each month from January 2016 to the current month.
 
     Returns:
-        string with result
-
+        str: A message indicating that the database has been successfully rebuilt.
     """
     dr = pd.date_range(date(2016, 1, 31), date.today(), freq="M")
     # dr = pd.date_range(date(2021, 11, 30), date.today(), freq="M")
     for ref_date in dr:
         for data_type in ["rfr", "meta", "spreads", "govies", "sym_adj"]:
-            df = get(ref_date.date(), data_type)
+            _ = get(ref_date.date(), data_type)
     return "Database successfully rebuilt"

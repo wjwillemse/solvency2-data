@@ -26,8 +26,8 @@ wheels/
 *.egg
 
 # Exclude test_data from package
-tests/test_data/*.zip
-tests/test_data/*.xlsx
+tests/test_data/
+tests/test_data/
 data/
 
 # PyInstaller
@@ -107,4 +107,4 @@ ENV/
 .mypy_cache/
 
 raw/
-eiopa.db
+eiopa.db"site/" 

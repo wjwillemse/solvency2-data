@@ -25,8 +25,10 @@ logging.basicConfig(format='%(asctime)s | %(levelname)s : %(message)s',
 
 ```python
 # Check your environment
-sys.path
+print(sys.path)
 ```
+
+Create a database with:
 
 ```python
 from solvency2_data.eiopa_data import get_workspace
@@ -35,12 +37,14 @@ database = get_workspace()['database']
 db = EiopaDB(database)
 ```
 
+Reset the database with:
+
 ```python
 # Hard reset of DB - deletes the file and all stored data and rebuilds empty DB
 db.reset()
 ```
 
-Now populate it for every month (until July 2021)
+Now populate it for every month:
 
 ```python
 import solvency2_data
@@ -52,7 +56,7 @@ Now this can be indirectly queried using the API
 ```python
 import solvency2_data
 from datetime import date
-ref_date = date(2020,12,31)
+ref_date = date(2020, 12, 31)
 rfr = solvency2_data.get(ref_date)
 meta = solvency2_data.get(ref_date, 'meta')
 spr = solvency2_data.get(ref_date, 'spreads')
@@ -61,7 +65,7 @@ sym_adj =  solvency2_data.get(ref_date, 'sym_adj')
 rfr.head()
 ```
 
-Or directly queried
+Or directly queried via a SQL expression:
 
 ```python
 import pandas as pd

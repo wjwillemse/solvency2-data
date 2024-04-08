@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "solvency2-data"
+version = "0.2.0"
+description = "Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from the zip-files on the EIOPA website and deriving the term structures for alternative extrapolations"
+authors = ["Willem Jan Willemse <w.j.willemse@freedom.nl>"]
+license = "MIT"
+readme = "docs/README.md"
+keywords = ["solvency2", "eiopa", "pandas"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[project.urls]
+homepage = "https://github.com/wjwillemse/solvency2-data"
+documentation = "https://github.com/wjwillemse/solvency2-data"
+repository = "https://github.com/wjwillemse/solvency2-data"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+numpy = "^1.26.4"
+pandas = "^2.2.1"
+openpyxl = "^3.1.2"
+configparser = "^6.0.1"
+bs4 = "^0.0.2"
+lxml = "^5.2.1"
+requests = "^2.31.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.dev-dependencies]
+ruff = "^0.3.5"
+pre-commit = "^3.7.0"
+
+[tool.poetry.group.docs]
+optional = true
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.5.3"
+mkdocs-material = "^9.5.17"
+mkdocstrings-python = "^1.9.2"
