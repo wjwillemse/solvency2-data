@@ -20,8 +20,8 @@ classifiers = [
 ]
 
 [project.urls]
-homepage = "https://github.com/wjwillemse/solvency2-data"
-documentation = "https://github.com/wjwillemse/solvency2-data"
+homepage = "https://wjwillemse.github.io/solvency2-data"
+documentation = "https://wjwillemse.github.io/solvency2-data"
 repository = "https://github.com/wjwillemse/solvency2-data"
 
 [tool.poetry.dependencies]
