@@ -1,0 +1,17 @@
+site_name: solvency2-data
+site_url: https://github.com/wjwillemse/solvency2-data
+
+nav:
+  - About: README.md
+  - Installation: installation.md
+  - Usage: usage.md
+  - Using a database: api_example.md
+  - Contributing: contributing.md
+  - History: history.md
+  - API documentation: api_docs.md
+
+theme: material
+
+plugins:
+- search
+- mkdocstrings

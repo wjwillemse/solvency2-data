@@ -1,6 +1,7 @@
 """
 This module contains all the handler functions for the sqlite database storing the data
 """
+
 import os
 import sqlite3
 from sqlite3 import Error
@@ -9,19 +10,30 @@ import logging
 
 class EiopaDB(object):
     """
-    Database object to store the eiopa data
+    Database object to store the EIOPA data.
 
+    Attributes:
+        database (str): Path to the database file.
+
+    Methods:
+        __init__(database): Initialize database object.
+        reset(): Hard reset of the database.
+        set_conn(): Set database connection.
+        _close_conn(): Close database connection.
+        get_set_id(url): Get the URL ID for a URL.
+        _add_set(url): Add a new URL to the catalog.
+        update_catalog(url_id, dict_vals): Update the catalog with new values.
     """
+
     def __init__(self, database):
         """
-        Initialize database
+        Initialize the database.
 
         Args:
-            database: database specified by database file path
-    
+            database (str): Path to the database file.
+
         Returns:
             None
-
         """
         self.database = database
         if not os.path.isfile(database):
@@ -38,7 +50,7 @@ class EiopaDB(object):
 
         Args:
             None
-    
+
         Returns:
             None
 
@@ -55,7 +67,7 @@ class EiopaDB(object):
 
         Args:
             None
-    
+
         Returns:
             None
 
@@ -68,7 +80,7 @@ class EiopaDB(object):
 
         Args:
             None
-    
+
         Returns:
             None
 
@@ -83,7 +95,7 @@ class EiopaDB(object):
 
         Args:
             url: url to be found
-    
+
         Returns:
             None
 
@@ -126,7 +138,7 @@ def create_connection(database: str):
 
     Returns:
         connection object or None
-    
+
     """
     conn = None
     try:
