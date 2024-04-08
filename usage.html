@@ -8,25 +8,25 @@
       
       
       
-        <link rel="canonical" href="https://wjwillemse.github.io/solvency2-data/installation/">
+        <link rel="canonical" href="https://wjwillemse.github.io/solvency2-data/usage.html">
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="installation.html">
       
       
-        <link rel="next" href="../usage/">
+        <link rel="next" href="api_example.html">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.17">
     
     
       
-        <title>Installation - solvency2-data</title>
+        <title>Usage - solvency2-data</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.bcfcd587.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.bcfcd587.min.css">
       
       
 
@@ -45,9 +45,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="assets/_mkdocstrings.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -66,7 +66,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#installation" class="md-skip">
+        <a href="#usage" class="md-skip">
           Skip to content
         </a>
       
@@ -82,7 +82,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="solvency2-data" class="md-header__button md-logo" aria-label="solvency2-data" data-md-component="logo">
+    <a href="index.html" title="solvency2-data" class="md-header__button md-logo" aria-label="solvency2-data" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Installation
+              Usage
             
           </span>
         </div>
@@ -177,7 +177,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="solvency2-data" class="md-nav__button md-logo" aria-label="solvency2-data" data-md-component="logo">
+    <a href="index.html" title="solvency2-data" class="md-nav__button md-logo" aria-label="solvency2-data" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -195,11 +195,31 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="installation.html" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
   </span>
   
 
@@ -228,18 +248,18 @@
           
   
   <span class="md-ellipsis">
-    Installation
+    Usage
   </span>
   
 
           <span class="md-nav__icon md-icon"></span>
         </label>
       
-      <a href="./" class="md-nav__link md-nav__link--active">
+      <a href="usage.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
-    Installation
+    Usage
   </span>
   
 
@@ -261,18 +281,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#stable-release" class="md-nav__link">
+  <a href="#configuration-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Stable release
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#from-sources" class="md-nav__link">
-    <span class="md-ellipsis">
-      From sources
+      Configuration file
     </span>
   </a>
   
@@ -293,27 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../usage/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Usage
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../api_example/" class="md-nav__link">
+      <a href="api_example.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -333,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../contributing/" class="md-nav__link">
+      <a href="contributing.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -353,7 +344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../history/" class="md-nav__link">
+      <a href="history.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -373,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api_docs/" class="md-nav__link">
+      <a href="api_docs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -413,18 +404,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#stable-release" class="md-nav__link">
+  <a href="#configuration-file" class="md-nav__link">
     <span class="md-ellipsis">
-      Stable release
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#from-sources" class="md-nav__link">
-    <span class="md-ellipsis">
-      From sources
+      Configuration file
     </span>
   </a>
   
@@ -445,30 +427,74 @@
                   
 
 
-<h1 id="installation">Installation</h1>
-<h2 id="stable-release">Stable release</h2>
-<p>To install solvency2-data, run this command in your terminal:</p>
-<pre><code class="language-console">pip install solvency2_data
+<h1 id="usage">Usage</h1>
+<p>To use solvency2-data in a project:</p>
+<pre><code>import solvency2_data
 </code></pre>
-<p>This is the preferred method to install solvency2-data, as it will
-always install the most recent stable release.</p>
-<p>If you don't have <a href="https://pip.pypa.io">pip</a> installed, this <a href="http://docs.python-guide.org/en/latest/starting/installation/">Python
-installation
-guide</a>
-can guide you through the process.</p>
-<h2 id="from-sources">From sources</h2>
-<p>The sources for solvency2-data can be downloaded from the <a href="https://github.com/wjwillemse/solvency2_data">Github
-repo</a>.</p>
-<p>You can either clone the public repository:</p>
-<pre><code class="language-console">git clone git://github.com/wjwillemse/solvency2_data
+<p>After installation you can use the functions in the package in for
+example a Jupyter notebook.</p>
+<p>To get the term structures per 31/12/2017 enter</p>
+<pre><code>    d = solvency2_data.read("2017-12-31")
 </code></pre>
-<p>Or download the
-<a href="https://github.com/wjwillemse/solvency2_data/tarball/master">tarball</a>:</p>
-<pre><code class="language-console">curl -OJL https://github.com/wjwillemse/solvency2_data/tarball/master
+<p>If you don't add an input datetime string, i.e. solvency2_data.read(), then the
+function will use now() and you will receive the most recent published term structure.</p>
+<p>This returns a Python dictionary with all the information about the term
+structures. The dictionary has the following keys</p>
+<ul>
+<li><em>input_date</em>: the original date by which the function was called is
+    stored in the dictionary as input_date</li>
+<li><em>reference_date</em>: the proper reference date generated from the input
+    date. The reference date is the most recent end of the month prior
+    to the input date. So if for example the input is datetime(2018,
+    1, 1) then the reference date is \'20171231\', because this the most
+    recent end of the month prior to the input date. The reference date
+    is a string because it is used in the name of the files to be
+    downloaded from the EIOPA-website.</li>
+<li><em>url</em>: the url of the term structures</li>
+<li><em>name_zipfile</em>: the name of the zip-file</li>
+<li><em>name_excelfile</em>: the name of the Excel-file contained in the
+    zip-file that was downloaded</li>
+<li><em>meta</em>: the information per term structure contained in the
+    Excel-file: the Coupon frequency, the Last Liquid Point, the
+    Convergence period, the Ultimate Forward Rate, the alpha parameter
+    of the Smith-Wilson algorithm, the Credit Rate Adjustment and the
+    Volatility adjustment</li>
+<li><em>RFR_spot_no_VA</em>: the term structures without Volatility adjustment
+    (a Pandas DataFrame)</li>
+<li><em>RFR_spot_with_VA</em>: the term structures with Volatility adjustment
+    (a Pandas DataFrame)</li>
+</ul>
+<p>You can get the term structure without Volatility Adjustment for the
+Euro by</p>
+<pre><code>    rates = d['RFR_spot_no_VA']['Euro']
 </code></pre>
-<p>Once you have a copy of the source, you can install it with:</p>
-<pre><code class="language-console">python setup.py install
+<p>This returns a Pandas Series (convert it to a Numpy array to use it in
+calculations).</p>
+<p>The package also contains the Smith-Wilson algorithm that is used to
+derive the original term structures published by EIOPA. You can use this
+algorithm to derive term structures with alternative extrapolation by
+changing the parameters.</p>
+<p>For this you can do the following. First define the liquid maturities of
+the term structure, together with a Python dictionary of rates. Then use
+the smith_wilson function.</p>
+<pre><code>    liquid_maturities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20]
+   rates = d['RFR_spot_no_VA']['Euro']
+   ratesin = {num: float(rates[num]) for num in liquid_maturities}
+
+    alt_curve = smith_wilson(liquid_maturities = liquid_maturities,
+                             RatesIn = ratesin, 
+                             nrofcoup = d['metadata'].loc[:, 'Euro'].Coupon_freq, 
+                             cra = 0,
+                             ufr = 0,
+                             T2  = d['metadata'].loc[:, 'Euro'].LLP + 
+                                   d['metadata'].loc[:, 'Euro'].Convergence)
 </code></pre>
+<p>In this case, we use a UFR of zero and a CRA of zero.</p>
+<h2 id="configuration-file">Configuration file</h2>
+<p>The solvency2-data.cfg specifies the directories where the downloaded
+zip-files and the Excel files are stored. The .cfg file can be stored in
+the directory from where the code is run, otherwise the .cfg file in the
+package directory is used.</p>
 
 
 
@@ -515,10 +541,10 @@ repo</a>.</p>
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.1e8ae164.min.js"></script>
+      <script src="assets/javascripts/bundle.1e8ae164.min.js"></script>
       
     
   </body>
