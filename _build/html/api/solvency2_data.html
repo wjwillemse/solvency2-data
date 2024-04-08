@@ -1,0 +1,1276 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" data-theme="light">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>solvency2_data package &#8212; solvency2-data 0.1.23 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=20522496"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/solvency2_data';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="light">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">solvency2-data 0.1.23 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../readme.html">
+                        README
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../usage.html">
+                        Usage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api_example.html">
+                        using a database
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../contributing.html">
+                        CONTRIBUTING
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../history.html">
+                        History
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item">
+<nav class="navbar-nav">
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../readme.html">
+                        README
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../installation.html">
+                        Installation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../usage.html">
+                        Usage
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api_example.html">
+                        using a database
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../contributing.html">
+                        CONTRIBUTING
+                      </a>
+                    </li>
+                
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-controls="pst-nav-more-links-2">
+                    More
+                </button>
+                <ul id="pst-nav-more-links-2" class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link dropdown-item nav-internal" href="../history.html">
+                        History
+                      </a>
+                    </li>
+                
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">solvency2_da...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="solvency2-data-package">
+<h1>solvency2_data package<a class="headerlink" href="#solvency2-data-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-solvency2_data.alternative_extrapolation">
+<span id="solvency2-data-alternative-extrapolation-module"></span><h2>solvency2_data.alternative_extrapolation module<a class="headerlink" href="#module-solvency2_data.alternative_extrapolation" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.alternative_extrapolation.DiscountedValue4par2forwards">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.alternative_extrapolation.</span></span><span class="sig-name descname"><span class="pre">DiscountedValue4par2forwards</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sum_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">par_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forward_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_min_k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="../_modules/solvency2_data/alternative_extrapolation.html#DiscountedValue4par2forwards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.alternative_extrapolation.DiscountedValue4par2forwards" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.alternative_extrapolation.FromParToForwards">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.alternative_extrapolation.</span></span><span class="sig-name descname"><span class="pre">FromParToForwards</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/alternative_extrapolation.html#FromParToForwards"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.alternative_extrapolation.FromParToForwards" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.alternative_extrapolation.create_swap_struct">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.alternative_extrapolation.</span></span><span class="sig-name descname"><span class="pre">create_swap_struct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/alternative_extrapolation.html#create_swap_struct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.alternative_extrapolation.create_swap_struct" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.alternative_extrapolation.forwardstruct2termstruct">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.alternative_extrapolation.</span></span><span class="sig-name descname"><span class="pre">forwardstruct2termstruct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/alternative_extrapolation.html#forwardstruct2termstruct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.alternative_extrapolation.forwardstruct2termstruct" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-solvency2_data.eiopa_data">
+<span id="solvency2-data-eiopa-data-module"></span><h2>solvency2_data.eiopa_data module<a class="headerlink" href="#module-solvency2_data.eiopa_data" title="Link to this heading">#</a></h2>
+<p>Downloads rfr and stores in sqlite database for future reference</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.add_to_db">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">add_to_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#solvency2_data.sqlite_handler.EiopaDB" title="solvency2_data.sqlite_handler.EiopaDB"><span class="pre">EiopaDB</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rfr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#add_to_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.add_to_db" title="Link to this definition">#</a></dt>
+<dd><p>Call this if a set is missing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_date</strong> – reference date</p></li>
+<li><p><strong>db</strong> – database to be used</p></li>
+<li><p><strong>data_type</strong> – type of the dataset to be added</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.download_EIOPA_rates">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">download_EIOPA_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#download_EIOPA_rates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.download_EIOPA_rates" title="Link to this definition">#</a></dt>
+<dd><p>Download and unzip the EIOPA files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – url from which data is to be downloaded</p></li>
+<li><p><strong>ref_date</strong> – the reference date of the data</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary with metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.download_file">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">download_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#download_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.download_file" title="Link to this definition">#</a></dt>
+<dd><p>This function downloads a file and give it a name if not explicitly specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>raw_folder</strong> – url of the file to download</p></li>
+<li><p><strong>filename</strong> – file path+name to give to the file to download</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>name of the file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.extract_govies">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">extract_govies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">govies_filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#extract_govies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.extract_govies" title="Link to this definition">#</a></dt>
+<dd><p>Extract govies data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>govies_filepath</strong> – path to Excel file with govies data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary with metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.extract_meta">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">extract_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rfr_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#extract_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.extract_meta" title="Link to this definition">#</a></dt>
+<dd><p>Extract spot rates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rfr_filepath</strong> – path to Excel file with rfr data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary with metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.extract_spot_rates">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">extract_spot_rates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rfr_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#extract_spot_rates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.extract_spot_rates" title="Link to this definition">#</a></dt>
+<dd><p>Extract spot rates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rfr_filepath</strong> – path to Excel file with rfr data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary with metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.extract_spreads">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">extract_spreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spread_filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#extract_spreads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.extract_spreads" title="Link to this definition">#</a></dt>
+<dd><p>Extract spreads data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>spread_filepath</strong> – path to Excel file with spreads data</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary with metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.extract_sym_adj">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">extract_sym_adj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sym_adj_filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ref_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#extract_sym_adj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.extract_sym_adj" title="Link to this definition">#</a></dt>
+<dd><p>Extract symmetric adjustment</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sym_adj_filepath</strong> – path to Excel file with symmetric adjustment</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with symmetric adjustment data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.get">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rfr'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.get" title="Link to this definition">#</a></dt>
+<dd><p>Main API function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_date</strong> – reference date. Can be string or datetime.date. If passed as datetime.date this is converted for use elsewhere.</p></li>
+<li><p><strong>data_type</strong> – type of the required dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame with data if not empty dataset, otherwise None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.get_workspace">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">get_workspace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#get_workspace"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.get_workspace" title="Link to this definition">#</a></dt>
+<dd><p>Get the workspace for saving xl and the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>dictionary with workspace data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.refresh">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">refresh</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#refresh"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.refresh" title="Link to this definition">#</a></dt>
+<dd><p>Function to refresh database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>string with result</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.eiopa_data.validate_date_string">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.eiopa_data.</span></span><span class="sig-name descname"><span class="pre">validate_date_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/eiopa_data.html#validate_date_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.eiopa_data.validate_date_string" title="Link to this definition">#</a></dt>
+<dd><p>This function just converts the input date to a string YYYY-mm-dd for use in SQL
+e.g.
+from datetime import date
+ref_date = validate_date_string(date(2021,12,31))
+ref_date = validate_date_string(‘2021-12-31’)
+Both return the same result</p>
+</dd></dl>
+
+</section>
+<section id="module-solvency2_data.rfr">
+<span id="solvency2-data-rfr-module"></span><h2>solvency2_data.rfr module<a class="headerlink" href="#module-solvency2_data.rfr" title="Link to this heading">#</a></h2>
+<p>Main module.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.RFR_dict">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">RFR_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#RFR_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.RFR_dict" title="Link to this definition">#</a></dt>
+<dd><p>Returns a dict with url and filenames from the EIOPA website based on the
+input_date</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">RFR_dict</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2018</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="go">{&#39;input_date&#39;: datetime.datetime.datetime.datetime(2018, 1, 1, 0, 0),</span>
+<span class="go"> &#39;reference_date&#39;: &#39;20171231&#39;,</span>
+<span class="go"> &#39;url&#39;: &#39;https://eiopa.europa.eu/Publications/Standards/&#39;,</span>
+<span class="go"> &#39;path_zipfile&#39;: &#39;&#39;,</span>
+<span class="go"> &#39;name_zipfile&#39;: &#39;EIOPA_RFR_20171231.zip&#39;,</span>
+<span class="go"> &#39;path_excelfile&#39;: &#39;&#39;,</span>
+<span class="go"> &#39;name_excelfile&#39;: &#39;EIOPA_RFR_20171231_Term_Structures.xlsx&#39;}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_date</strong> – required date</p></li>
+<li><p><strong>cache</strong> – the cache with the data</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The updated cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.RFR_reference_date">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">RFR_reference_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#RFR_reference_date"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.RFR_reference_date" title="Link to this definition">#</a></dt>
+<dd><p>Returns the closest reference date prior to an input_date
+The reference_date is put in a dict with the original input_date</p>
+<p>If no input_date is given then today() is used
+&gt;&gt;&gt; RFR_reference_date(‘2018-12-31’)
+{‘input_date’: ‘2018-12-31’, ‘reference_date’:
+‘20171231’}
+&gt;&gt;&gt; RFR_reference_date(‘2018-12-31’)
+{‘input_date’: ‘2018-12-31’, ‘reference_date’:
+‘20180731’}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_date</strong> – </p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.download_RFR">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">download_RFR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#download_RFR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.download_RFR" title="Link to this definition">#</a></dt>
+<dd><p>Downloads the zipfile from the EIOPA website and extracts the Excel file</p>
+<p>Returns the cache with info
+download_RFR(‘2018-12-31’)
+{
+‘name_excelfile’: ‘EIOPA_RFR_20171231_Term_Structures.xlsx’,
+‘input_date’: ‘2018-12-31’,
+‘url’: ‘<a class="reference external" href="https://eiopa.europa.eu/Publications/Standards/">https://eiopa.europa.eu/Publications/Standards/</a>’,
+‘path_zipfile’: ‘’,
+‘name_zipfile’: ‘EIOPA_RFR_20171231.zip’,
+‘path_excelfile’: ‘’,
+‘reference_date’: ‘20171231’
+}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_date</strong> – required date</p></li>
+<li><p><strong>cache</strong> – the cache with the data</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The updated cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.read">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_date</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.read" title="Link to this definition">#</a></dt>
+<dd><p>Reads the RFR for input_date and stores data in path</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_date</strong> – the required input date</p></li>
+<li><p><strong>path</strong> – the path to the excel file</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.read_govies">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">read_govies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#read_govies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.read_govies" title="Link to this definition">#</a></dt>
+<dd><p>Function to read government spreads from Excel file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xls</strong> – the Excel object</p></li>
+<li><p><strong>cache</strong> – the cache with the data</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The updated cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.read_meta">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">read_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#read_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.read_meta" title="Link to this definition">#</a></dt>
+<dd><p>Function to read meta data from Excel file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xls</strong> – the Excel object</p></li>
+<li><p><strong>cache</strong> – the cache with the data</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The updated cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.read_spot">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">read_spot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#read_spot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.read_spot" title="Link to this definition">#</a></dt>
+<dd><p>Function to read spot rates from Excel file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xls</strong> – the Excel object</p></li>
+<li><p><strong>cache</strong> – the cache with the data</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The updated cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.rfr.read_spreads">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.rfr.</span></span><span class="sig-name descname"><span class="pre">read_spreads</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ExcelFile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/solvency2_data/rfr.html#read_spreads"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.rfr.read_spreads" title="Link to this definition">#</a></dt>
+<dd><p>Function to read spreads from Excel file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xls</strong> – the Excel object</p></li>
+<li><p><strong>cache</strong> – the cache with the data</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns</dt><dd><p>The updated cache with the data</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-solvency2_data.scraping">
+<span id="solvency2-data-scraping-module"></span><h2>solvency2_data.scraping module<a class="headerlink" href="#module-solvency2_data.scraping" title="Link to this heading">#</a></h2>
+<p>Returns links for EIOPA files</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.scraping.check_if_download">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.scraping.</span></span><span class="sig-name descname"><span class="pre">check_if_download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="../_modules/solvency2_data/scraping.html#check_if_download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.scraping.check_if_download" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.scraping.eiopa_link">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.scraping.</span></span><span class="sig-name descname"><span class="pre">eiopa_link</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ref_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rfr'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/solvency2_data/scraping.html#eiopa_link"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.scraping.eiopa_link" title="Link to this definition">#</a></dt>
+<dd><p>This returns the link for downloading the selected type of data for a given date
+Utilises regex to allow for variability in EIOPA publications</p>
+<p>Example:</p>
+<p>from datetime import date
+import pandas as pd
+dr = pd.date_range(date(2016,1,31), date(2023,5,31), freq=’M’)
+rfr_links = {i.strftime(‘%Y%m%d’): eiopa_link(i.strftime(‘%Y-%m-%d’)) for i in dr}
+sym_adj_links = {i.strftime(‘%Y%m%d’): eiopa_link(i.strftime(‘%Y-%m-%d’), ‘sym_adj’) for i in dr}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ref_date</strong> – reference date</p></li>
+<li><p><strong>data_type</strong> – type of the dataset</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>valid link of dataset</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.scraping.get_links">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.scraping.</span></span><span class="sig-name descname"><span class="pre">get_links</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">urls</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/solvency2_data/scraping.html#get_links"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.scraping.get_links" title="Link to this definition">#</a></dt>
+<dd><p>Looks for linkes where target file can be downloaded</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>urls</strong> – urls to search in</p></li>
+<li><p><strong>r</strong> – href to search for</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>list of valid links</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.scraping.lookthrough_redirect">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.scraping.</span></span><span class="sig-name descname"><span class="pre">lookthrough_redirect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/solvency2_data/scraping.html#lookthrough_redirect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.scraping.lookthrough_redirect" title="Link to this definition">#</a></dt>
+<dd><p>Get the file behind the redirect link</p>
+</dd></dl>
+
+</section>
+<section id="module-solvency2_data.smith_wilson">
+<span id="solvency2-data-smith-wilson-module"></span><h2>solvency2_data.smith_wilson module<a class="headerlink" href="#module-solvency2_data.smith_wilson" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.smith_wilson.big_g">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.smith_wilson.</span></span><span class="sig-name descname"><span class="pre">big_g</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alfa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrofcoup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="reference internal" href="../_modules/solvency2_data/smith_wilson.html#big_g"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.smith_wilson.big_g" title="Link to this definition">#</a></dt>
+<dd><p>This function calculates 2 outputs:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alfa</strong> – </p></li>
+<li><p><strong>q</strong> – </p></li>
+<li><p><strong>nrofcoup</strong> – </p></li>
+<li><p><strong>t2</strong> – </p></li>
+<li><p><strong>tau</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>g(alfa)-tau where g(alfa) is according to 165 of the specs
+output(2): gamma = Qb according to 156 of the specs</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>output(1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.smith_wilson.big_h">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.smith_wilson.</span></span><span class="sig-name descname"><span class="pre">big_h</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">array</span></span></span><a class="reference internal" href="../_modules/solvency2_data/smith_wilson.html#big_h"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.smith_wilson.big_h" title="Link to this definition">#</a></dt>
+<dd><p>The big h-function according to 139 of the specs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> – </p></li>
+<li><p><strong>v</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.smith_wilson.optimal_alfa">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.smith_wilson.</span></span><span class="sig-name descname"><span class="pre">optimal_alfa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alfa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrofcoup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="../_modules/solvency2_data/smith_wilson.html#optimal_alfa"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.smith_wilson.optimal_alfa" title="Link to this definition">#</a></dt>
+<dd><p>This function calculates the optimal alfa</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alfa</strong> – </p></li>
+<li><p><strong>q</strong> – </p></li>
+<li><p><strong>nrofcoup</strong> – </p></li>
+<li><p><strong>t2</strong> – </p></li>
+<li><p><strong>tau</strong> – </p></li>
+<li><p><strong>precision</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>gamma:</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>alfa</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.smith_wilson.q_matrix">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.smith_wilson.</span></span><span class="sig-name descname"><span class="pre">q_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquid_maturities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RatesIn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrofcoup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_ufr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/smith_wilson.html#q_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.smith_wilson.q_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Note: prices of all instruments are set to 1 by construction
+Hence 1: if Instrument = Zero then for Zero i there is only one pay-off
+of (1+r(i))^u(i) at time u(i)
+Hence 2: if Instrument = Swap or Bond then for Swap/Bond i there are
+pay-offs of r(i)/nrofcoup at time 1/nrofcoup, 2/nrofcoup, …
+u(i)-1/nrofcoup plus a final pay-off of 1+r(i)/nrofcoup at time u(i)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>instrument</strong> – </p></li>
+<li><p><strong>n</strong> – </p></li>
+<li><p><strong>m</strong> – </p></li>
+<li><p><strong>liquid_maturities</strong> – </p></li>
+<li><p><strong>RatesIn</strong> – </p></li>
+<li><p><strong>nrofcoup</strong> – </p></li>
+<li><p><strong>cra</strong> – </p></li>
+<li><p><strong>log_ufr</strong> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>gamma:</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>alfa</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.smith_wilson.smith_wilson">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.smith_wilson.</span></span><span class="sig-name descname"><span class="pre">smith_wilson</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">instrument</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Zero'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">liquid_maturities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RatesIn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrofcoup</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ufr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_alfa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.05</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tau</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">60</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">precision</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'brute_force'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'zero</span> <span class="pre">rates</span> <span class="pre">annual</span> <span class="pre">compounding'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/smith_wilson.html#smith_wilson"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.smith_wilson.smith_wilson" title="Link to this definition">#</a></dt>
+<dd><p>Note: prices of all instruments are set to 1 by construction
+Hence 1: if Instrument = Zero then for Zero i there is only one pay-off
+of (1+r(i))^u(i) at time u(i)
+Hence 2: if Instrument = Swap or Bond then for Swap/Bond i there are
+pay-offs of r(i)/nrofcoup at time 1/nrofcoup, 2/nrofcoup, …
+u(i)-1/nrofcoup plus a final pay-off of 1+r(i)/nrofcoup at time u(i)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>{&quot;Zero&quot;</strong> (<em>Instrument =</em>) – </p></li>
+<li><p><strong>&quot;Bond&quot;</strong> – </p></li>
+<li><p><strong>&quot;Swap&quot;}</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>:param :
+:param liquid_maturities:
+:param RatesIn = range:
+:type RatesIn = range: 50 rows x 3 columns
+:param nrofcoup = Number of Coupon Payments per Year:
+:param :
+:param cra: Credit Risk Adjustment in basispoints,
+:param ufr: Ultimate Forward Rate annual commpounded (perunage),
+:param T2: Convergence Maturity
+:param Column1: Indicator Vector indicating if corresponding maturity
+:param is DLT to qualify as credible input:
+:param Column2: Maturity Vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>output</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-solvency2_data.sqlite_handler">
+<span id="solvency2-data-sqlite-handler-module"></span><h2>solvency2_data.sqlite_handler module<a class="headerlink" href="#module-solvency2_data.sqlite_handler" title="Link to this heading">#</a></h2>
+<p>This module contains all the handler functions for the sqlite database storing the data</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.EiopaDB">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">solvency2_data.sqlite_handler.</span></span><span class="sig-name descname"><span class="pre">EiopaDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#EiopaDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.EiopaDB" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Database object to store the eiopa data</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.EiopaDB.get_set_id">
+<span class="sig-name descname"><span class="pre">get_set_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#EiopaDB.get_set_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.EiopaDB.get_set_id" title="Link to this definition">#</a></dt>
+<dd><p>Get the url id for a url
+If not there, check if valid then add</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>url</strong> – url to be found</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.EiopaDB.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#EiopaDB.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.EiopaDB.reset" title="Link to this definition">#</a></dt>
+<dd><p>Hard reset of the database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.EiopaDB.set_conn">
+<span class="sig-name descname"><span class="pre">set_conn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#EiopaDB.set_conn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.EiopaDB.set_conn" title="Link to this definition">#</a></dt>
+<dd><p>Set database connection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.EiopaDB.update_catalog">
+<span class="sig-name descname"><span class="pre">update_catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict_vals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#EiopaDB.update_catalog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.EiopaDB.update_catalog" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.create_connection">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.sqlite_handler.</span></span><span class="sig-name descname"><span class="pre">create_connection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#create_connection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.create_connection" title="Link to this definition">#</a></dt>
+<dd><p>create a database connection to the SQLite database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>database</strong> – database specified by database file path</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>connection object or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.create_eiopa_db">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.sqlite_handler.</span></span><span class="sig-name descname"><span class="pre">create_eiopa_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">database</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'eiopa.db'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#create_eiopa_db"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.create_eiopa_db" title="Link to this definition">#</a></dt>
+<dd><p>Create the EIOPA database</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>database</strong> – name of the database to be created</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.sqlite_handler.exec_sql">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.sqlite_handler.</span></span><span class="sig-name descname"><span class="pre">exec_sql</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sql</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/sqlite_handler.html#exec_sql"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.sqlite_handler.exec_sql" title="Link to this definition">#</a></dt>
+<dd><p>Execute sql in connection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>conn</strong> – database connection</p></li>
+<li><p><strong>sql</strong> – sql statement to be executed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-solvency2_data.util">
+<span id="solvency2-data-util-module"></span><h2>solvency2_data.util module<a class="headerlink" href="#module-solvency2_data.util" title="Link to this heading">#</a></h2>
+<p>Common utilities shared across modules</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.util.get_config">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.util.</span></span><span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/util.html#get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.util.get_config" title="Link to this definition">#</a></dt>
+<dd><p>Returns the config file as a dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>configuration sections</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="solvency2_data.util.set_config">
+<span class="sig-prename descclassname"><span class="pre">solvency2_data.util.</span></span><span class="sig-name descname"><span class="pre">set_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">new_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">existing_key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'data_folder'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/solvency2_data/util.html#set_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#solvency2_data.util.set_config" title="Link to this definition">#</a></dt>
+<dd><p>Exposed via API to allow users to adjust the config without digging into install folder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>configuration sections</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-solvency2_data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-solvency2_data" title="Link to this heading">#</a></h2>
+<p>Top-level package for solvency2-data.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data.alternative_extrapolation">solvency2_data.alternative_extrapolation module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.alternative_extrapolation.DiscountedValue4par2forwards"><code class="docutils literal notranslate"><span class="pre">DiscountedValue4par2forwards()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.alternative_extrapolation.FromParToForwards"><code class="docutils literal notranslate"><span class="pre">FromParToForwards()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.alternative_extrapolation.create_swap_struct"><code class="docutils literal notranslate"><span class="pre">create_swap_struct()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.alternative_extrapolation.forwardstruct2termstruct"><code class="docutils literal notranslate"><span class="pre">forwardstruct2termstruct()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data.eiopa_data">solvency2_data.eiopa_data module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.add_to_db"><code class="docutils literal notranslate"><span class="pre">add_to_db()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.download_EIOPA_rates"><code class="docutils literal notranslate"><span class="pre">download_EIOPA_rates()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.download_file"><code class="docutils literal notranslate"><span class="pre">download_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.extract_govies"><code class="docutils literal notranslate"><span class="pre">extract_govies()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.extract_meta"><code class="docutils literal notranslate"><span class="pre">extract_meta()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.extract_spot_rates"><code class="docutils literal notranslate"><span class="pre">extract_spot_rates()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.extract_spreads"><code class="docutils literal notranslate"><span class="pre">extract_spreads()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.extract_sym_adj"><code class="docutils literal notranslate"><span class="pre">extract_sym_adj()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.get"><code class="docutils literal notranslate"><span class="pre">get()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.get_workspace"><code class="docutils literal notranslate"><span class="pre">get_workspace()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.refresh"><code class="docutils literal notranslate"><span class="pre">refresh()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.eiopa_data.validate_date_string"><code class="docutils literal notranslate"><span class="pre">validate_date_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data.rfr">solvency2_data.rfr module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.RFR_dict"><code class="docutils literal notranslate"><span class="pre">RFR_dict()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.RFR_reference_date"><code class="docutils literal notranslate"><span class="pre">RFR_reference_date()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.download_RFR"><code class="docutils literal notranslate"><span class="pre">download_RFR()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.read"><code class="docutils literal notranslate"><span class="pre">read()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.read_govies"><code class="docutils literal notranslate"><span class="pre">read_govies()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.read_meta"><code class="docutils literal notranslate"><span class="pre">read_meta()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.read_spot"><code class="docutils literal notranslate"><span class="pre">read_spot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.rfr.read_spreads"><code class="docutils literal notranslate"><span class="pre">read_spreads()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data.scraping">solvency2_data.scraping module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.scraping.check_if_download"><code class="docutils literal notranslate"><span class="pre">check_if_download()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.scraping.eiopa_link"><code class="docutils literal notranslate"><span class="pre">eiopa_link()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.scraping.get_links"><code class="docutils literal notranslate"><span class="pre">get_links()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.scraping.lookthrough_redirect"><code class="docutils literal notranslate"><span class="pre">lookthrough_redirect()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data.smith_wilson">solvency2_data.smith_wilson module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.smith_wilson.big_g"><code class="docutils literal notranslate"><span class="pre">big_g()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.smith_wilson.big_h"><code class="docutils literal notranslate"><span class="pre">big_h()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.smith_wilson.optimal_alfa"><code class="docutils literal notranslate"><span class="pre">optimal_alfa()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.smith_wilson.q_matrix"><code class="docutils literal notranslate"><span class="pre">q_matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.smith_wilson.smith_wilson"><code class="docutils literal notranslate"><span class="pre">smith_wilson()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data.sqlite_handler">solvency2_data.sqlite_handler module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.EiopaDB"><code class="docutils literal notranslate"><span class="pre">EiopaDB</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.EiopaDB.get_set_id"><code class="docutils literal notranslate"><span class="pre">EiopaDB.get_set_id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.EiopaDB.reset"><code class="docutils literal notranslate"><span class="pre">EiopaDB.reset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.EiopaDB.set_conn"><code class="docutils literal notranslate"><span class="pre">EiopaDB.set_conn()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.EiopaDB.update_catalog"><code class="docutils literal notranslate"><span class="pre">EiopaDB.update_catalog()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.create_connection"><code class="docutils literal notranslate"><span class="pre">create_connection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.create_eiopa_db"><code class="docutils literal notranslate"><span class="pre">create_eiopa_db()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.sqlite_handler.exec_sql"><code class="docutils literal notranslate"><span class="pre">exec_sql()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data.util">solvency2_data.util module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.util.get_config"><code class="docutils literal notranslate"><span class="pre">get_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solvency2_data.util.set_config"><code class="docutils literal notranslate"><span class="pre">set_config()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-solvency2_data">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api/solvency2_data.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Willem Jan Willemse.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.2.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
