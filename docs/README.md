@@ -1,7 +1,7 @@
 # solvency2-data
 
 [![Pypi Version](https://img.shields.io/pypi/v/solvency2_data.svg)](https://pypi.python.org/pypi/solvency2-data)
-[![Documentation Status](https://readthedocs.org/projects/solvency2-data/badge/?version=latest)](https://solvency2-data.readthedocs.io/en/latest/?badge=latest)
+[![Built with Material for MkDocs](https://img.shields.io/badge/Material_for_MkDocs-526CFE?style=for-the-badge&logo=MaterialForMkDocs&logoColor=white)](https://wjwillemse.github.io/solvency2-data/)
 [![License](https://img.shields.io/badge/License-MIT/X-blue.svg)](https://github.com/wjwillemse/solvency2-data/blob/master/LICENSE)
 
 Package for reading the Solvency 2 Risk-Free Interest Rate Term
@@ -9,7 +9,7 @@ Structures from the zip-files on the EIOPA website and deriving the term
 structures for alternative extrapolations.
 
 -   Free software: MIT/X license
--   Documentation: <https://solvency2-data.readthedocs.io>.
+-   Documentation: <https://wjwillemse.github.io/solvency2-data>.
 
 ![click for animation](https://raw.githubusercontent.com/wjwillemse/solvency2-data/master/docs/rfr.gif?raw=true)
 
