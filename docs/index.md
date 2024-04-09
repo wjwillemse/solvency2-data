@@ -4,7 +4,7 @@
 [![Pypi Version](https://img.shields.io/pypi/v/solvency2_data.svg)](https://pypi.python.org/pypi/solvency2-data)
 [![License](https://img.shields.io/badge/License-MIT/X-blue.svg)](https://github.com/wjwillemse/solvency2-data/blob/master/LICENSE)
 
-Package for reading the Solvency 2 Risk-Free Interest Rate Term
+Python Package for reading the Solvency 2 Risk-Free Interest Rate Term
 Structures from the zip-files on the EIOPA website and deriving the term
 structures for alternative extrapolations.
 
