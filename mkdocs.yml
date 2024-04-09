@@ -1,5 +1,6 @@
 site_name: solvency2-data
 site_url: https://wjwillemse.github.io/solvency2-data/
+repo_name: solvency2-data
 repo_url: https://github.com/wjwillemse/solvency2-data
 
 theme: 
@@ -16,10 +17,11 @@ plugins:
 - mkdocstrings
 
 nav:
-  - About: 'index.md'
+  - Home: 'index.md'
   - Installation: 'installation.md'
   - Usage: 'usage.md'
   - Using a database: 'api_example.md'
   - Contributing: 'contributing.md'
   - History: 'history.md'
   - API documentation: 'api_docs.md'
+
