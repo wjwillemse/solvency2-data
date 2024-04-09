@@ -9,6 +9,7 @@ theme:
     - navigation.instant
     - navigation.indexes
     - navigation.sections
+    - navigation.tabs
 
 plugins:
 - search
