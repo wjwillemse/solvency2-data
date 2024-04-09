@@ -23,5 +23,3 @@ nav:
   - Contributing: 'contributing.md'
   - History: 'history.md'
   - API documentation: 'api_docs.md'
-
-use_directory_urls: false
