@@ -4,7 +4,7 @@ version = "0.2.0"
 description = "Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from the zip-files on the EIOPA website and deriving the term structures for alternative extrapolations"
 authors = ["Willem Jan Willemse <w.j.willemse@freedom.nl>"]
 license = "MIT"
-readme = "docs/README.md"
+readme = "README.md"
 keywords = ["solvency2", "eiopa", "pandas"]
 classifiers = [
     "Development Status :: 3 - Alpha",
