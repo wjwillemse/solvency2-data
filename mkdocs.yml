@@ -10,7 +10,11 @@ nav:
   - History: history.md
   - API documentation: api_docs.md
 
-theme: material
+theme: 
+  name: material
+  features:
+    - navigation.indexes
+    - navigation.sections
 
 plugins:
 - search
