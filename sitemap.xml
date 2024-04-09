@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://wjwillemse.github.io/solvency2-data/index.html</loc>
+         <loc>https://wjwillemse.github.io/solvency2-data/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wjwillemse.github.io/solvency2-data/api_docs.html</loc>
+         <loc>https://wjwillemse.github.io/solvency2-data/api_docs/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wjwillemse.github.io/solvency2-data/api_example.html</loc>
+         <loc>https://wjwillemse.github.io/solvency2-data/api_example/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wjwillemse.github.io/solvency2-data/contributing.html</loc>
+         <loc>https://wjwillemse.github.io/solvency2-data/contributing/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wjwillemse.github.io/solvency2-data/history.html</loc>
+         <loc>https://wjwillemse.github.io/solvency2-data/history/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wjwillemse.github.io/solvency2-data/installation.html</loc>
+         <loc>https://wjwillemse.github.io/solvency2-data/installation/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://wjwillemse.github.io/solvency2-data/usage.html</loc>
+         <loc>https://wjwillemse.github.io/solvency2-data/usage/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
     </url>
