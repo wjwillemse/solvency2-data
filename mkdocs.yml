@@ -17,8 +17,4 @@ theme:
     - navigation.indexes
     - navigation.sections
 
-plugins:
-- search
-- mkdocstrings
-
 use_directory_urls: false
