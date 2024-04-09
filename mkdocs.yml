@@ -13,7 +13,6 @@ theme:
     - navigation.tabs
 
 plugins:
-- search
 - mkdocstrings
 
 nav:
