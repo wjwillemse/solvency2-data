@@ -16,7 +16,7 @@ plugins:
 - mkdocstrings
 
 nav:
-  - About: 'README.md'
+  - About: 'index.md'
   - Installation: 'installation.md'
   - Usage: 'usage.md'
   - Using a database: 'api_example.md'
