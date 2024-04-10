@@ -11,6 +11,21 @@ theme:
     - navigation.indexes
     - navigation.sections
     - navigation.tabs
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue grey
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue grey
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
 
 plugins:
 - mkdocstrings
