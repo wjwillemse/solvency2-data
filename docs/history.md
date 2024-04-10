@@ -1,5 +1,10 @@
 # History
 
+### 0.2 (2024-4-10)
+
+- Switch to mkdocs for documentation
+- Restructured project repo with Poetry, pre-commit and Ruff
+
 ### 0.1.23 (2023-9-20)
 
 - Eiopa's 2023-6-1 uses PD_CoD instead pf PD_Cod

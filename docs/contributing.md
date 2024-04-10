@@ -69,3 +69,17 @@ Build the package
 ```shell
 poetry build
 ``` 
+
+#### Documentation
+
+Install with
+
+```shell
+poetry install --with dev
+```
+
+Build the documentation
+```shell
+mkdocs build
+``` 
+
