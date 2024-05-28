@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "solvency2-data"
-version = "0.2.0"
+version = "0.2.1"
 description = "Package for reading the Solvency 2 Risk-Free Interest Rate Term Structures from the zip-files on the EIOPA website and deriving the term structures for alternative extrapolations"
 authors = ["Willem Jan Willemse <w.j.willemse@freedom.nl>"]
 license = "MIT"
@@ -49,3 +49,5 @@ optional = true
 mkdocs = "^1.5.3"
 mkdocs-material = "^9.5.17"
 mkdocstrings-python = "^1.9.2"
+
+[tool.setuptools_scm]
