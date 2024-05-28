@@ -203,11 +203,16 @@ def download_RFR(input_date: str = None, cache: dict = {}) -> dict:
     """
     cache = RFR_dict(input_date, cache)
 
-    if not (
-        os.path.isfile(join(cache["path_excelfile"], cache["name_excelfile"]))
-    ) or not (
-        os.path.isfile(join(cache["path_excelfile"], cache["name_excelfile_spreads"]))
-    ):
+    name_excelfile = None
+    name_excelfile_spreads = None
+
+    for file in os.listdir(cache["path_excelfile"]):
+        if file.lower() == cache["name_excelfile"].lower():
+            cache['name_excelfile'] = name_excelfile = file
+        if file.lower() == cache["name_excelfile_spreads"].lower():
+            cache['name_excelfile_spreads'] = name_excelfile_spreads = file
+
+    if name_excelfile is None or name_excelfile_spreads is None:
         # determine correct url and zipfile
         cache["url"] = eiopa_link(cache["input_date"], data_type="rfr")
         cache["name_zipfile"] = os.path.basename(cache["url"]).split("filename=")[-1]
@@ -225,9 +230,9 @@ def download_RFR(input_date: str = None, cache: dict = {}) -> dict:
         zip_ref = zipfile.ZipFile(join(cache["path_zipfile"], cache["name_zipfile"]))
         for idx, name in enumerate(zip_ref.namelist()):
             if name.lower() == cache["name_excelfile"].lower():
-                name_excelfile = name
+                cache["name_excelfile"] = name_excelfile = name
             if name.lower() == cache["name_excelfile_spreads"].lower():
-                name_excelfile_spreads = name
+                cache["name_excelfile_spreads"] = name_excelfile_spreads = name
         if name_excelfile is not None:
             zip_ref.extract(name_excelfile, cache["path_excelfile"])
         if name_excelfile_spreads is not None:
