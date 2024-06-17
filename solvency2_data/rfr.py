@@ -366,7 +366,7 @@ def read_spot(xls, cache: dict = {}) -> dict:
             for col in df.columns:
                 if "Unnamed:" in col:
                     df = df.drop(col, axis=1)
-            df.loc["VA"].infer_objects(copy=False).fillna(0, inplace=True)
+            df.loc["VA"] = df.loc["VA"].infer_objects().fillna(0, inplace=False)
             df = df.iloc[8:]
             df.index.names = ["Duration"]
             cache[name] = df
@@ -398,7 +398,7 @@ def read_meta(xls, cache: str = {}) -> dict:
         if "Unnamed:" in col:
             df_meta = df_meta.drop(col, axis=1)
 
-    df_meta.loc["VA", :].infer_objects(copy=False).fillna(0, inplace=True)
+    df_meta.loc["VA"] = df_meta.loc["VA"].infer_objects().fillna(0, inplace=False)
     df_meta = df_meta.iloc[0:8]
     df_meta.index.names = ["meta"]
     df_meta.index = df_meta.index.fillna("Info")
