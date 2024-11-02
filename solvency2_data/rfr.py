@@ -10,6 +10,7 @@ from urllib.request import urlopen
 import zipfile
 import os
 from os.path import join
+from typing import Union
 
 import pandas as pd
 
@@ -208,17 +209,19 @@ def download_RFR(input_date: str = None, cache: dict = {}) -> dict:
 
     for file in os.listdir(cache["path_excelfile"]):
         if file.lower() == cache["name_excelfile"].lower():
-            cache['name_excelfile'] = name_excelfile = file
+            cache["name_excelfile"] = name_excelfile = file
         if file.lower() == cache["name_excelfile_spreads"].lower():
-            cache['name_excelfile_spreads'] = name_excelfile_spreads = file
+            cache["name_excelfile_spreads"] = name_excelfile_spreads = file
 
     if name_excelfile is None or name_excelfile_spreads is None:
         # determine correct url and zipfile
-        cache["url"] = eiopa_link(cache["input_date"], data_type="rfr")
+        cache["url"] = eiopa_link(
+            cache["input_date"], data_type="rfr", proxies=cache.get("proxies", None)
+        )
         cache["name_zipfile"] = os.path.basename(cache["url"]).split("filename=")[-1]
 
         # download file
-        request = urlopen(cache["url"])
+        request = urlopen(cache["url"], cache.get("proxies", None))
 
         # save zip-file
         output = open(join(cache["path_zipfile"], cache["name_zipfile"]), "wb")
@@ -414,7 +417,7 @@ def read_meta(xls, cache: str = {}) -> dict:
     return cache
 
 
-def read(input_date=None, path: str = None) -> dict:
+def read(input_date=None, path: str = None, proxies: Union[dict, None] = None) -> dict:
     """
     Reads data from Excel files and stores it in a dictionary.
 
@@ -424,6 +427,8 @@ def read(input_date=None, path: str = None) -> dict:
         path (str, optional): The path to the directory containing Excel files.
             If None, it looks for .cfg files in the current directory or the package directory.
             Defaults to None.
+        proxies: None or a dictionary of proxies to be used when downloading rates
+            (None turns off proxies completely)
 
     Returns:
         dict: A dictionary containing the read data.
@@ -440,7 +445,12 @@ def read(input_date=None, path: str = None) -> dict:
         path_zipfile = path
         path_excelfile = path
 
-    cache = {"path_zipfile": path_zipfile, "path_excelfile": path_excelfile}
+    cache = {
+        "path_zipfile": path_zipfile,
+        "path_excelfile": path_excelfile,
+    }
+    if proxies is not None:
+        cache["proxies"] = proxies
 
     cache = download_RFR(input_date, cache)
     xls = pd.ExcelFile(

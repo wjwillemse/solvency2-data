@@ -9,6 +9,7 @@ import urllib as urllib
 import bs4 as bs
 import requests
 import datetime
+from typing import Union
 
 urls_dict = {
     "rfr": [
@@ -22,13 +23,14 @@ urls_dict = {
 }
 
 
-def get_links(urls: str, r: str) -> list:
+def get_links(urls: str, r: str, proxies: Union[dict, None] = None) -> list:
     """
     Retrieves valid download links from a list of URLs.
 
     Args:
         urls (str): A list of URLs to search for links.
         r (str): The pattern to match for links.
+        proxies: None or a dictionary of proxies to pass in requests.get
 
     Returns:
         list: A list of valid download links.
@@ -36,7 +38,7 @@ def get_links(urls: str, r: str) -> list:
     raw_links = []
     for page in urls:
         if len(raw_links) == 0:
-            resp = requests.get(page)
+            resp = requests.get(page, proxies=proxies)
             soup = bs.BeautifulSoup(resp.text, "lxml")
             for link in soup.find_all("a", {"href": r}):
                 if link.get("href")[0] == "/":
@@ -100,7 +102,9 @@ def lookthrough_redirect(url: str) -> str:
     return file_url
 
 
-def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
+def eiopa_link(
+    ref_date: str, data_type: str = "rfr", proxies: Union[dict, None] = None
+) -> str:
     """
     Generates the link for downloading the selected type of data for a given date.
 
@@ -160,7 +164,7 @@ def eiopa_link(ref_date: str, data_type: str = "rfr") -> str:
             + "(?:_[0-9]{0,1})?(?:.xlsx|$)"
         )
 
-    valid_link = get_links(urls, r)
+    valid_link = get_links(urls, r, proxies)
 
     problem_dates = {"rfr": ["2021-11-30"]}
     if ref_date in problem_dates.get(data_type, []):

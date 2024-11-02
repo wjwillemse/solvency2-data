@@ -1,5 +1,9 @@
 # History
 
+### 0.2.3 (2024-11-2)
+
+- Added proxies support (functions .get, .refresh and .read have proxies parameter)
+
 ### 0.2 (2024-4-10)
 
 - Switch to mkdocs for documentation

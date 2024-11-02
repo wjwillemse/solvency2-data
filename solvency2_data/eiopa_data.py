@@ -13,6 +13,7 @@ import pandas as pd
 import urllib
 from datetime import date
 import logging
+from typing import Union
 
 from solvency2_data.sqlite_handler import EiopaDB
 from solvency2_data.util import get_config
@@ -37,7 +38,9 @@ def get_workspace() -> dict:
     return {"database": database, "raw_data": path_raw}
 
 
-def download_file(url: str, raw_folder: str, filename: str = "") -> str:
+def download_file(
+    url: str, raw_folder: str, filename: str = "", proxies: Union[dict, None] = None
+) -> str:
     """
     Downloads a file from a URL and saves it in a specified folder.
 
@@ -72,6 +75,11 @@ def download_file(url: str, raw_folder: str, filename: str = "") -> str:
     else:
         if not os.path.exists(raw_folder):
             os.makedirs(raw_folder)
+        # process proxies
+        if proxies is not None:
+            proxy = urllib.request.ProxyHandler(proxies)
+            opener = urllib.request.build_opener(proxy)
+            urllib.request.install_opener(opener)
         urllib.request.urlretrieve(url, target_file)  # simpler for file downloading
         logging.info(
             "file downloaded and saved in the following location: " + target_file
@@ -80,7 +88,9 @@ def download_file(url: str, raw_folder: str, filename: str = "") -> str:
     return target_file
 
 
-def download_EIOPA_rates(url: str, ref_date: str, workspace: dict = None) -> dict:
+def download_EIOPA_rates(
+    url: str, ref_date: str, workspace: dict = None, proxies: Union[dict, None] = None
+) -> dict:
     """
     Downloads EIOPA RFR (Risk-Free Rate) files from a given URL and extracts them.
 
@@ -90,6 +100,7 @@ def download_EIOPA_rates(url: str, ref_date: str, workspace: dict = None) -> dic
         workspace (dict, optional): A dictionary containing workspace directories and paths.
             If None, it retrieves workspace information using get_workspace() function.
             Defaults to None.
+        proxies (dict or None): proxies to be used when downloading EIOPA rates
 
     Returns:
         dict: A dictionary containing the paths to the downloaded files.
@@ -102,8 +113,9 @@ def download_EIOPA_rates(url: str, ref_date: str, workspace: dict = None) -> dic
     if workspace is None:
         workspace = get_workspace()
     raw_folder = workspace["raw_data"]
-    zip_file = download_file(url, raw_folder)
-
+    zip_file = download_file(
+        url=url, raw_folder=raw_folder, filename="", proxies=proxies
+    )
     # Change format of ref_date string for EIOPA Excel files from YYYY-mm-dd to YYYYmmdd:
     reference_date = ref_date.replace("-", "")
 
@@ -304,7 +316,11 @@ def extract_sym_adj(sym_adj_filepath: str, ref_date: str) -> pd.DataFrame:
 
 
 def add_to_db(
-    ref_date: str, db: EiopaDB, data_type: str = "rfr", workspace: dict = None
+    ref_date: str,
+    db: EiopaDB,
+    data_type: str = "rfr",
+    workspace: dict = None,
+    proxies: Union[dict, None] = None,
 ):
     """
     Adds data to the EIOPA database, to use when you are missing data.
@@ -321,11 +337,13 @@ def add_to_db(
     Returns:
         None
     """
-    url = eiopa_link(ref_date, data_type=data_type)
+    url = eiopa_link(ref_date, data_type=data_type, proxies=proxies)
     set_id = db.get_set_id(url)
 
     if data_type != "sym_adj":
-        files = download_EIOPA_rates(url, ref_date)
+        files = download_EIOPA_rates(
+            url=url, ref_date=ref_date, workspace=None, proxies=proxies
+        )
         if data_type == "rfr":
             df = extract_spot_rates(files[data_type])
         elif data_type == "meta":
@@ -340,7 +358,9 @@ def add_to_db(
         if workspace is None:
             workspace = get_workspace()
         raw_folder = workspace["raw_data"]
-        file = download_file(url, raw_folder)
+        file = download_file(
+            url=url, raw_folder=raw_folder, filename="", proxies=proxies
+        )
         df = extract_sym_adj(file, ref_date)
 
     if df is not None:
@@ -371,7 +391,7 @@ def validate_date_string(ref_date):
         str or None: A validated date string in the format "%Y-%m-%d".
             Returns None if the input date type is not recognized or cannot be converted.
     """
-    if type(ref_date) == datetime.date:
+    if isinstance(ref_date, datetime.date):
         return ref_date.strftime("%Y-%m-%d")
     elif isinstance(ref_date, str):
         try:
@@ -383,7 +403,12 @@ def validate_date_string(ref_date):
         return None
 
 
-def get(ref_date: str, data_type: str = "rfr", workspace: dict = None):
+def get(
+    ref_date: str,
+    data_type: str = "rfr",
+    workspace: dict = None,
+    proxies: Union[dict, None] = None,
+):
     """
     Retrieves data from the EIOPA database for a given reference date and data type.
 
@@ -417,7 +442,13 @@ def get(ref_date: str, data_type: str = "rfr", workspace: dict = None):
     sql = sql_map.get(data_type)
     df = pd.read_sql(sql, con=db.conn)
     if df.empty:
-        add_to_db(ref_date, db, data_type)
+        add_to_db(
+            ref_date=ref_date,
+            db=db,
+            data_type=data_type,
+            workspace=None,
+            proxies=proxies,
+        )
         df = pd.read_sql(sql, con=db.conn)
     if not df.empty:
         df = df.drop(columns=["url_id", "ref_date"])
@@ -426,16 +457,21 @@ def get(ref_date: str, data_type: str = "rfr", workspace: dict = None):
         return None
 
 
-def refresh():
+def refresh(proxies: Union[dict, None] = None):
     """
     Refreshes the EIOPA database by updating data for each month from January 2016 to the current month.
 
     Returns:
         str: A message indicating that the database has been successfully rebuilt.
     """
-    dr = pd.date_range(date(2016, 1, 31), date.today(), freq="M")
-    # dr = pd.date_range(date(2021, 11, 30), date.today(), freq="M")
+    dr = pd.date_range(date(2016, 1, 31), date.today(), freq="ME")
+    # dr = pd.date_range(date(2021, 11, 30), date.today(), freq="ME")
     for ref_date in dr:
         for data_type in ["rfr", "meta", "spreads", "govies", "sym_adj"]:
-            _ = get(ref_date.date(), data_type)
+            _ = get(
+                ref_date=ref_date.date(),
+                data_type=data_type,
+                workspace=None,
+                proxies=proxies,
+            )
     return "Database successfully rebuilt"
