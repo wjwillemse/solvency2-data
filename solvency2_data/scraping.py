@@ -53,11 +53,11 @@ def get_links(urls: str, r: str, proxies: Union[dict, None] = None) -> list:
 
     valid_links = []
     for url in raw_links:
-        if check_if_download(url):
+        if check_if_download(url, proxies):
             valid_links.append(url)
         else:
             redirect = lookthrough_redirect(url)
-            if check_if_download(redirect):
+            if check_if_download(redirect, proxies):
                 valid_links.append(redirect)
     if len(valid_links) > 0:
         return valid_links[0]
@@ -65,17 +65,18 @@ def get_links(urls: str, r: str, proxies: Union[dict, None] = None) -> list:
         return None
 
 
-def check_if_download(url: str) -> bool:
+def check_if_download(url: str, proxies: Union[dict, None] = None) -> bool:
     """
     Checks if the URL points to a downloadable resource.
 
     Args:
         url (str): The URL to check.
+        proxies: None or a dictionary of proxies to pass in requests.get
 
     Returns:
         bool: True if the resource is downloadable, False otherwise.
     """
-    headers = requests.head(url).headers
+    headers = requests.head(url, proxies, timeout=10, verify=False).headers
     # downloadable = 'attachment' in headers.get('Content-Disposition', '')
     downloadable = headers.get("Content-Type") in [
         "application/zip",
